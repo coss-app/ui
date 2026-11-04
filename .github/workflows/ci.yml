@@ -14,5 +14,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
-      - run: npm run typecheck -w storybook
+      - run: npm run typecheck -w @coss-app/docs
       - run: npm run build

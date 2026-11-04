@@ -7,8 +7,8 @@
   "scripts": {
     "build": "npm run build -w @coss-app/ui",
     "typecheck": "npm run typecheck -w @coss-app/ui",
-    "storybook": "npm run storybook -w storybook",
-    "build-storybook": "npm run build-storybook -w storybook",
+    "storybook": "npm run storybook -w @coss-app/docs",
+    "build-storybook": "npm run build-storybook -w @coss-app/docs",
     "changeset": "changeset",
     "release": "npm run build && changeset publish"
   },
