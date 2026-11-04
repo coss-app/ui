@@ -39,6 +39,15 @@ export NODE_AUTH_TOKEN=ghp_xxxxxxxxxxxxxxxx
 
 只有 `@coss-app/*` 會去 GitHub Packages，其他套件照常走 npmjs。
 
+**`.npmrc` 不用填 token。** `${NODE_AUTH_TOKEN}` 只是變數名稱，npm 執行時才去讀同名的環境變數：
+
+| 放哪裡 | 內容 | 可以 commit？ |
+| --- | --- | --- |
+| 專案的 `.npmrc` | `${NODE_AUTH_TOKEN}`（變數名稱，照抄上面即可） | 可以 |
+| 環境變數 `NODE_AUTH_TOKEN` | 真正的 token（`ghp_…`） | **不可以** |
+
+環境變數在哪設：本機寫在 shell 設定（上一步）；GitHub Actions 由 workflow 設；Vercel／Cloudflare 在平台後台設（見下方）。不論哪個環境，`.npmrc` 都不用改。
+
 ## 3. 安裝
 
 ```bash
@@ -51,7 +60,9 @@ npm install @coss-app/ui
 
 ### GitHub Actions（coss-app 內的 repo）
 
-用內建的 `GITHUB_TOKEN` 即可，不需要個人 token：
+用內建的 `GITHUB_TOKEN` 即可，不需要個人 token。
+
+`GITHUB_TOKEN` 是 GitHub Actions **每次執行時自動產生**的臨時 token，執行結束就失效：**不需要建立，Settings → Secrets 裡也看不到它**，workflow 裡直接寫 `${{ secrets.GITHUB_TOKEN }}` 就能用。它只存在於 Actions，本機開發請用自己的 classic token。
 
 ```yaml
 permissions:
@@ -70,7 +81,12 @@ steps:
       NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-第一次使用的 repo 需要管理員到 **coss-app → Packages → ui → Package settings → Manage Actions access** 把該 repo 加入（Read）。
+第一次使用的 repo 要先讓它有讀取套件的權限（org 管理員操作一次）：
+
+1. 進入套件頁：**coss-app → Packages → `ui`**，或從 coss-app/ui repo 首頁右側欄的 **Packages** 點進去。
+2. 右側 **Package settings** → **Manage Actions access** → **Add repository**，選要安裝套件的 repo，Role 選 **Read**。
+
+> 套件**第一次發佈後**才會出現在 Packages 列表，在那之前看不到 `ui`、也沒有 Manage Actions access。
 
 ### Vercel／Cloudflare Pages／其他平台
 
