@@ -1,6 +1,6 @@
 {
   "name": "@coss-app/ui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "coss 公司通用 UI 組件庫（shadcn/ui + Tailwind v4）",
   "type": "module",
   "files": [

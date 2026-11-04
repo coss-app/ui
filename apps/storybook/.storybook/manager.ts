@@ -6,6 +6,7 @@ addons.setConfig({
   theme: create({
     base: "light",
     brandTitle: "coss UI",
+    brandImage: "./coss-logo.png",
     brandUrl: "https://ui.coss.com.tw",
     brandTarget: "_self",
     colorPrimary: "#00a756",

@@ -58,8 +58,20 @@ npm run storybook    # 瀏覽全部組件：http://localhost:6006
 
 ## 發佈
 
-1. `npx changeset` 記錄變更並 commit。
-2. 合併到 main → CI 自動開 Version PR。
-3. 合併 Version PR → 自動發佈到 GitHub Packages。
+1. 功能 PR 附上 `npx changeset`（記錄這次改了什麼、版本要升 patch／minor）。PR 會跑 CI 並部署文件站預覽。
+2. 要發版時，從最新的 main 開分支跑版本：
+
+   ```bash
+   git switch main && git pull
+   git switch -c release/v0.2.0
+   npx changeset version   # 依累積的 changeset 升版號、寫 CHANGELOG
+   npm install             # 更新 package-lock.json
+   git commit -am "chore: release v0.2.0"
+   git push -u origin HEAD && gh pr create --fill
+   ```
+
+3. CI 通過後合併 → 自動發佈到 GitHub Packages、打 tag、建立 GitHub Release，並更新 ui.coss.com.tw。
+
+main 上的版本號已經發佈過時，Release workflow 會直接略過，所以平常合併功能 PR 不會發版。
 
 > GitHub Packages 的 scope 必須等於 GitHub org 名稱（`coss-app`），所以套件名是 `@coss-app/ui`；repo 為 `coss-app/ui`。
