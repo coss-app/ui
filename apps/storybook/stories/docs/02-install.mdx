@@ -1,0 +1,90 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="使用手冊/安裝與權限" />
+
+# 安裝與權限
+
+`@coss-app/ui` 發佈在 **GitHub Packages（私有）**。這個文件站公開，但**安裝套件一定要 token**：GitHub Packages 的 npm 套件不論公開或私有，都要登入才能下載。
+
+## 需求
+
+| 項目 | 版本 |
+| --- | --- |
+| Node.js | 22 以上 |
+| React | 18.2 或 19 |
+| Tailwind CSS | **v4**（v3 專案先看「舊專案遷移」） |
+
+## 1. 取得 token（每位開發者一次）
+
+1. GitHub → Settings → Developer settings → **Personal access tokens → Tokens (classic)** → Generate new token (classic)。
+2. 勾選 **`read:packages`**（只要這個）。期限依公司規定。
+3. 你的 GitHub 帳號必須是 `coss-app` org 成員。
+
+> GitHub Packages 的 npm registry **只支援 classic token**，fine-grained token 無法安裝。
+
+把 token 放進 shell 設定（`~/.zshrc` 或 `~/.bashrc`），不要寫進專案：
+
+```bash
+export NODE_AUTH_TOKEN=ghp_xxxxxxxxxxxxxxxx
+```
+
+## 2. 專案的 `.npmrc`
+
+放在專案根目錄（與 `package.json` 同層），**可以 commit**，裡面只有變數名稱沒有 token：
+
+```ini
+@coss-app:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+只有 `@coss-app/*` 會去 GitHub Packages，其他套件照常走 npmjs。
+
+## 3. 安裝
+
+```bash
+npm install @coss-app/ui
+```
+
+出現 `401 Unauthorized` 或 `404 Not Found`：多半是 `NODE_AUTH_TOKEN` 沒設、token 沒有 `read:packages`，或帳號不在 coss-app org。
+
+## CI 與部署平台
+
+### GitHub Actions（coss-app 內的 repo）
+
+用內建的 `GITHUB_TOKEN` 即可，不需要個人 token：
+
+```yaml
+permissions:
+  contents: read
+  packages: read
+
+steps:
+  - uses: actions/checkout@v4
+  - uses: actions/setup-node@v4
+    with:
+      node-version: 22
+      registry-url: https://npm.pkg.github.com
+      scope: "@coss-app"
+  - run: npm ci
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+第一次使用的 repo 需要管理員到 **coss-app → Packages → ui → Package settings → Manage Actions access** 把該 repo 加入（Read）。
+
+### Vercel／Cloudflare Pages／其他平台
+
+在專案的環境變數加入 `NODE_AUTH_TOKEN`（值為具 `read:packages` 的 classic token，建議由管理員用共用帳號建立）。`.npmrc` 已在 repo 內，平台安裝時會自動讀取。
+
+### Docker
+
+用 build secret，不要把 token 寫進 image：
+
+```dockerfile
+RUN --mount=type=secret,id=npm_token \
+    NODE_AUTH_TOKEN=$(cat /run/secrets/npm_token) npm ci
+```
+
+```bash
+docker build --secret id=npm_token,env=NODE_AUTH_TOKEN .
+```

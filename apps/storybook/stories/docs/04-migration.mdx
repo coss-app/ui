@@ -1,0 +1,86 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="使用手冊/舊專案遷移" />
+
+# 舊專案遷移
+
+適用於已經在用 shadcn/ui（組件複製在專案的 `components/ui/`）或自己寫樣式的專案。**可以一個組件一個組件換**，本地組件與套件組件能並存。
+
+## 0. 前置：Tailwind 必須是 v4
+
+```bash
+npx tailwindcss --help | head -1   # 看版本
+```
+
+還是 v3 的話先升級（會改設定檔與 class 名稱，請在乾淨的 git 狀態下執行並檢查 diff）：
+
+```bash
+npx @tailwindcss/upgrade
+```
+
+沒有用 Tailwind 的專案（CSS Modules、MUI、Ant Design…）建議**新頁面**才用這個套件，舊頁面維持原樣；要共存時先確認全域 reset（Tailwind preflight）不會影響舊頁面。
+
+## 1. 安裝
+
+依「安裝與權限」設定 token 與 `.npmrc`，然後：
+
+```bash
+npm install @coss-app/ui
+```
+
+## 2. 換掉全域 CSS
+
+shadcn 專案的 `globals.css` 通常長這樣：`@import "tailwindcss"`、`@import "tw-animate-css"`、`:root { --background… }`、`.dark { … }`、`@theme inline { … }`、`@layer base { … }`。
+
+**把這些全部刪掉**，換成一行；專案自己的樣式留在下面：
+
+```css
+@import "@coss-app/ui/globals.css";
+
+/* 專案自己的樣式 */
+```
+
+token 名稱和 shadcn 相同（`--primary`、`--muted`…），所以還沒換掉的本地組件會直接吃到新配色。
+
+## 3. 逐一換掉組件
+
+以 Button 為例：
+
+```bash
+# 把 import 改成套件路徑（macOS 的 sed 要寫成 sed -i ''）
+grep -rl '@/components/ui/button"' src app 2>/dev/null \
+  | xargs sed -i 's#@/components/ui/button"#@coss-app/ui/components/button"#g'
+
+# 確認沒有引用後刪除本地副本
+grep -rn '@/components/ui/button"' src app || rm components/ui/button.tsx
+```
+
+`cn` 也可以改用套件的：`import { cn } from "@coss-app/ui/lib/utils"`。
+
+建議順序：Button、Input、Label、Badge、Card 這些「純樣式」組件先換（幾乎不用改程式）；Dialog、Select、Dropdown 這類互動組件 API 有差異，見下表。
+
+## 4. Radix → Base UI 差異
+
+套件的組件底層是 [Base UI](https://base-ui.com)，舊 shadcn 是 Radix。常見要改的地方：
+
+| 舊寫法（Radix） | 新寫法（Base UI） |
+| --- | --- |
+| `<Button asChild><a href="/x">…</a></Button>` | `<Button render={<a href="/x" />}>…</Button>` |
+| `<DialogTrigger asChild><Button>開啟</Button></DialogTrigger>` | `<DialogTrigger render={<Button />}>開啟</DialogTrigger>` |
+| `DropdownMenuLabel` 可以單獨放 | 必須放在 `DropdownMenuGroup` 裡（ContextMenu、Menubar 同理） |
+| `<Accordion type="single" collapsible>` | 預設單一展開；多個用 `<Accordion multiple>` |
+| `<Select>` 的 `SelectValue` 顯示選項文字 | 要顯示文字而非 value 時，在 `Select` 傳 `items`（`{ value: label }`） |
+| `Drawer`（vaul）`direction="right"` | Base UI Drawer：`swipeDirection="right"` |
+| `sonner` 的 `toast("…")` | 仍可用 `@coss-app/ui/components/sonner`；新程式建議 `toast.add({ title })`（`components/toast`） |
+| CSS 選擇器 `data-[state=open]`、`data-[state=checked]` | `data-open`、`data-checked`（自訂樣式時要改） |
+| `react-hook-form` 的 `Form` | 一樣可用；新表單建議 `Field` 系列 |
+
+每個組件頁的範例都是 Base UI 寫法，照著改最快。
+
+## 5. 檢查清單
+
+- [ ] `npm run build` 通過、沒有 TypeScript 錯誤
+- [ ] 深色模式：`<html class="dark">` 切換正常
+- [ ] 字體：next/font 的 `variable` 改成 `"--font-sans"`
+- [ ] 刪掉不再使用的依賴（`@radix-ui/*`、`radix-ui`、`vaul`、`tailwindcss-animate`）
+- [ ] 刪掉已全部替換的 `components/ui/*.tsx` 與 `components.json`

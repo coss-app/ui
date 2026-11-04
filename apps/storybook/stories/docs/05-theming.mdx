@@ -1,0 +1,52 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="使用手冊/主題與深色模式" />
+
+# 主題與深色模式
+
+所有顏色都是 CSS 變數，定義在 `@coss-app/ui/globals.css`；完整清單與色塊見 **Foundations / Colors**，字級見 **Foundations / Typography**。
+
+## 在 Tailwind class 裡用 token
+
+| 用途 | class |
+| --- | --- |
+| App 底色／面板 | `bg-background`／`bg-card` |
+| 內文／次要文字／placeholder | `text-foreground`／`text-muted-foreground`／`text-placeholder` |
+| 主要動作（品牌綠） | `bg-primary text-primary-foreground` |
+| 資訊（連結、選中） | `text-info`、`bg-info`、`bg-info-muted` |
+| 成功／警示／錯誤淡底 | `bg-success-muted text-success-foreground`、`bg-warning-muted text-warning`、`bg-destructive-muted text-destructive-foreground` |
+| 分隔線 | `border-border` |
+| 浮層陰影 | `shadow-menu`、`shadow-picker`、`shadow-tab`、`shadow-float` |
+
+底色與字色**成對使用**（綠底配白字、淡底配同色系深字），不要隨手混搭。
+
+## 深色模式
+
+在 `<html>` 加上 `class="dark"` 就切換，所有 token 會換成深色值。Next.js 用 `next-themes`：
+
+```tsx
+<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+```
+
+Tailwind 的 `dark:` 前綴也跟著 `.dark` class 走。
+
+## 專案要微調顏色
+
+在 import 之後覆寫變數即可，不需要改套件：
+
+```css
+@import "@coss-app/ui/globals.css";
+
+:root {
+  --radius: 0.5rem; /* 全站圓角基準 */
+}
+.dark {
+  --background: #0b0e1e;
+}
+```
+
+不建議改 `--primary` 等品牌色：會偏離公司設計規範。真的需要新顏色，請提到 coss-app/ui 統一加入。
+
+## 減少動態
+
+使用者在系統開啟「減少動態」時，彈窗、抽屜、Toast 只保留淡入淡出，不滑動也不縮放。這已內建在 globals.css，專案不用處理。

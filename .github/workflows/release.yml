@@ -1,0 +1,38 @@
+name: Release
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+  pull-requests: write
+  packages: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+      - run: npm ci
+      - uses: changesets/action@v1
+        id: changesets
+        with:
+          publish: npm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 發佈新版後才更新正式文件站，讓 ui.coss.com.tw 永遠對應已發佈的版本
+      - name: 建置文件站
+        if: steps.changesets.outputs.published == 'true'
+        run: npm run build-storybook
+      - name: 部署文件站到 Cloudflare Pages
+        if: steps.changesets.outputs.published == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          preCommands: npx wrangler pages project create coss-ui --production-branch main || true
+          command: pages deploy apps/storybook/storybook-static --project-name coss-ui --branch main --commit-dirty=true

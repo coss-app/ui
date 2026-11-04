@@ -1,0 +1,122 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="使用手冊/新專案" />
+
+# 新專案
+
+先完成「安裝與權限」的 token 與 `.npmrc` 設定。
+
+## Next.js（App Router，建議）
+
+### 1. 建立專案並安裝
+
+```bash
+npx create-next-app@latest my-app --typescript --tailwind --app --eslint
+cd my-app
+# 建立 .npmrc（內容見「安裝與權限」）後：
+npm install @coss-app/ui next-themes
+```
+
+create-next-app 產生的專案已經是 Tailwind v4（`@tailwindcss/postcss`），不需要另外設定。
+
+### 2. `app/globals.css`
+
+把檔案內容**整個換成**下面這行（`@coss-app/ui/globals.css` 已包含 `@import "tailwindcss"`、色彩 token 與基礎樣式，不要再 import 一次 tailwindcss）：
+
+```css
+@import "@coss-app/ui/globals.css";
+
+/* 專案自己的樣式寫在下面 */
+```
+
+### 3. `app/layout.tsx`
+
+```tsx
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "@coss-app/ui/components/toast";
+import { TooltipProvider } from "@coss-app/ui/components/tooltip";
+import "./globals.css";
+
+// variable 必須是 --font-sans：globals.css 會用它當主要字體，中文自動退回 PingFang TC／微軟正黑體
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+export const metadata: Metadata = { title: "My App" };
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="zh-Hant-TW" className={inter.variable} suppressHydrationWarning>
+      <body>
+        {/* 深色模式靠 <html class="dark">，next-themes 負責切換 */}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <TooltipProvider>
+            <Toaster>{children}</Toaster>
+          </TooltipProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### 4. 使用
+
+```tsx
+"use client";
+
+import { Button } from "@coss-app/ui/components/button";
+import { toast } from "@coss-app/ui/components/toast";
+
+export function SaveButton() {
+  return (
+    <Button onClick={() => toast.add({ title: "已儲存", type: "success" })}>
+      儲存
+    </Button>
+  );
+}
+```
+
+- 組件已標記 `"use client"`，可以直接在 Server Component 裡渲染；只有要傳事件處理函式時，呼叫端才需要是 Client Component。
+- **不需要** `transpilePackages`：發佈的是編譯好的 JS。
+
+## Vite＋React
+
+```bash
+npm create vite@latest my-app -- --template react-ts
+cd my-app
+# 建立 .npmrc 後：
+npm install @coss-app/ui
+npm install -D tailwindcss @tailwindcss/vite
+```
+
+`vite.config.ts`：
+
+```ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+});
+```
+
+`src/index.css`（整個換掉）：
+
+```css
+@import "@coss-app/ui/globals.css";
+```
+
+字體：沒設定 `--font-sans` 時會用名為 `Inter` 的字型（沒裝就退回中文系統字）。要載入 Inter，在 `index.html` 加：
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+```
+
+`src/main.tsx` 用 `TooltipProvider`、`Toaster` 包住 `<App />`（同上方 Next.js 範例）。深色模式在 `<html>` 加上 `class="dark"`。
+
+## 下一步
+
+- 每個組件頁最上方都有 import 寫法，直接複製。
+- 版面、顏色怎麼用：看 **Foundations** 與 `DESIGN.md`。

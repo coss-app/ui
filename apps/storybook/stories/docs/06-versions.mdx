@@ -1,0 +1,33 @@
+import { Meta, Markdown } from "@storybook/addon-docs/blocks";
+import pkg from "../../../../packages/ui/package.json";
+
+export const changelogs = import.meta.glob("../../../../packages/ui/CHANGELOG.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+export const changelog = Object.values(changelogs)[0];
+
+<Meta title="使用手冊/更新與版本" />
+
+# 更新與版本
+
+目前版本：**{pkg.version}**
+
+## 更新
+
+```bash
+npm install @coss-app/ui@latest
+```
+
+更新後跑一次 `npm run build` 與主要頁面的畫面檢查。
+
+## 版本規則
+
+- 目前是 **0.x**：minor（0.**x**.0）**可能包含破壞性變更**，CHANGELOG 會標「破壞性」並寫明怎麼改；patch（0.0.**x**）只修 bug。
+- 1.0 之後照標準 semver：只有 major 會有破壞性變更。
+- 建議 `package.json` 寫 `"@coss-app/ui": "~0.1.0"`（只自動吃 patch），升 minor 時看完 CHANGELOG 再手動升。
+
+## 變更紀錄
+
+{changelog ? <Markdown>{changelog}</Markdown> : <p>尚無發佈紀錄。第一個版本發佈後會顯示在這裡。</p>}

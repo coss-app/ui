@@ -1,0 +1,40 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="使用手冊/貢獻組件" />
+
+# 貢獻組件
+
+repo：[github.com/coss-app/ui](https://github.com/coss-app/ui)
+
+```
+packages/ui/             ← 發佈的套件 @coss-app/ui
+  src/components/ui/     ← 組件
+  src/styles/globals.css ← 色彩 token 與全域樣式
+apps/storybook/          ← 這個文件站（ui.coss.com.tw）
+  stories/               ← 每個組件一個 *.stories.tsx
+  stories/docs/          ← 使用手冊（MDX）
+DESIGN.md                ← 設計規範
+```
+
+## 開發
+
+```bash
+npm install
+npm run storybook        # http://localhost:6006，改組件會即時更新
+npm run typecheck
+npm run build
+```
+
+## 新增或更新 shadcn 組件
+
+1. `cd packages/ui && npx shadcn@latest add <name>`（更新既有組件加 `--overwrite`，**會蓋掉已調整的樣式**，先看 diff）。
+2. 把 `from "cn"` 改成 `from "@/lib/utils"`，並從 `package.json` 移除 CLI 自動加的 `cn` 依賴。
+3. 依 `DESIGN.md` 改 class：輸入框 `bg-muted` 無框、浮層 `shadow-menu`、選中 `bg-info`、主要動作 `rounded-full`、字重只用 400／500／600。
+4. 在 `apps/storybook/stories/` 新增 `<name>.stories.tsx`：import 一律寫 `@coss-app/ui/components/<name>`，展示所有 variant 與狀態，範例文字用繁體中文。
+5. `npx changeset` 記錄變更（破壞性變更選 minor 並寫清楚怎麼改）。
+
+## 發佈流程
+
+1. 開 PR → CI（typecheck、build）＋ 文件站預覽網址。
+2. 合併到 main → 自動開「Version Packages」PR。
+3. 合併 Version PR → 發佈到 GitHub Packages，並更新 ui.coss.com.tw。

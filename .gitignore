@@ -1,0 +1,7 @@
+node_modules
+dist
+.next
+storybook-static
+*.tgz
+.env*
+.DS_Store

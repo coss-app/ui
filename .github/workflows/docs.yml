@@ -1,0 +1,50 @@
+# 文件站（Storybook）部署到 Cloudflare Pages
+# - PR：部署預覽，網址留言在 PR
+# - 手動（workflow_dispatch）：部署正式站 ui.coss.com.tw（平常由 release.yml 在發佈新版後自動部署）
+name: Docs
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: write
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HAS_CF: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build-storybook
+      - name: 部署到 Cloudflare Pages
+        id: deploy
+        if: env.HAS_CF == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          preCommands: npx wrangler pages project create coss-ui --production-branch main || true
+          command: >-
+            pages deploy apps/storybook/storybook-static
+            --project-name coss-ui
+            --branch ${{ github.event_name == 'pull_request' && github.head_ref || 'main' }}
+            --commit-dirty=true
+      - name: 預覽網址留言到 PR
+        if: env.HAS_CF == 'true' && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          URL: ${{ steps.deploy.outputs.deployment-url }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --edit-last --create-if-none \
+            --body "📚 文件站預覽：$URL"
+      - name: 未設定 Cloudflare secrets
+        if: env.HAS_CF != 'true'
+        run: echo "::notice::未設定 CLOUDFLARE_API_TOKEN／CLOUDFLARE_ACCOUNT_ID，只建置不部署"
