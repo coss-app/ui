@@ -28,3 +28,18 @@ addons.setConfig({
     fontBase: '"Inter", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif',
   }),
 });
+
+// 分頁標題：Storybook 寫死「… ⋅ Storybook」後綴且無設定可改，標題一變動就換成 coss UI
+const BRAND = "coss UI";
+const rebrand = () => {
+  const next = document.title
+    .replace(/\s*⋅\s*Storybook$/, ` ⋅ ${BRAND}`)
+    .replace(/^(.*\s-\s)?Storybook$/, BRAND);
+  if (next !== document.title) document.title = next;
+};
+rebrand();
+new MutationObserver(rebrand).observe(document.head, {
+  subtree: true,
+  childList: true,
+  characterData: true,
+});
