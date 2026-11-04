@@ -46,6 +46,6 @@ npm run build-storybook                  # 文件站靜態檔＋改寫 <title>
 
 - main 受保護：須走 PR 且 `ci` 檢查通過。repo 不允許 Actions 開 PR，故**不用 `changesets/action`**。
 - 流程：功能 PR 附 `npx changeset` → 要發版時開分支跑 `npx changeset version && npm install`，以 PR 合併。
-- `.github/workflows/release.yml`：main 上 `packages/ui/package.json` 版本尚未發佈 → `changeset publish`、推 tag `@coss-app/ui@x.y.z`、建 GitHub Release（取 CHANGELOG 該版段落）、部署正式文件站；已發佈則略過。
-- `docs.yml`：PR 部署預覽並留言網址；`workflow_dispatch` 部署正式站。正式站僅在發佈新版或手動觸發時更新，合併 PR 不會自動更新。
+- `.github/workflows/release.yml`：main 上 `packages/ui/package.json` 版本尚未發佈 → `changeset publish`、推 tag `@coss-app/ui@x.y.z`、建 GitHub Release（取 CHANGELOG 該版段落）；已發佈則略過。
+- `docs.yml`：PR 部署預覽並留言網址；push 到 main（`apps/storybook/**`、`packages/ui/**`、`package-lock.json` 有變動）與 `workflow_dispatch` 部署正式站。正式站可能領先已發佈版本（含未發版組件）。
 - repo secrets：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`；發佈用內建 `GITHUB_TOKEN`。

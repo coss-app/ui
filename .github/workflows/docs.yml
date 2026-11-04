@@ -1,9 +1,16 @@
 # 文件站（Storybook）部署到 Cloudflare Pages
 # - PR：部署預覽，網址留言在 PR
-# - 手動（workflow_dispatch）：部署正式站 ui.coss.com.tw（平常由 release.yml 在發佈新版後自動部署）
+# - 合併到 main（文件站或套件有變動）、手動（workflow_dispatch）：部署正式站 ui.coss.com.tw
 name: Docs
 on:
   pull_request:
+  push:
+    branches: [main]
+    paths:
+      - "apps/storybook/**"
+      - "packages/ui/**"
+      - "package-lock.json"
+      - ".github/workflows/docs.yml"
   workflow_dispatch:
 permissions:
   contents: read
