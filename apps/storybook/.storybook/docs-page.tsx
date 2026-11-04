@@ -67,7 +67,7 @@ function ImportSnippet() {
     <>
       <h3 id="import">引用方式</h3>
       <Source code={code} language="tsx" dark />
-      <p style={{ fontSize: 13, marginTop: -8 }}>
+      <p style={{ fontSize: 15, marginTop: -8 }}>
         尚未安裝？見{" "}
         <a href="/?path=/docs/使用手冊-安裝與權限--docs" target="_top">
           安裝與權限
