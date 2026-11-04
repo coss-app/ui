@@ -94,7 +94,7 @@ DESIGN.md                 # 設計規範
 
 發佈新版：
 
-1. 功能 PR 附上 `npx changeset`，記錄改了什麼、要升 patch 還是 minor。PR 會跑 CI 並部署文件站預覽。
+1. 功能 PR 附上 `npx changeset`，記錄改了什麼、要升 patch 還是 minor。PR 會跑 CI 並部署文件站預覽，合併後 ui.coss.com.tw 自動更新。
 2. 要發版時，從最新的 main 開分支跑版本：
 
    ```bash
@@ -106,7 +106,7 @@ DESIGN.md                 # 設計規範
    git push -u origin HEAD && gh pr create --fill
    ```
 
-3. CI 通過後合併，就會自動發佈到 GitHub Packages、打 tag、建立 GitHub Release，並更新 ui.coss.com.tw。
+3. CI 通過後合併，就會自動發佈到 GitHub Packages、打 tag、建立 GitHub Release。
 
 > [!NOTE]
-> main 上的版本號已經發佈過時，Release workflow 會直接略過，所以平常合併功能 PR 不會發版。
+> main 上的版本號已經發佈過時，Release workflow 會直接略過，所以平常合併功能 PR 不會發版；但文件站會更新，可能出現尚未發版的組件。

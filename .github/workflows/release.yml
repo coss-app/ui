@@ -1,6 +1,7 @@
 # 發佈 @coss-app/ui
 # 版本由開發者在本機跑 `npx changeset version` 後以 PR 合併（不讓 Actions 開 PR）。
-# main 上的版本號若尚未發佈 → 發佈到 GitHub Packages、打 tag、建 GitHub Release、更新 ui.coss.com.tw。
+# main 上的版本號若尚未發佈 → 發佈到 GitHub Packages、打 tag、建 GitHub Release。
+# 正式文件站由 docs.yml 在合併到 main 時部署。
 name: Release
 on:
   push:
@@ -59,16 +60,3 @@ jobs:
           # 取 CHANGELOG 中這一版的段落（從 "## x.y.z" 到下一個 "## "）
           awk -v v="## $VERSION" '$0==v{f=1;next} /^## /{f=0} f' packages/ui/CHANGELOG.md > /tmp/notes.md
           gh release create "@coss-app/ui@$VERSION" --title "v$VERSION" --notes-file /tmp/notes.md
-
-      # 發佈新版後才更新正式文件站，讓 ui.coss.com.tw 永遠對應已發佈的版本
-      - name: 建置文件站
-        if: steps.check.outputs.publish == 'true'
-        run: npm run build-storybook
-      - name: 部署文件站到 Cloudflare Pages
-        if: steps.check.outputs.publish == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          preCommands: npx wrangler pages project create coss-ui --production-branch main || true
-          command: pages deploy apps/storybook/storybook-static --project-name coss-ui --branch main --commit-dirty=true
