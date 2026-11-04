@@ -20,13 +20,13 @@ export const changelog = Object.values(changelogs)[0];
 npm install @coss-app/ui@latest
 ```
 
-更新後跑一次 `npm run build` 與主要頁面的畫面檢查。
+更新會用到同一組 `NODE_AUTH_TOKEN`，不需要新增 token。更新後跑一次 `npm run build`，並檢查主要頁面的畫面。
 
 ## 版本規則
 
-- 目前是 **0.x**：minor（0.**x**.0）**可能包含破壞性變更**，CHANGELOG 會標「破壞性」並寫明怎麼改；patch（0.0.**x**）只修 bug。
-- 1.0 之後照標準 semver：只有 major 會有破壞性變更。
-- 建議 `package.json` 寫 `"@coss-app/ui": "~0.1.0"`（只自動吃 patch），升 minor 時看完 CHANGELOG 再手動升。
+- 目前是 0.x：minor 版本（0.x.0）可能包含破壞性變更，CHANGELOG 會標明「破壞性」並說明怎麼改；patch 版本（0.0.x）只修 bug。
+- 1.0 之後照標準 semver，只有 major 版本會有破壞性變更。
+- 建議在 `package.json` 寫 `"@coss-app/ui": "~0.1.0"`，只自動更新 patch；要升 minor 時，先看完 CHANGELOG 再手動升。
 
 ## 變更紀錄
 

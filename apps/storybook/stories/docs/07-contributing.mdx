@@ -25,13 +25,32 @@ npm run typecheck
 npm run build
 ```
 
+開發這個 repo 不需要 token。repo 直接使用 `packages/ui` 的原始碼，不從 GitHub Packages 下載，沒設 `NODE_AUTH_TOKEN` 也能 `npm install`。
+
+## 這個 repo 用到的 token（維護者）
+
+| 名稱 | 用途 | 要新增嗎 |
+| --- | --- | --- |
+| `GITHUB_TOKEN` | Release workflow 發佈套件、打 tag、建 GitHub Release | 不用，GitHub Actions 自動產生 |
+| `CLOUDFLARE_API_TOKEN` | 部署文件站到 Cloudflare Pages | 不用，已設定在 repo secrets；過期或要更換時才更新 |
+| `CLOUDFLARE_ACCOUNT_ID` | 指定部署到哪個 Cloudflare 帳號 | 不用，已設定；換 Cloudflare 帳號時才更新 |
+
+Cloudflare token 過期或要更換時：
+
+1. Cloudflare 後台右上角頭像 → **My Profile** → **API Tokens** → **Create Token** → **Custom token**。
+2. Permissions 選 **Account** → **Cloudflare Pages** → **Edit**；Account Resources 選公司的帳號 → **Create Token**，複製產生的值。
+3. GitHub：coss-app/ui → **Settings** → **Secrets and variables** → **Actions** → 點 `CLOUDFLARE_API_TOKEN` → **Update secret**，貼上新值。
+4. 到 Actions → **Docs** → **Run workflow** 部署一次，確認新 token 可用。
+
+Account ID 在 Cloudflare 後台 Workers & Pages 頁面右側可以看到。
+
 ## 新增或更新 shadcn 組件
 
-1. `cd packages/ui && npx shadcn@latest add <name>`（更新既有組件加 `--overwrite`，**會蓋掉已調整的樣式**，先看 diff）。
+1. `cd packages/ui && npx shadcn@latest add <name>`。更新既有組件要加 `--overwrite`，這會蓋掉已經調整過的樣式，執行後先看 diff。
 2. 把 `from "cn"` 改成 `from "@/lib/utils"`，並從 `package.json` 移除 CLI 自動加的 `cn` 依賴。
-3. 依 `DESIGN.md` 改 class：輸入框 `bg-muted` 無框、浮層 `shadow-menu`、選中 `bg-info`、主要動作 `rounded-full`、字重只用 400／500／600。
-4. 在 `apps/storybook/stories/` 新增 `<name>.stories.tsx`：import 一律寫 `@coss-app/ui/components/<name>`，展示所有 variant 與狀態，範例文字用繁體中文。
-5. `npx changeset` 記錄變更（破壞性變更選 minor 並寫清楚怎麼改）。
+3. 依 `DESIGN.md` 改 class：輸入框用 `bg-muted` 且無框、浮層用 `shadow-menu`、選中用 `bg-info`、主要動作用 `rounded-full`，字重只用 400／500／600。
+4. 在 `apps/storybook/stories/` 新增 `<name>.stories.tsx`。import 一律寫 `@coss-app/ui/components/<name>`，展示所有 variant 與狀態，範例文字用繁體中文。
+5. 執行 `npx changeset` 記錄變更。破壞性變更選 minor，並寫清楚使用者要怎麼改。
 
 ## 發佈流程
 
@@ -47,6 +66,6 @@ npm run build
    git push -u origin HEAD && gh pr create --fill
    ```
 
-3. CI 通過後合併 → 自動發佈到 GitHub Packages、打 tag、建立 GitHub Release，並更新 ui.coss.com.tw。
+3. CI 通過後合併，就會自動發佈到 GitHub Packages、打 tag、建立 GitHub Release，並更新 ui.coss.com.tw。
 
-main 上的版本號已經發佈過時，Release workflow 會直接略過，所以平常合併功能 PR 不會發版。
+main 上的版本號如果已經發佈過，Release workflow 會直接略過，所以平常合併功能 PR 不會發版。發版流程不需要新增任何 token。

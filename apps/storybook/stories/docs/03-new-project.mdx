@@ -4,7 +4,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # 新專案
 
-先完成「安裝與權限」的 token 與 `.npmrc` 設定。
+開始前要先有個人 token，並設成環境變數 `NODE_AUTH_TOKEN`（「安裝與權限」步驟 1，每人只做一次）。已經設過就不用再新增。
 
 ## Next.js（App Router，建議）
 
@@ -13,15 +13,15 @@ import { Meta } from "@storybook/addon-docs/blocks";
 ```bash
 npx create-next-app@latest my-app --typescript --tailwind --app --eslint
 cd my-app
-# 建立 .npmrc（內容見「安裝與權限」）後：
+# 先建立 .npmrc（內容見「安裝與權限」步驟 2），再安裝：
 npm install @coss-app/ui next-themes
 ```
 
-create-next-app 產生的專案已經是 Tailwind v4（`@tailwindcss/postcss`），不需要另外設定。
+create-next-app 建立的專案已經用 Tailwind v4（`@tailwindcss/postcss`），不用另外設定。
 
 ### 2. `app/globals.css`
 
-把檔案內容**整個換成**下面這行（`@coss-app/ui/globals.css` 已包含 `@import "tailwindcss"`、色彩 token 與基礎樣式，不要再 import 一次 tailwindcss）：
+把檔案內容整個換成下面這行。`@coss-app/ui/globals.css` 已經包含 `@import "tailwindcss"`、色彩變數與基礎樣式，不要再 import 一次 tailwindcss：
 
 ```css
 @import "@coss-app/ui/globals.css";
@@ -77,15 +77,15 @@ export function SaveButton() {
 }
 ```
 
-- 組件已標記 `"use client"`，可以直接在 Server Component 裡渲染；只有要傳事件處理函式時，呼叫端才需要是 Client Component。
-- **不需要** `transpilePackages`：發佈的是編譯好的 JS。
+- 組件已標記 `"use client"`，可以直接在 Server Component 裡渲染；要傳事件處理函式時，呼叫端才需要是 Client Component。
+- 不需要設定 `transpilePackages`，套件發佈的是編譯好的 JS。
 
 ## Vite＋React
 
 ```bash
 npm create vite@latest my-app -- --template react-ts
 cd my-app
-# 建立 .npmrc 後：
+# 先建立 .npmrc（內容見「安裝與權限」步驟 2），再安裝：
 npm install @coss-app/ui
 npm install -D tailwindcss @tailwindcss/vite
 ```
@@ -108,7 +108,7 @@ export default defineConfig({
 @import "@coss-app/ui/globals.css";
 ```
 
-字體：沒設定 `--font-sans` 時會用名為 `Inter` 的字型（沒裝就退回中文系統字）。要載入 Inter，在 `index.html` 加：
+字體：沒設定 `--font-sans` 時，會使用名為 `Inter` 的字型；沒有載入 Inter 就退回中文系統字。要載入 Inter，在 `index.html` 加：
 
 ```html
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
@@ -118,5 +118,5 @@ export default defineConfig({
 
 ## 下一步
 
-- 每個組件頁最上方都有 import 寫法，直接複製。
-- 版面、顏色怎麼用：看 **Foundations** 與 `DESIGN.md`。
+- 每個組件頁最上方都有 import 寫法，可以直接複製。
+- 版面與顏色的用法見 Foundations 與 `DESIGN.md`。

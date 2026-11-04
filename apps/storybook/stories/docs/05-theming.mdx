@@ -4,7 +4,9 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # 主題與深色模式
 
-所有顏色都是 CSS 變數，定義在 `@coss-app/ui/globals.css`；完整清單與色塊見 **Foundations / Colors**，字級見 **Foundations / Typography**。
+所有顏色都是 CSS 變數（design token），定義在 `@coss-app/ui/globals.css`。完整清單與色塊見 Foundations / Colors，字級見 Foundations / Typography。
+
+這些色彩 token 已經全部內建在套件裡，import globals.css 就能用，專案不需要新增。它們和安裝套件用的 GitHub token 無關。
 
 ## 在 Tailwind class 裡用 token
 
@@ -18,11 +20,11 @@ import { Meta } from "@storybook/addon-docs/blocks";
 | 分隔線 | `border-border` |
 | 浮層陰影 | `shadow-menu`、`shadow-picker`、`shadow-tab`、`shadow-float` |
 
-底色與字色**成對使用**（綠底配白字、淡底配同色系深字），不要隨手混搭。
+底色與字色要成對使用：綠底配白字，淡底配同色系的深色字。
 
 ## 深色模式
 
-在 `<html>` 加上 `class="dark"` 就切換，所有 token 會換成深色值。Next.js 用 `next-themes`：
+在 `<html>` 加上 `class="dark"` 就會切換，所有色彩變數換成深色值。Next.js 用 `next-themes` 控制：
 
 ```tsx
 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -32,7 +34,7 @@ Tailwind 的 `dark:` 前綴也跟著 `.dark` class 走。
 
 ## 專案要微調顏色
 
-在 import 之後覆寫變數即可，不需要改套件：
+在 import 之後覆寫變數就好，不用改套件：
 
 ```css
 @import "@coss-app/ui/globals.css";
@@ -45,8 +47,8 @@ Tailwind 的 `dark:` 前綴也跟著 `.dark` class 走。
 }
 ```
 
-不建議改 `--primary` 等品牌色：會偏離公司設計規範。真的需要新顏色，請提到 coss-app/ui 統一加入。
+不建議改 `--primary` 等品牌色，會偏離公司設計規範。需要新的顏色時，請到 coss-app/ui 提出，統一加進套件。
 
 ## 減少動態
 
-使用者在系統開啟「減少動態」時，彈窗、抽屜、Toast 只保留淡入淡出，不滑動也不縮放。這已內建在 globals.css，專案不用處理。
+使用者在系統開啟「減少動態」時，彈窗、抽屜和 Toast 只保留淡入淡出，不滑動也不縮放。globals.css 已經處理好，專案不用另外設定。
