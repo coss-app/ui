@@ -6,3 +6,18 @@
 <link rel="icon" type="image/x-icon" href="./favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+<!-- 字級：Storybook 側欄與工具列預設 11–14px，對中文偏小 -->
+<style>
+  #storybook-explorer-tree .sidebar-item :is(a, button) {
+    font-size: 15px;
+  }
+  #storybook-explorer-tree .sidebar-subheading button {
+    font-size: 13px;
+  }
+  #storybook-explorer-searchfield {
+    font-size: 15px;
+  }
+  .sb-bar button {
+    font-size: 13px;
+  }
+</style>

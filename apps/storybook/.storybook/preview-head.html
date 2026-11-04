@@ -5,3 +5,30 @@
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
 />
 <!-- 字體：globals.css 的 --font-sans 未注入時自動退回 "Inter"，這裡只需載入字型檔 -->
+<!--
+  字級：Storybook 預設偏小（內文 14px、程式碼 13px），對中文吃力；只放大手冊／Docs 內文。
+  - 排除 .sb-unstyled（Storybook 區塊）與 .docs-story（組件範例）
+  - 組件範例刻意維持實際尺寸（勿改 html font-size）：文件站要和產品裡看到的一致；要看細節用範例工具列的放大鈕
+-->
+<style>
+  .sbdocs-content :is(p, li, blockquote):not(.sb-unstyled *, .docs-story *) {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+  .sbdocs-content table:not(.sb-unstyled, .sb-unstyled *, .docs-story *) :is(td, th) {
+    font-size: 15px;
+  }
+  .sbdocs-content :not(pre) > code:not(.docs-story *) {
+    font-size: 0.875em;
+  }
+  .sbdocs-content pre.prismjs {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .sbdocs-content .sbdocs-subtitle {
+    font-size: 18px;
+  }
+  .sbdocs-content .docblock-argstable :is(td, th) {
+    font-size: 14px;
+  }
+</style>
