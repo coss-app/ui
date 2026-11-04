@@ -1,35 +1,71 @@
+# 發佈 @coss-app/ui
+# 版本由開發者在本機跑 `npx changeset version` 後以 PR 合併（不讓 Actions 開 PR）。
+# main 上的版本號若尚未發佈 → 發佈到 GitHub Packages、打 tag、建 GitHub Release、更新 ui.coss.com.tw。
 name: Release
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 permissions:
   contents: write
-  pull-requests: write
   packages: write
+concurrency:
+  group: release
+  cancel-in-progress: false
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
           registry-url: https://npm.pkg.github.com
+          scope: "@coss-app"
       - run: npm ci
-      - uses: changesets/action@v1
-        id: changesets
-        with:
-          publish: npm run release
+
+      - name: 檢查版本是否已發佈
+        id: check
+        run: |
+          VERSION=$(node -p "require('./packages/ui/package.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if npm view "@coss-app/ui@$VERSION" version >/dev/null 2>&1; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::@coss-app/ui@$VERSION 已發佈過，略過"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::將發佈 @coss-app/ui@$VERSION"
+          fi
+
+      - name: 發佈到 GitHub Packages
+        if: steps.check.outputs.publish == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          npm run release
+          git push --tags
+
+      - name: 建立 GitHub Release
+        if: steps.check.outputs.publish == 'true'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.check.outputs.version }}
+        run: |
+          # 取 CHANGELOG 中這一版的段落（從 "## x.y.z" 到下一個 "## "）
+          awk -v v="## $VERSION" '$0==v{f=1;next} /^## /{f=0} f' packages/ui/CHANGELOG.md > /tmp/notes.md
+          gh release create "@coss-app/ui@$VERSION" --title "v$VERSION" --notes-file /tmp/notes.md
+
       # 發佈新版後才更新正式文件站，讓 ui.coss.com.tw 永遠對應已發佈的版本
       - name: 建置文件站
-        if: steps.changesets.outputs.published == 'true'
+        if: steps.check.outputs.publish == 'true'
         run: npm run build-storybook
       - name: 部署文件站到 Cloudflare Pages
-        if: steps.changesets.outputs.published == 'true'
+        if: steps.check.outputs.publish == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
