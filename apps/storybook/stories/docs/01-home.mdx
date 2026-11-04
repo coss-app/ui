@@ -5,14 +5,16 @@ import pkg from "../../../../packages/ui/package.json";
 
 # @coss-app/ui
 
-coss 公司通用 UI 組件庫：65 個組件，基於 [shadcn/ui](https://ui.shadcn.com)（Base UI 版）＋ Tailwind CSS v4，套用公司設計規範「靛藍＋品牌綠」。
+coss 公司通用 UI 組件庫，共 65 個組件，以 [shadcn/ui](https://ui.shadcn.com)（Base UI 版）和 Tailwind CSS v4 為基礎，套用公司設計規範「靛藍＋品牌綠」。
 
 目前版本：**{pkg.version}**　·　原始碼：[github.com/coss-app/ui](https://github.com/coss-app/ui)（需 coss-app 成員權限）
 
 ## 30 秒開始
 
+開始前要先有個人 token，並設成環境變數 `NODE_AUTH_TOKEN`。每人只要做一次，步驟見「安裝與權限」的步驟 1。
+
 ```bash
-# 1. 專案根目錄 .npmrc（token 取得方式見「安裝與權限」）
+# 1. 在專案根目錄建立 .npmrc（只放變數名稱，不放 token，可以 commit）
 echo '@coss-app:registry=https://npm.pkg.github.com' >> .npmrc
 echo '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}' >> .npmrc
 
@@ -38,18 +40,20 @@ export function CreateTicket() {
 
 | 區塊 | 內容 |
 | --- | --- |
-| **使用手冊** | 安裝、新專案、舊專案遷移、主題、版本、貢獻 |
-| **Foundations** | 色彩 token、字級 |
-| **Inputs／Overlays／Navigation／…** | 每個組件一頁：最上方是 **import 寫法**，下面是可操作的範例與 props（右側 Controls 可即時切換） |
+| 使用手冊 | 安裝、新專案、舊專案遷移、主題、版本、貢獻 |
+| Foundations | 色彩變數（design token）、字級 |
+| Inputs／Overlays／Navigation／… | 每個組件一頁：最上方是 import 寫法，下面是可操作的範例與 props（用 Controls 面板即時切換） |
 
-右上角工具列可切換淺色／深色與螢幕寬度（375／768／1024／1440）。每個範例下方的「Show code」可直接複製原始碼。
+上方工具列可以切換淺色／深色與螢幕寬度（375／768／1024／1440）。每個範例下方按「Show code」可以複製原始碼。
+
+注意：「token」在這個網站有兩種意思。「安裝與權限」講的是下載套件用的 GitHub token；Foundations 的色彩 token 是 CSS 變數，已經全部內建在套件裡，不需要新增。
 
 ## 設計原則（摘要）
 
-- **綠色只給主要動作與目前位置**：主要按鈕、選中的側邊選單、進度。一個畫面只放一個主要按鈕。
-- **資訊用藍色**：連結、勾選、日期選中、處理中狀態都是資訊藍。
-- **文字不用純黑**：深靛藍；灰階全部帶藍紫調。
-- **幾乎不用陰影**：靠「底色 vs. 白色面板」分層；只有浮層（下拉、彈窗、Toast）有淡陰影。
-- **主要動作是膠囊形**，容器 10px 圓角，彈窗 25px。
+- 綠色只給主要動作與目前位置：主要按鈕、選中的側邊選單、進度。一個畫面只放一個主要按鈕。
+- 資訊用藍色：連結、勾選、日期選中、處理中狀態都用資訊藍。
+- 文字不用純黑，用深靛藍；灰階全部帶藍紫調。
+- 幾乎不用陰影，靠底色與白色面板的明暗差分層；只有浮層（下拉、彈窗、Toast）有淡陰影。
+- 主要動作用膠囊形，容器 10px 圓角，彈窗 25px。
 
 完整規範見 repo 內的 `DESIGN.md`。

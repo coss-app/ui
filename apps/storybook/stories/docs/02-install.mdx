@@ -4,7 +4,20 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # 安裝與權限
 
-`@coss-app/ui` 發佈在 **GitHub Packages（私有）**。這個文件站公開，但**安裝套件一定要 token**：GitHub Packages 的 npm 套件不論公開或私有，都要登入才能下載。
+`@coss-app/ui` 發佈在 GitHub Packages，是私有套件。這個文件站任何人都能看，但安裝套件一定要有 token：GitHub Packages 的 npm 套件不論公開或私有，都要登入才能下載。
+
+## 先確認：要不要新增 token
+
+| 情境 | 要新增 token 嗎 | 用什麼 |
+| --- | --- | --- |
+| 在自己電腦上開發「使用這個套件的專案」 | 要，每人建一次 | 個人 classic token，放在環境變數 `NODE_AUTH_TOKEN`（見步驟 1） |
+| coss-app org 內的 repo 跑 GitHub Actions | 不用 | 內建的 `GITHUB_TOKEN`；管理員要先開一次讀取權限（見「GitHub Actions」） |
+| coss-app org 以外的 repo 跑 GitHub Actions | 要 | classic token 存成該 repo 的 secret（見「GitHub Actions」） |
+| Vercel、Cloudflare 等部署平台 | 要，每個專案設一次 | classic token，設成平台的環境變數 `NODE_AUTH_TOKEN` |
+| Docker build | 要 | 用 build secret 傳入，不寫進 image |
+| 開發 coss-app/ui 這個 repo 本身 | 不用 | repo 直接用原始碼，不從 GitHub Packages 下載 |
+
+不論哪種情境，專案裡的 `.npmrc` 內容都一樣，而且不放 token（見步驟 2）。
 
 ## 需求
 
@@ -12,41 +25,61 @@ import { Meta } from "@storybook/addon-docs/blocks";
 | --- | --- |
 | Node.js | 22 以上 |
 | React | 18.2 或 19 |
-| Tailwind CSS | **v4**（v3 專案先看「舊專案遷移」） |
+| Tailwind CSS | v4（v3 專案先看「舊專案遷移」） |
 
-## 1. 取得 token（每位開發者一次）
+## 1. 建立個人 token（每位開發者一次）
 
-1. GitHub → Settings → Developer settings → **Personal access tokens → Tokens (classic)** → Generate new token (classic)。
-2. 勾選 **`read:packages`**（只要這個）。期限依公司規定。
-3. 你的 GitHub 帳號必須是 `coss-app` org 成員。
+前提：你的 GitHub 帳號是 `coss-app` org 的成員。
 
-> GitHub Packages 的 npm registry **只支援 classic token**，fine-grained token 無法安裝。
+1. GitHub 右上角頭像 → **Settings** → 左側最下方 **Developer settings**。
+2. **Personal access tokens** → **Tokens (classic)** → **Generate new token** → **Generate new token (classic)**。
+3. Note 填用途（例如「coss-ui npm」）；Expiration 依公司規定。
+4. Scopes 只勾 **`read:packages`**，其他都不用。
+5. 按 **Generate token**，複製 `ghp_` 開頭的字串。這個值只顯示一次，關掉頁面就看不到了。
+6. 如果 coss-app 啟用了 SAML SSO，回到 token 列表，在這個 token 旁按 **Configure SSO** → **Authorize** coss-app。
 
-把 token 放進 shell 設定（`~/.zshrc` 或 `~/.bashrc`），不要寫進專案：
+GitHub Packages 的 npm registry 只支援 classic token，fine-grained token 裝不了。
+
+接著把 token 設成環境變數 `NODE_AUTH_TOKEN`，不要寫進任何專案檔案。
+
+macOS／Linux（zsh 改 `~/.zshrc`，bash 改 `~/.bashrc`）：
 
 ```bash
-export NODE_AUTH_TOKEN=ghp_xxxxxxxxxxxxxxxx
+echo 'export NODE_AUTH_TOKEN=ghp_xxxxxxxxxxxxxxxx' >> ~/.zshrc
+source ~/.zshrc
 ```
+
+Windows（PowerShell，設好後要重開終端機）：
+
+```powershell
+setx NODE_AUTH_TOKEN "ghp_xxxxxxxxxxxxxxxx"
+```
+
+確認設定成功（第一版發佈後才查得到）：
+
+```bash
+npm view @coss-app/ui version --registry=https://npm.pkg.github.com
+```
+
+印出版本號就代表 token 可用。token 過期後會出現 `401`，照上面步驟建一個新的，再把環境變數換掉即可。
 
 ## 2. 專案的 `.npmrc`
 
-放在專案根目錄（與 `package.json` 同層），**可以 commit**，裡面只有變數名稱沒有 token：
+在專案根目錄（與 `package.json` 同層）建立 `.npmrc`，內容照抄：
 
 ```ini
 @coss-app:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
 ```
 
-只有 `@coss-app/*` 會去 GitHub Packages，其他套件照常走 npmjs。
+`.npmrc` 不放 token。`${NODE_AUTH_TOKEN}` 只是變數名稱，npm 執行時才去讀同名的環境變數，所以這個檔案可以 commit。
 
-**`.npmrc` 不用填 token。** `${NODE_AUTH_TOKEN}` 只是變數名稱，npm 執行時才去讀同名的環境變數：
-
-| 放哪裡 | 內容 | 可以 commit？ |
+| 放哪裡 | 內容 | 可以 commit 嗎 |
 | --- | --- | --- |
-| 專案的 `.npmrc` | `${NODE_AUTH_TOKEN}`（變數名稱，照抄上面即可） | 可以 |
-| 環境變數 `NODE_AUTH_TOKEN` | 真正的 token（`ghp_…`） | **不可以** |
+| 專案的 `.npmrc` | `${NODE_AUTH_TOKEN}`（變數名稱，照抄即可） | 可以 |
+| 環境變數 `NODE_AUTH_TOKEN` | 真正的 token（`ghp_…`） | 不可以 |
 
-環境變數在哪設：本機寫在 shell 設定（上一步）；GitHub Actions 由 workflow 設；Vercel／Cloudflare 在平台後台設（見下方）。不論哪個環境，`.npmrc` 都不用改。
+只有 `@coss-app/*` 會到 GitHub Packages 下載，其他套件照常走 npmjs。
 
 ## 3. 安裝
 
@@ -54,15 +87,19 @@ export NODE_AUTH_TOKEN=ghp_xxxxxxxxxxxxxxxx
 npm install @coss-app/ui
 ```
 
-出現 `401 Unauthorized` 或 `404 Not Found`：多半是 `NODE_AUTH_TOKEN` 沒設、token 沒有 `read:packages`，或帳號不在 coss-app org。
+出現 `401 Unauthorized` 或 `404 Not Found`，通常是下面其中一個原因：
+
+- 這個終端機讀不到 `NODE_AUTH_TOKEN`（`echo $NODE_AUTH_TOKEN` 是空的）。
+- token 沒勾 `read:packages`，或已經過期。
+- 帳號不在 coss-app org，或 org 啟用 SSO 但 token 還沒授權。
 
 ## CI 與部署平台
 
-### GitHub Actions（coss-app 內的 repo）
+### GitHub Actions
 
-用內建的 `GITHUB_TOKEN` 即可，不需要個人 token。
+**coss-app org 內的 repo：不用新增 token。**
 
-`GITHUB_TOKEN` 是 GitHub Actions **每次執行時自動產生**的臨時 token，執行結束就失效：**不需要建立，Settings → Secrets 裡也看不到它**，workflow 裡直接寫 `${{ secrets.GITHUB_TOKEN }}` 就能用。它只存在於 Actions，本機開發請用自己的 classic token。
+`GITHUB_TOKEN` 是 GitHub Actions 每次執行時自動產生的臨時 token，執行結束就失效。它不需要建立，Settings → Secrets 裡也看不到；workflow 裡直接寫 `${{ secrets.GITHUB_TOKEN }}` 就能用。它只存在於 Actions 裡，本機開發請用步驟 1 的個人 token。
 
 ```yaml
 permissions:
@@ -81,20 +118,32 @@ steps:
       NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-第一次使用的 repo 要先讓它有讀取套件的權限（org 管理員操作一次）：
+每個 repo 第一次使用前，org 管理員要開一次讀取權限：
 
 1. 進入套件頁：**coss-app → Packages → `ui`**，或從 coss-app/ui repo 首頁右側欄的 **Packages** 點進去。
 2. 右側 **Package settings** → **Manage Actions access** → **Add repository**，選要安裝套件的 repo，Role 選 **Read**。
 
-> 套件**第一次發佈後**才會出現在 Packages 列表，在那之前看不到 `ui`、也沒有 Manage Actions access。
+套件第一次發佈後，Packages 列表才會出現 `ui`；在那之前也看不到 Manage Actions access。
 
-### Vercel／Cloudflare Pages／其他平台
+**coss-app org 以外的 repo：要新增 token。** 這種 repo 的 `GITHUB_TOKEN` 讀不到 coss-app 的私有套件，需要改用 classic token：
 
-在專案的環境變數加入 `NODE_AUTH_TOKEN`（值為具 `read:packages` 的 classic token，建議由管理員用共用帳號建立）。`.npmrc` 已在 repo 內，平台安裝時會自動讀取。
+1. 照步驟 1 建一個只勾 `read:packages` 的 classic token。
+2. 到該 repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**，Name 填 `COSS_PACKAGES_TOKEN`，Secret 貼上 token。
+3. workflow 裡把 `NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}` 換成 `NODE_AUTH_TOKEN: ${{ secrets.COSS_PACKAGES_TOKEN }}`。
+
+### Vercel、Cloudflare 等部署平台
+
+要新增，每個專案設一次。平台安裝套件時會讀 repo 裡的 `.npmrc`，你只需要提供 `NODE_AUTH_TOKEN` 這個環境變數。
+
+建議由管理員用共用帳號建立 classic token（只勾 `read:packages`），不要用個人 token，避免成員離職後部署失敗。
+
+- **Vercel**：專案 → **Settings** → **Environment Variables** → Key 填 `NODE_AUTH_TOKEN`、Value 貼 token，Environments 勾 Production 與 Preview → **Save**，然後重新部署。
+- **Cloudflare Pages**：Workers & Pages → 專案 → **Settings** → **Variables and Secrets** → **Add**，Type 選 Secret，Variable name 填 `NODE_AUTH_TOKEN`、Value 貼 token → **Save**，然後重新部署。
+- **其他平台**：找「環境變數」或「Build environment variables」設定，名稱一樣是 `NODE_AUTH_TOKEN`，要在安裝依賴的階段讀得到。
 
 ### Docker
 
-用 build secret，不要把 token 寫進 image：
+用 build secret 傳 token，不要寫進 image：
 
 ```dockerfile
 RUN --mount=type=secret,id=npm_token \
@@ -104,3 +153,5 @@ RUN --mount=type=secret,id=npm_token \
 ```bash
 docker build --secret id=npm_token,env=NODE_AUTH_TOKEN .
 ```
+
+`env=NODE_AUTH_TOKEN` 會讀建置機器上的同名環境變數，所以執行前要先照步驟 1 設好。
