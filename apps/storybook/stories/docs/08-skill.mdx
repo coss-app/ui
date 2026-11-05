@@ -21,9 +21,11 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ## 安裝
 
-前置條件：已安裝 Claude Code，且需要連得上 GitHub。repo 是公開的，不用登入 GitHub、不用 token，也不用設定 git 認證。
+前置條件：需要連得上 GitHub。repo 是公開的，不用登入 GitHub、不用 token，也不用設定 git 認證。選一種方式安裝。
 
-在 Claude Code 裡執行：
+### 方式 A：Claude Code plugin
+
+需要已安裝 Claude Code。在 Claude Code 裡執行：
 
 ```text
 /plugin marketplace add coss-app/ui
@@ -31,6 +33,18 @@ import { Meta } from "@storybook/addon-docs/blocks";
 ```
 
 裝好後執行 `/plugin`，確認 `coss-ui` 已啟用。
+
+### 方式 B：npx skills add
+
+在終端機執行，不限 Claude Code，Cursor、Codex 等 agent 也能裝：
+
+```bash
+npx skills add coss-app/ui --skill coss-ui
+```
+
+預設裝在目前專案。要裝成使用者層級、所有專案共用，加 `-g`；只裝給某個 agent，加 `-a`，例如 `-a claude-code`。專案層級安裝會把 skill 複製進專案目錄，要不要 commit 由各專案決定。
+
+用 `npx skills list` 確認已安裝。
 
 ## 使用
 
@@ -86,9 +100,10 @@ skill 附一支檢查腳本 `check-usage.mjs`，AI 寫完程式後會用它掃�
 
 ## 更新
 
-skill 內容跟著 `coss-app/ui` 的 main 更新，但**不會自動套用**。要在 Claude Code 裡手動更新：
+skill 內容跟著 `coss-app/ui` 的 main 更新，但**不會自動套用**。要手動更新：
 
-- 開 `/plugin`，更新 `coss-ui`；或執行 `/plugin marketplace update coss`。
+- 方式 A（plugin）：開 `/plugin`，更新 `coss-ui`；或執行 `/plugin marketplace update coss`。
+- 方式 B（npx skills）：執行 `npx skills update coss-ui`；裝在使用者層級的加 `-g`。
 - 組件庫升版後也更新一次，AI 看到的組件清單與 token 才會跟套件版本一致。
 
 專案裝的 `@coss-app/ui` 比 skill 描述的版本舊時，新組件可能 import 不到。這時升級套件，不要讓 AI 在專案裡補一個本地組件。

@@ -35,6 +35,12 @@ import { cn } from "@coss-app/ui/lib/utils";
 /plugin install coss-ui@coss
 ```
 
+不用 Claude Code plugin，或用其他 agent（Cursor、Codex 等）時，改在終端機執行：
+
+```bash
+npx skills add coss-app/ui --skill coss-ui
+```
+
 skill 內容由組件原始碼與 `globals.css` 產生（`npm run manifest`），見 [CLAUDE.md](./CLAUDE.md)。
 
 ## 📝 使用須知
