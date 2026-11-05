@@ -1,0 +1,8 @@
+{
+  "name": "coss-ui",
+  "description": "coss 公司 UI 組件庫（@coss-app/ui）的使用規則：選型、設計規範、token、Base UI 注意事項與客服情境範本。",
+  "author": {
+    "name": "coss"
+  },
+  "repository": "https://github.com/coss-app/ui"
+}

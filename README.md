@@ -33,6 +33,17 @@ import { Button } from "@coss-app/ui/components/button";
 import { cn } from "@coss-app/ui/lib/utils";
 ```
 
+## 🤖 Claude Code skill
+
+用 Claude Code 寫畫面時，安裝 `coss-ui` skill，讓 AI 知道組件選型、設計規範與 Base UI 寫法（需 coss-app 成員權限與本機 git 認證）：
+
+```text
+/plugin marketplace add coss-app/ui
+/plugin install coss-ui@coss
+```
+
+skill 內容由組件原始碼與 `globals.css` 產生（`npm run manifest`），見 [CLAUDE.md](./CLAUDE.md)。
+
 ## 📝 使用須知
 
 | 項目     | 說明                                                                                                      |
@@ -58,6 +69,8 @@ apps/storybook/           # 文件站 ui.coss.com.tw（workspace：@coss-app/doc
   stories/                # 每個組件一個 *.stories.tsx
   stories/docs/           # 使用手冊（MDX）
   storybook-static/       # 文件站建置產物（gitignored）
+plugins/coss-ui/          # Claude Code skill（repo 本身是 plugin marketplace）
+scripts/                  # skill manifest 產生器、組件用途說明
 .changeset/               # 待發佈的版本變更紀錄
 .github/workflows/        # CI、文件站部署、發佈
 DESIGN.md                 # 設計規範
@@ -74,15 +87,18 @@ DESIGN.md                 # 設計規範
 | `npm run typecheck`       | 型別檢查                                          |
 | `npm run build`           | 建置套件到 `packages/ui/dist`                     |
 | `npm run build-storybook` | 建置文件站靜態檔                                  |
+| `npm run manifest`        | 重新產生 Claude Code skill 的組件索引與 token     |
 
 ## 📏 規則
 
 給 Claude Code 讀的專案規則，編輯對應檔案時自動載入；整體說明在 [CLAUDE.md](./CLAUDE.md)。
 
-| 名稱                                                               | 用途                                                        |
-| ------------------------------------------------------------------ | ----------------------------------------------------------- |
-| [`globals-css.md`](./.claude/rules/globals-css.md)                 | globals.css 慣例：掃描來源、字體後備值、色彩 token 三處同步 |
-| [`ui-component-styles.md`](./.claude/rules/ui-component-styles.md) | 組件 class 慣例：輸入框、浮層、選中色、圓角、字重           |
+| 名稱                                                               | 用途                                                                       |
+| ------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| [`claude-code-skill.md`](./.claude/rules/claude-code-skill.md)     | skill 維護：產生檔勿手改、plugin.json 不設 version、違規檢查腳本、範例驗證 |
+| [`globals-css.md`](./.claude/rules/globals-css.md)                 | globals.css 慣例：掃描來源、字體後備值、色彩 token 三處同步                |
+| [`storybook-branding.md`](./.claude/rules/storybook-branding.md)   | 文件站品牌：分頁標題、favicon、建置後改寫 `<title>`、靜態檔                |
+| [`ui-component-styles.md`](./.claude/rules/ui-component-styles.md) | 組件 class 慣例：輸入框、浮層、選中色、圓角、字重                          |
 
 ## 🛠️ 維護
 
@@ -91,6 +107,7 @@ DESIGN.md                 # 設計規範
 1. 執行 `cd packages/ui && npx shadcn@latest add <name>`；更新既有組件加 `--overwrite`，它會蓋掉已調整的樣式，執行後先看 diff。
 2. 把 `from "cn"` 改成 `from "@/lib/utils"`，並移除 shadcn CLI 自動加的 `cn` 依賴。
 3. 依 DESIGN.md 換掉預設 class（輸入框 `bg-muted`、浮層 `shadow-menu`、選中 `bg-info` 等）。
+4. 在 `scripts/component-notes.json` 補一句用途，執行 `npm run manifest`，連同 `plugins/coss-ui` 一起提交；漏做時 CI 的 `manifest --check` 會失敗。
 
 發佈新版：
 
@@ -102,6 +119,7 @@ DESIGN.md                 # 設計規範
    git switch -c release/v0.2.0
    npx changeset version   # 依累積的 changeset 升版號、寫 CHANGELOG
    npm install             # 更新 package-lock.json
+   npm run manifest        # 更新 skill 內標示的套件版本（否則 CI 的 manifest 檢查會失敗）
    git commit -am "chore: release v0.2.0"
    git push -u origin HEAD && gh pr create --fill
    ```

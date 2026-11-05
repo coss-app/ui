@@ -1,0 +1,154 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="使用手冊/Claude Code Skill" />
+
+# Claude Code Skill
+
+`coss-ui` skill 讓 Claude Code 在你的專案裡寫畫面時，照這個組件庫的規則來寫：用對組件、用對 import 路徑、遵守設計規範，不必每次重新解釋。
+
+只有用 Claude Code 寫程式的人需要它。沒用 Claude Code 也能正常使用組件庫，見「安裝與權限」。
+
+## 它解決什麼問題
+
+| 沒有 skill 時 AI 常見的錯 | 有 skill 後 |
+| --- | --- |
+| 當成 Radix 版 shadcn，寫 `asChild`、`data-[state=open]` | 改用 Base UI 的 `render`、`data-open` |
+| 從 `@/components/ui/...` import，或把組件原始碼複製進專案 | 一律 `@coss-app/ui/components/<名稱>` |
+| 寫死色碼或用 `bg-green-500`、`text-gray-600` | 只用語意 token（`bg-primary`、`text-muted-foreground`），深色模式自動切換 |
+| 到處放綠色按鈕、用綠色表示選中 | 綠色只給主要動作與目前位置，選中用資訊藍 |
+| 不知道 Dialog、Sheet、Drawer 或 Select、Combobox 該選哪個 | 有選型表，依情境決定 |
+| 忘了 Select 要傳 `items`、選單的 `Label` 要放在 `Group` 內 | 規則寫在 skill 裡，寫之前就會讀到 |
+
+## 安裝
+
+### 1. 前置條件
+
+- 已安裝 Claude Code。
+- 你的 GitHub 帳號是 `coss-app` org 的成員。skill 放在私有的 `coss-app/ui` repo 裡。
+- 本機的 `git` 能讀取 `coss-app/ui`。這和安裝套件用的 `NODE_AUTH_TOKEN` 是兩回事，互不影響。
+
+### 2. 設定 git 認證（做過就跳過）
+
+Claude Code 用本機的 `git` 下載 skill，所以先確認終端機裡 `git` 讀得到這個 repo。選一種做法。
+
+**做法 A：GitHub CLI（較簡單）**
+
+1. 安裝 GitHub CLI：macOS 用 `brew install gh`，Windows 用 `winget install GitHub.cli`，其他系統見 [cli.github.com](https://cli.github.com)。
+2. 執行 `gh auth login`，依序選 `GitHub.com`、`HTTPS`，「Authenticate Git with your GitHub credentials?」選 `Yes`，再選 `Login with a web browser`。
+3. 瀏覽器開啟後貼上終端機顯示的一次性代碼，用加入 coss-app 的帳號登入。如果要求授權 `coss-app`（SAML SSO），按授權。
+
+**做法 B：SSH 金鑰**
+
+1. 產生金鑰：`ssh-keygen -t ed25519 -C "你的 email"`，一路按 Enter。
+2. 複製公鑰：`cat ~/.ssh/id_ed25519.pub`。
+3. GitHub → Settings → SSH and GPG keys → New SSH key，貼上。
+4. 如果有 SSO，在這把金鑰旁按 Configure SSO，授權 `coss-app`。
+
+驗證：下面的指令印出一串 commit hash，就代表權限通了。
+
+```bash
+# 做法 A
+git ls-remote https://github.com/coss-app/ui.git
+
+# 做法 B
+git ls-remote git@github.com:coss-app/ui.git
+```
+
+出現 `Repository not found` 或要求輸入密碼，表示帳號不在 coss-app org、SSO 還沒授權，或金鑰沒設好。
+
+### 3. 安裝 skill
+
+在 Claude Code 裡執行：
+
+```text
+/plugin marketplace add coss-app/ui
+/plugin install coss-ui@coss
+```
+
+只設定了 SSH 時，簡寫 `coss-app/ui` 可能會走 HTTPS 而失敗，改用完整網址加入 marketplace：
+
+```text
+/plugin marketplace add git@github.com:coss-app/ui.git
+```
+
+裝好後執行 `/plugin`，確認 `coss-ui` 已啟用。
+
+## 使用
+
+### 平常什麼都不用做
+
+在使用 `@coss-app/ui` 的專案裡，直接描述需求，Claude Code 會自動套用 skill：
+
+```text
+用 coss UI 做一個客服工單列表，有狀態分頁籤、搜尋框和分頁
+```
+
+```text
+建立工單改成彈窗，要有欄位驗證，送出中按鈕要顯示載入
+```
+
+```text
+這個頁面的顏色和按鈕改成符合 coss UI 規範
+```
+
+提示語裡提到「coss UI」或「@coss-app/ui」，會更容易觸發。專案要已經有 `@coss-app/ui` 這個依賴。
+
+### skill 裡有什麼
+
+AI 會依需求只讀需要的那份：
+
+| 檔案 | 內容 |
+| --- | --- |
+| `SKILL.md` | 10 條硬規則（import 路徑、`render`、token、按鈕與圖示…）與設計判斷，每次都會讀 |
+| `components.md` | 全部組件的用途、import 寫法、variant 清單與文件連結（自動產生） |
+| `decision-guide.md` | 選型：彈窗、下拉選擇、表單、回饋、導覽、內容容器、對話 |
+| `tokens.md` | 色彩、圓角、陰影的 token 名稱與淺色／深色值（自動產生） |
+| `design-rules.md` | 顏色配對、按鈕用法、表單、字級、間距、響應式 |
+| `patterns.md` | 可直接套用的範本：建立工單表單、工單列表、客服對話、後台側欄、非同步回饋 |
+| `setup.md` | 新專案安裝、字體、深色模式、舊專案遷移 |
+
+需要精確的 props 與型別時，AI 會讀專案裡的 `node_modules/@coss-app/ui/dist/components/ui/<名稱>.d.ts`。它一定對得上你安裝的版本。
+
+### 違規檢查
+
+skill 附一支檢查腳本 `check-usage.mjs`，AI 寫完程式後會用它掃描。它抓型別檢查抓不到的寫法：
+
+| 抓什麼 | 應該改成 |
+| --- | --- |
+| 寫死的 HEX、Tailwind 任意色值（`bg-[#00a756]`） | 語意 token class |
+| 預設色票（`gray-600`、`green-500`）、純黑 | 語意 token class |
+| `font-bold` | 標題與按鈕用 `font-semibold`，內文用預設 |
+| `asChild`、`data-[state=…]` | `render`、`data-open` 等 |
+| 本地的 `@/components/ui/` import | `@coss-app/ui/components/<名稱>` |
+
+你也可以直接請 AI 檢查：「用 coss-ui 的 check-usage 檢查 `src`」。刻意例外的那一行，放上註解文字 `coss-ui-ignore` 就會略過。
+
+型別檢查（`tsc`）本身就會擋下 `asChild` 和不存在的 variant，兩者互補。
+
+## 更新
+
+skill 內容跟著 `coss-app/ui` 的 main 更新，但**不會自動套用**。要在 Claude Code 裡手動更新：
+
+- 開 `/plugin`，更新 `coss-ui`；或執行 `/plugin marketplace update coss`。
+- 組件庫升版後也更新一次，AI 看到的組件清單與 token 才會跟套件版本一致。
+
+專案裝的 `@coss-app/ui` 比 skill 描述的版本舊時，新組件可能 import 不到。這時升級套件，不要讓 AI 在專案裡補一個本地組件。
+
+## 限制
+
+- 違規檢查是逐行文字比對：跨行拆開的 class 字串、用變數組出來的顏色抓不到。
+- skill 只是讓 AI 更常寫對，不保證每次正確。AI 寫的程式仍然要 review、跑 typecheck、在畫面上看過淺色與深色。
+- 組件缺功能或有 bug，回報到 [coss-app/ui](https://github.com/coss-app/ui) 統一修，不要在專案裡複製修改。
+
+## 疑難排解
+
+| 狀況 | 怎麼辦 |
+| --- | --- |
+| `/plugin marketplace add` 出現 `Repository not found` | 照上面「設定 git 認證」，用 `git ls-remote` 驗證。多半是帳號不在 coss-app org，或 SSO 沒授權 |
+| 裝好了，AI 卻沒照規則寫 | 用 `/plugin` 確認 `coss-ui` 已啟用；提示語裡明說「用 coss UI」；確認專案的 `package.json` 有 `@coss-app/ui` |
+| AI 提到的組件，專案裡 import 不到 | 專案的 `@coss-app/ui` 版本比 skill 舊，升級套件 |
+| AI 提到的組件清單比文件站少或多 | 更新 skill（見「更新」） |
+
+## 給維護者
+
+skill 的組件清單與 token 由原始碼自動產生，改組件後要執行 `npm run manifest`，CI 會檢查是否同步。流程見「貢獻組件」。

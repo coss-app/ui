@@ -10,7 +10,8 @@
     "storybook": "npm run storybook -w @coss-app/docs",
     "build-storybook": "npm run build-storybook -w @coss-app/docs",
     "changeset": "changeset",
-    "release": "npm run build && changeset publish"
+    "release": "npm run build && changeset publish",
+    "manifest": "node scripts/build-manifest.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.0"

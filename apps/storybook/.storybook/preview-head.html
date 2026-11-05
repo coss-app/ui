@@ -31,4 +31,24 @@
   .sbdocs-content .docblock-argstable :is(td, th) {
     font-size: 14px;
   }
+  /*
+    手機與平板（< 1024，同 DESIGN.md 斷點）：寬表格（手冊的 Markdown 表格、組件頁的 props 表）
+    與長行內程式碼會撐開整頁造成左右晃動。
+    - 表格改成自己在框內橫向捲動
+    - 表格外的行內程式碼改成可換行（Storybook 預設 nowrap）；表格內的維持不換行，
+      否則程式碼會被切成多行難以閱讀，交給上面的橫向捲動；程式碼區塊（pre）本來就會自己捲動
+    只在窄螢幕生效，桌面維持原樣。排除組件範例（.docs-story）。
+  */
+  @media (max-width: 1023px) {
+    .sbdocs-content table:not(.docs-story *) {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .sbdocs-content :not(pre) > code:not(table *, .docs-story *) {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+  }
 </style>

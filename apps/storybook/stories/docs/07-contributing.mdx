@@ -50,7 +50,8 @@ Account ID 在 Cloudflare 後台 Workers & Pages 頁面右側可以看到。
 2. 把 `from "cn"` 改成 `from "@/lib/utils"`，並從 `package.json` 移除 CLI 自動加的 `cn` 依賴。
 3. 依 `DESIGN.md` 改 class：輸入框用 `bg-muted` 且無框、浮層用 `shadow-menu`、選中用 `bg-info`、主要動作用 `rounded-full`，字重只用 400／500／600。
 4. 在 `apps/storybook/stories/` 新增 `<name>.stories.tsx`。import 一律寫 `@coss-app/ui/components/<name>`，展示所有 variant 與狀態，範例文字用繁體中文。
-5. 執行 `npx changeset` 記錄變更。破壞性變更選 minor，並寫清楚使用者要怎麼改。
+5. 在 `scripts/component-notes.json` 補一句用途說明，執行 `npm run manifest`，把更新後的 `plugins/coss-ui` 一起提交。這會更新給 AI 助理用的 skill（組件清單、variants、token）；漏做的話 CI 的 `manifest --check` 會失敗。兩個組件容易混淆時，同步補上 `plugins/coss-ui/skills/coss-ui/references/decision-guide.md`。
+6. 執行 `npx changeset` 記錄變更。破壞性變更選 minor，並寫清楚使用者要怎麼改。
 
 ## 發佈流程
 
@@ -62,6 +63,7 @@ Account ID 在 Cloudflare 後台 Workers & Pages 頁面右側可以看到。
    git switch -c release/v0.2.0
    npx changeset version   # 依累積的 changeset 升版號、寫 CHANGELOG
    npm install             # 更新 package-lock.json
+   npm run manifest        # 更新 skill 內標示的套件版本（否則 CI 的 manifest 檢查會失敗）
    git commit -am "chore: release v0.2.0"
    git push -u origin HEAD && gh pr create --fill
    ```

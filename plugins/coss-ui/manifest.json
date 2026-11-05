@@ -1,0 +1,2231 @@
+{
+  "package": "@coss-app/ui",
+  "version": "0.1.0",
+  "docs": "https://ui.coss.com.tw",
+  "categories": [
+    "Inputs",
+    "Overlays",
+    "Navigation",
+    "Data Display",
+    "Feedback",
+    "Messaging",
+    "Layout"
+  ],
+  "components": [
+    {
+      "slug": "accordion",
+      "name": "Accordion",
+      "description": "可展開收合的多段內容，一次只開一段或可多開；用於 FAQ、工單詳情分區。",
+      "importPath": "@coss-app/ui/components/accordion",
+      "import": "import {\n  Accordion,\n  AccordionItem,\n  AccordionTrigger,\n  AccordionContent,\n} from \"@coss-app/ui/components/accordion\";",
+      "exports": [
+        "Accordion",
+        "AccordionItem",
+        "AccordionTrigger",
+        "AccordionContent"
+      ],
+      "category": "Navigation",
+      "title": "Navigation/Accordion",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/navigation-accordion--docs",
+      "variants": []
+    },
+    {
+      "slug": "alert",
+      "name": "Alert",
+      "description": "頁面內的提示列（資訊／成功／警示／錯誤），不會浮起；可附標題、說明與動作按鈕。",
+      "importPath": "@coss-app/ui/components/alert",
+      "import": "import {\n  Alert,\n  AlertTitle,\n  AlertDescription,\n  AlertAction,\n} from \"@coss-app/ui/components/alert\";",
+      "exports": [
+        "Alert",
+        "AlertTitle",
+        "AlertDescription",
+        "AlertAction"
+      ],
+      "category": "Feedback",
+      "title": "Feedback/Alert",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/feedback-alert--docs",
+      "variants": [
+        {
+          "name": "alertVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "success",
+              "warning",
+              "destructive"
+            ]
+          },
+          "defaults": {
+            "variant": "default"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "alert-dialog",
+      "name": "AlertDialog",
+      "description": "需要使用者明確確認的中斷式對話框（刪除、結案等不可逆動作）；點遮罩不會關閉。",
+      "importPath": "@coss-app/ui/components/alert-dialog",
+      "import": "import {\n  AlertDialog,\n  AlertDialogAction,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogMedia,\n  AlertDialogOverlay,\n  AlertDialogPortal,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n} from \"@coss-app/ui/components/alert-dialog\";",
+      "exports": [
+        "AlertDialog",
+        "AlertDialogAction",
+        "AlertDialogCancel",
+        "AlertDialogContent",
+        "AlertDialogDescription",
+        "AlertDialogFooter",
+        "AlertDialogHeader",
+        "AlertDialogMedia",
+        "AlertDialogOverlay",
+        "AlertDialogPortal",
+        "AlertDialogTitle",
+        "AlertDialogTrigger"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/AlertDialog",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-alertdialog--docs",
+      "variants": []
+    },
+    {
+      "slug": "aspect-ratio",
+      "name": "AspectRatio",
+      "description": "固定寬高比的容器，用於圖片、影片預覽。",
+      "importPath": "@coss-app/ui/components/aspect-ratio",
+      "import": "import { AspectRatio } from \"@coss-app/ui/components/aspect-ratio\";",
+      "exports": [
+        "AspectRatio"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/AspectRatio",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-aspectratio--docs",
+      "variants": []
+    },
+    {
+      "slug": "attachment",
+      "name": "Attachment",
+      "description": "附件卡片（檔名、大小、上傳狀態、重試／移除動作）；對話與表單的檔案列。",
+      "importPath": "@coss-app/ui/components/attachment",
+      "import": "import {\n  Attachment,\n  AttachmentGroup,\n  AttachmentMedia,\n  AttachmentContent,\n  AttachmentTitle,\n  AttachmentDescription,\n  AttachmentActions,\n  AttachmentAction,\n  AttachmentTrigger,\n} from \"@coss-app/ui/components/attachment\";",
+      "exports": [
+        "Attachment",
+        "AttachmentGroup",
+        "AttachmentMedia",
+        "AttachmentContent",
+        "AttachmentTitle",
+        "AttachmentDescription",
+        "AttachmentActions",
+        "AttachmentAction",
+        "AttachmentTrigger"
+      ],
+      "category": "Messaging",
+      "title": "Messaging/Attachment",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/messaging-attachment--docs",
+      "variants": [
+        {
+          "name": "attachmentVariants",
+          "groups": {
+            "size": [
+              "default",
+              "sm",
+              "xs"
+            ],
+            "orientation": [
+              "horizontal",
+              "vertical"
+            ]
+          },
+          "defaults": {}
+        },
+        {
+          "name": "attachmentMediaVariants",
+          "groups": {
+            "variant": [
+              "icon",
+              "image"
+            ]
+          },
+          "defaults": {
+            "variant": "icon"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "avatar",
+      "name": "Avatar",
+      "description": "使用者頭像（圖片或文字後備），含頭像群組、數量與狀態徽章。",
+      "importPath": "@coss-app/ui/components/avatar",
+      "import": "import {\n  Avatar,\n  AvatarImage,\n  AvatarFallback,\n  AvatarGroup,\n  AvatarGroupCount,\n  AvatarBadge,\n} from \"@coss-app/ui/components/avatar\";",
+      "exports": [
+        "Avatar",
+        "AvatarImage",
+        "AvatarFallback",
+        "AvatarGroup",
+        "AvatarGroupCount",
+        "AvatarBadge"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Avatar",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-avatar--docs",
+      "variants": []
+    },
+    {
+      "slug": "badge",
+      "name": "Badge",
+      "description": "小標籤，表示狀態或分類；variant 對應工單狀態色（待受理＝warning、處理中＝info、已結案＝success、逾期＝destructive）。",
+      "importPath": "@coss-app/ui/components/badge",
+      "import": "import { Badge, badgeVariants } from \"@coss-app/ui/components/badge\";",
+      "exports": [
+        "Badge",
+        "badgeVariants"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Badge",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-badge--docs",
+      "variants": [
+        {
+          "name": "badgeVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "secondary",
+              "info",
+              "success",
+              "warning",
+              "destructive",
+              "outline",
+              "ghost",
+              "link"
+            ]
+          },
+          "defaults": {
+            "variant": "default"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "breadcrumb",
+      "name": "Breadcrumb",
+      "description": "麵包屑導覽，顯示目前頁面在階層中的位置。",
+      "importPath": "@coss-app/ui/components/breadcrumb",
+      "import": "import {\n  Breadcrumb,\n  BreadcrumbList,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n  BreadcrumbEllipsis,\n} from \"@coss-app/ui/components/breadcrumb\";",
+      "exports": [
+        "Breadcrumb",
+        "BreadcrumbList",
+        "BreadcrumbItem",
+        "BreadcrumbLink",
+        "BreadcrumbPage",
+        "BreadcrumbSeparator",
+        "BreadcrumbEllipsis"
+      ],
+      "category": "Navigation",
+      "title": "Navigation/Breadcrumb",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/navigation-breadcrumb--docs",
+      "variants": []
+    },
+    {
+      "slug": "bubble",
+      "name": "Bubble",
+      "description": "對話氣泡（default／secondary／ghost），可附表情反應；搭配 Message 使用。",
+      "importPath": "@coss-app/ui/components/bubble",
+      "import": "import {\n  BubbleGroup,\n  Bubble,\n  BubbleContent,\n  BubbleReactions,\n} from \"@coss-app/ui/components/bubble\";",
+      "exports": [
+        "BubbleGroup",
+        "Bubble",
+        "BubbleContent",
+        "BubbleReactions"
+      ],
+      "category": "Messaging",
+      "title": "Messaging/Bubble",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/messaging-bubble--docs",
+      "variants": [
+        {
+          "name": "bubbleVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "secondary",
+              "muted",
+              "tinted",
+              "outline",
+              "ghost",
+              "destructive"
+            ]
+          },
+          "defaults": {
+            "variant": "default"
+          }
+        },
+        {
+          "name": "bubbleReactionsVariants",
+          "groups": {
+            "side": [
+              "top",
+              "bottom"
+            ],
+            "align": [
+              "start",
+              "end"
+            ]
+          },
+          "defaults": {
+            "side": "bottom",
+            "align": "end"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "button",
+      "name": "Button",
+      "description": "按鈕。default＝主要動作（綠、膠囊，一個畫面只放一個）、outline＝次要、secondary＝輔助、neutral＝列表列上的動作、ghost＝圖示鈕、destructive＝刪除、link＝文字連結。",
+      "importPath": "@coss-app/ui/components/button",
+      "import": "import { Button, buttonVariants } from \"@coss-app/ui/components/button\";",
+      "exports": [
+        "Button",
+        "buttonVariants"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Button",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-button--docs",
+      "variants": [
+        {
+          "name": "buttonVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "outline",
+              "secondary",
+              "neutral",
+              "ghost",
+              "destructive",
+              "link"
+            ],
+            "size": [
+              "default",
+              "xs",
+              "sm",
+              "lg",
+              "block",
+              "icon",
+              "icon-xs",
+              "icon-sm",
+              "icon-lg"
+            ]
+          },
+          "defaults": {
+            "variant": "default",
+            "size": "default"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "button-group",
+      "name": "ButtonGroup",
+      "description": "把相關按鈕黏成一組（分段操作、輸入框加按鈕）。",
+      "importPath": "@coss-app/ui/components/button-group",
+      "import": "import {\n  ButtonGroup,\n  ButtonGroupSeparator,\n  ButtonGroupText,\n  buttonGroupVariants,\n} from \"@coss-app/ui/components/button-group\";",
+      "exports": [
+        "ButtonGroup",
+        "ButtonGroupSeparator",
+        "ButtonGroupText",
+        "buttonGroupVariants"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/ButtonGroup",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-buttongroup--docs",
+      "variants": [
+        {
+          "name": "buttonGroupVariants",
+          "groups": {
+            "orientation": [
+              "horizontal",
+              "vertical"
+            ]
+          },
+          "defaults": {
+            "orientation": "horizontal"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "calendar",
+      "name": "Calendar",
+      "description": "月曆選日期（單日、區間），日期選中用資訊藍；放在 Popover 內做日期欄位。",
+      "importPath": "@coss-app/ui/components/calendar",
+      "import": "import { Calendar, CalendarDayButton } from \"@coss-app/ui/components/calendar\";",
+      "exports": [
+        "Calendar",
+        "CalendarDayButton"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Calendar",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-calendar--docs",
+      "variants": []
+    },
+    {
+      "slug": "card",
+      "name": "Card",
+      "description": "白色面板容器（Header／Title／Description／Action／Content／Footer）；靠底色差分層，不用陰影。",
+      "importPath": "@coss-app/ui/components/card",
+      "import": "import {\n  Card,\n  CardHeader,\n  CardFooter,\n  CardTitle,\n  CardAction,\n  CardDescription,\n  CardContent,\n} from \"@coss-app/ui/components/card\";",
+      "exports": [
+        "Card",
+        "CardHeader",
+        "CardFooter",
+        "CardTitle",
+        "CardAction",
+        "CardDescription",
+        "CardContent"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Card",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-card--docs",
+      "variants": []
+    },
+    {
+      "slug": "carousel",
+      "name": "Carousel",
+      "description": "可滑動的輪播（Embla），含上一張／下一張按鈕。",
+      "importPath": "@coss-app/ui/components/carousel",
+      "import": "import {\n  Carousel,\n  CarouselContent,\n  CarouselItem,\n  CarouselPrevious,\n  CarouselNext,\n  useCarousel,\n} from \"@coss-app/ui/components/carousel\";",
+      "exports": [
+        "Carousel",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselPrevious",
+        "CarouselNext",
+        "useCarousel"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Carousel",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-carousel--docs",
+      "variants": []
+    },
+    {
+      "slug": "chart",
+      "name": "Chart",
+      "description": "Recharts 圖表外殼：套用色票 --chart-1～5、Tooltip 與 Legend 樣式。",
+      "importPath": "@coss-app/ui/components/chart",
+      "import": "import {\n  ChartContainer,\n  ChartTooltip,\n  ChartTooltipContent,\n  ChartLegend,\n  ChartLegendContent,\n  ChartStyle,\n} from \"@coss-app/ui/components/chart\";",
+      "exports": [
+        "ChartContainer",
+        "ChartTooltip",
+        "ChartTooltipContent",
+        "ChartLegend",
+        "ChartLegendContent",
+        "ChartStyle"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Chart",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-chart--docs",
+      "variants": []
+    },
+    {
+      "slug": "checkbox",
+      "name": "Checkbox",
+      "description": "勾選框（資訊藍）；單一選項或多選清單。",
+      "importPath": "@coss-app/ui/components/checkbox",
+      "import": "import { Checkbox } from \"@coss-app/ui/components/checkbox\";",
+      "exports": [
+        "Checkbox"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Checkbox",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-checkbox--docs",
+      "variants": []
+    },
+    {
+      "slug": "code-block",
+      "name": "CodeBlock",
+      "description": "程式碼區塊，含標題列、複製按鈕、行號與高亮（Shiki）；錯誤輸出可用 destructive。",
+      "importPath": "@coss-app/ui/components/code-block",
+      "import": "import {\n  CodeBlock,\n  CodeBlockHeader,\n  CodeBlockTitle,\n  CodeBlockActions,\n  CodeBlockCopyButton,\n  CodeBlockContent,\n  CodeBlockLine,\n  CodeBlockFooter,\n} from \"@coss-app/ui/components/code-block\";",
+      "exports": [
+        "CodeBlock",
+        "CodeBlockHeader",
+        "CodeBlockTitle",
+        "CodeBlockActions",
+        "CodeBlockCopyButton",
+        "CodeBlockContent",
+        "CodeBlockLine",
+        "CodeBlockFooter"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/CodeBlock",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-codeblock--docs",
+      "variants": [
+        {
+          "name": "codeBlockVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "destructive"
+            ]
+          },
+          "defaults": {
+            "variant": "default"
+          }
+        },
+        {
+          "name": "codeBlockLineVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "added",
+              "removed",
+              "highlighted"
+            ]
+          },
+          "defaults": {
+            "variant": "default"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "collapsible",
+      "name": "Collapsible",
+      "description": "單一區塊的展開／收合，無預設樣式；Accordion 與 Trace 的基礎。",
+      "importPath": "@coss-app/ui/components/collapsible",
+      "import": "import {\n  Collapsible,\n  CollapsibleTrigger,\n  CollapsibleContent,\n} from \"@coss-app/ui/components/collapsible\";",
+      "exports": [
+        "Collapsible",
+        "CollapsibleTrigger",
+        "CollapsibleContent"
+      ],
+      "category": "Navigation",
+      "title": "Navigation/Collapsible",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/navigation-collapsible--docs",
+      "variants": []
+    },
+    {
+      "slug": "combobox",
+      "name": "Combobox",
+      "description": "可輸入搜尋的下拉選單，支援多選晶片；選項很多或需要搜尋時用，取代 Select。",
+      "importPath": "@coss-app/ui/components/combobox",
+      "import": "import {\n  Combobox,\n  ComboboxInput,\n  ComboboxContent,\n  ComboboxList,\n  ComboboxItem,\n  ComboboxGroup,\n  ComboboxLabel,\n  ComboboxCollection,\n  ComboboxEmpty,\n  ComboboxSeparator,\n  ComboboxChips,\n  ComboboxChip,\n  ComboboxChipsInput,\n  ComboboxTrigger,\n  ComboboxValue,\n  useComboboxAnchor,\n} from \"@coss-app/ui/components/combobox\";",
+      "exports": [
+        "Combobox",
+        "ComboboxInput",
+        "ComboboxContent",
+        "ComboboxList",
+        "ComboboxItem",
+        "ComboboxGroup",
+        "ComboboxLabel",
+        "ComboboxCollection",
+        "ComboboxEmpty",
+        "ComboboxSeparator",
+        "ComboboxChips",
+        "ComboboxChip",
+        "ComboboxChipsInput",
+        "ComboboxTrigger",
+        "ComboboxValue",
+        "useComboboxAnchor"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Combobox",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-combobox--docs",
+      "variants": []
+    },
+    {
+      "slug": "command",
+      "name": "Command",
+      "description": "命令面板／搜尋清單（cmdk），可用 CommandDialog 做全域搜尋。",
+      "importPath": "@coss-app/ui/components/command",
+      "import": "import {\n  Command,\n  CommandDialog,\n  CommandInput,\n  CommandList,\n  CommandEmpty,\n  CommandGroup,\n  CommandItem,\n  CommandShortcut,\n  CommandSeparator,\n} from \"@coss-app/ui/components/command\";",
+      "exports": [
+        "Command",
+        "CommandDialog",
+        "CommandInput",
+        "CommandList",
+        "CommandEmpty",
+        "CommandGroup",
+        "CommandItem",
+        "CommandShortcut",
+        "CommandSeparator"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/Command",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-command--docs",
+      "variants": []
+    },
+    {
+      "slug": "context-menu",
+      "name": "ContextMenu",
+      "description": "右鍵選單；列表列、訊息的快速動作。",
+      "importPath": "@coss-app/ui/components/context-menu",
+      "import": "import {\n  ContextMenu,\n  ContextMenuTrigger,\n  ContextMenuContent,\n  ContextMenuItem,\n  ContextMenuCheckboxItem,\n  ContextMenuRadioItem,\n  ContextMenuLabel,\n  ContextMenuSeparator,\n  ContextMenuShortcut,\n  ContextMenuGroup,\n  ContextMenuPortal,\n  ContextMenuSub,\n  ContextMenuSubContent,\n  ContextMenuSubTrigger,\n  ContextMenuRadioGroup,\n} from \"@coss-app/ui/components/context-menu\";",
+      "exports": [
+        "ContextMenu",
+        "ContextMenuTrigger",
+        "ContextMenuContent",
+        "ContextMenuItem",
+        "ContextMenuCheckboxItem",
+        "ContextMenuRadioItem",
+        "ContextMenuLabel",
+        "ContextMenuSeparator",
+        "ContextMenuShortcut",
+        "ContextMenuGroup",
+        "ContextMenuPortal",
+        "ContextMenuSub",
+        "ContextMenuSubContent",
+        "ContextMenuSubTrigger",
+        "ContextMenuRadioGroup"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/ContextMenu",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-contextmenu--docs",
+      "variants": []
+    },
+    {
+      "slug": "dialog",
+      "name": "Dialog",
+      "description": "置中對話框，可含表單（轉派、編輯）；一般任務用，需強制確認用 AlertDialog。",
+      "importPath": "@coss-app/ui/components/dialog",
+      "import": "import {\n  Dialog,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogOverlay,\n  DialogPortal,\n  DialogTitle,\n  DialogTrigger,\n} from \"@coss-app/ui/components/dialog\";",
+      "exports": [
+        "Dialog",
+        "DialogClose",
+        "DialogContent",
+        "DialogDescription",
+        "DialogFooter",
+        "DialogHeader",
+        "DialogOverlay",
+        "DialogPortal",
+        "DialogTitle",
+        "DialogTrigger"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/Dialog",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-dialog--docs",
+      "variants": []
+    },
+    {
+      "slug": "direction",
+      "name": "Direction",
+      "description": "設定 LTR／RTL 方向的 Provider 與 hook（useDirection）。",
+      "importPath": "@coss-app/ui/components/direction",
+      "import": "import {\n  DirectionProvider,\n  useDirection,\n} from \"@coss-app/ui/components/direction\";",
+      "exports": [
+        "DirectionProvider",
+        "useDirection"
+      ],
+      "category": "Layout",
+      "title": "Layout/Direction",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/layout-direction--docs",
+      "variants": []
+    },
+    {
+      "slug": "drawer",
+      "name": "Drawer",
+      "description": "可手勢拖曳關閉的底部／側邊抽屜，行動裝置優先；桌面側欄面板用 Sheet。",
+      "importPath": "@coss-app/ui/components/drawer",
+      "import": "import {\n  Drawer,\n  DrawerPortal,\n  DrawerOverlay,\n  DrawerSwipeHandle,\n  DrawerTrigger,\n  DrawerClose,\n  DrawerContent,\n  DrawerHeader,\n  DrawerFooter,\n  DrawerTitle,\n  DrawerDescription,\n} from \"@coss-app/ui/components/drawer\";",
+      "exports": [
+        "Drawer",
+        "DrawerPortal",
+        "DrawerOverlay",
+        "DrawerSwipeHandle",
+        "DrawerTrigger",
+        "DrawerClose",
+        "DrawerContent",
+        "DrawerHeader",
+        "DrawerFooter",
+        "DrawerTitle",
+        "DrawerDescription"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/Drawer",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-drawer--docs",
+      "variants": []
+    },
+    {
+      "slug": "dropdown-menu",
+      "name": "DropdownMenu",
+      "description": "點擊觸發的動作選單（含勾選、單選、子選單、快捷鍵）；「更多動作」按鈕。",
+      "importPath": "@coss-app/ui/components/dropdown-menu",
+      "import": "import {\n  DropdownMenu,\n  DropdownMenuPortal,\n  DropdownMenuTrigger,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuLabel,\n  DropdownMenuItem,\n  DropdownMenuCheckboxItem,\n  DropdownMenuRadioGroup,\n  DropdownMenuRadioItem,\n  DropdownMenuSeparator,\n  DropdownMenuShortcut,\n  DropdownMenuSub,\n  DropdownMenuSubTrigger,\n  DropdownMenuSubContent,\n} from \"@coss-app/ui/components/dropdown-menu\";",
+      "exports": [
+        "DropdownMenu",
+        "DropdownMenuPortal",
+        "DropdownMenuTrigger",
+        "DropdownMenuContent",
+        "DropdownMenuGroup",
+        "DropdownMenuLabel",
+        "DropdownMenuItem",
+        "DropdownMenuCheckboxItem",
+        "DropdownMenuRadioGroup",
+        "DropdownMenuRadioItem",
+        "DropdownMenuSeparator",
+        "DropdownMenuShortcut",
+        "DropdownMenuSub",
+        "DropdownMenuSubTrigger",
+        "DropdownMenuSubContent"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/DropdownMenu",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-dropdownmenu--docs",
+      "variants": []
+    },
+    {
+      "slug": "empty",
+      "name": "Empty",
+      "description": "空狀態：圖示或頭像、標題、說明與行動按鈕（無工單、搜尋無結果）。",
+      "importPath": "@coss-app/ui/components/empty",
+      "import": "import {\n  Empty,\n  EmptyHeader,\n  EmptyTitle,\n  EmptyDescription,\n  EmptyContent,\n  EmptyMedia,\n} from \"@coss-app/ui/components/empty\";",
+      "exports": [
+        "Empty",
+        "EmptyHeader",
+        "EmptyTitle",
+        "EmptyDescription",
+        "EmptyContent",
+        "EmptyMedia"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Empty",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-empty--docs",
+      "variants": [
+        {
+          "name": "emptyMediaVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "icon"
+            ]
+          },
+          "defaults": {
+            "variant": "default"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "field",
+      "name": "Field",
+      "description": "表單欄位排版（Label／Description／Error／FieldSet／FieldGroup），不綁表單函式庫；簡單表單用它。",
+      "importPath": "@coss-app/ui/components/field",
+      "import": "import {\n  Field,\n  FieldLabel,\n  FieldDescription,\n  FieldError,\n  FieldGroup,\n  FieldLegend,\n  FieldSeparator,\n  FieldSet,\n  FieldContent,\n  FieldTitle,\n} from \"@coss-app/ui/components/field\";",
+      "exports": [
+        "Field",
+        "FieldLabel",
+        "FieldDescription",
+        "FieldError",
+        "FieldGroup",
+        "FieldLegend",
+        "FieldSeparator",
+        "FieldSet",
+        "FieldContent",
+        "FieldTitle"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Field",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-field--docs",
+      "variants": [
+        {
+          "name": "fieldVariants",
+          "groups": {
+            "orientation": [
+              "vertical",
+              "horizontal",
+              "responsive"
+            ]
+          },
+          "defaults": {
+            "orientation": "vertical"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "form",
+      "name": "Form",
+      "description": "react-hook-form 整合（FormField／FormItem／FormControl／FormMessage）；需要 zod 驗證與錯誤顯示時用它。",
+      "importPath": "@coss-app/ui/components/form",
+      "import": "import {\n  useFormField,\n  Form,\n  FormItem,\n  FormLabel,\n  FormControl,\n  FormDescription,\n  FormMessage,\n  FormField,\n} from \"@coss-app/ui/components/form\";",
+      "exports": [
+        "useFormField",
+        "Form",
+        "FormItem",
+        "FormLabel",
+        "FormControl",
+        "FormDescription",
+        "FormMessage",
+        "FormField"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Form",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-form--docs",
+      "variants": []
+    },
+    {
+      "slug": "hover-card",
+      "name": "HoverCard",
+      "description": "滑過連結時浮出的預覽卡（客戶資料摘要）；僅限有滑鼠的裝置，行動裝置看不到。",
+      "importPath": "@coss-app/ui/components/hover-card",
+      "import": "import {\n  HoverCard,\n  HoverCardTrigger,\n  HoverCardContent,\n} from \"@coss-app/ui/components/hover-card\";",
+      "exports": [
+        "HoverCard",
+        "HoverCardTrigger",
+        "HoverCardContent"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/HoverCard",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-hovercard--docs",
+      "variants": []
+    },
+    {
+      "slug": "input",
+      "name": "Input",
+      "description": "單行文字輸入框，高 40，淡霧灰底。",
+      "importPath": "@coss-app/ui/components/input",
+      "import": "import { Input } from \"@coss-app/ui/components/input\";",
+      "exports": [
+        "Input"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Input",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-input--docs",
+      "variants": []
+    },
+    {
+      "slug": "input-group",
+      "name": "InputGroup",
+      "description": "輸入框加前後綴（圖示、文字、按鈕）的組合，如搜尋框、金額。",
+      "importPath": "@coss-app/ui/components/input-group",
+      "import": "import {\n  InputGroup,\n  InputGroupAddon,\n  InputGroupButton,\n  InputGroupText,\n  InputGroupInput,\n  InputGroupTextarea,\n} from \"@coss-app/ui/components/input-group\";",
+      "exports": [
+        "InputGroup",
+        "InputGroupAddon",
+        "InputGroupButton",
+        "InputGroupText",
+        "InputGroupInput",
+        "InputGroupTextarea"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/InputGroup",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-inputgroup--docs",
+      "variants": [
+        {
+          "name": "inputGroupAddonVariants",
+          "groups": {
+            "align": [
+              "inline-start",
+              "inline-end",
+              "block-start",
+              "block-end"
+            ]
+          },
+          "defaults": {
+            "align": "inline-start"
+          }
+        },
+        {
+          "name": "inputGroupButtonVariants",
+          "groups": {
+            "size": [
+              "xs",
+              "sm",
+              "icon-xs",
+              "icon-sm"
+            ]
+          },
+          "defaults": {
+            "size": "xs"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "input-otp",
+      "name": "InputOtp",
+      "description": "一次性驗證碼輸入（分格、自動跳格）。",
+      "importPath": "@coss-app/ui/components/input-otp",
+      "import": "import {\n  InputOTP,\n  InputOTPGroup,\n  InputOTPSlot,\n  InputOTPSeparator,\n} from \"@coss-app/ui/components/input-otp\";",
+      "exports": [
+        "InputOTP",
+        "InputOTPGroup",
+        "InputOTPSlot",
+        "InputOTPSeparator"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/InputOTP",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-inputotp--docs",
+      "variants": []
+    },
+    {
+      "slug": "item",
+      "name": "Item",
+      "description": "通用列表項目（Media／Content／Title／Description／Actions），比 Card 輕量；設定列、清單。",
+      "importPath": "@coss-app/ui/components/item",
+      "import": "import {\n  Item,\n  ItemMedia,\n  ItemContent,\n  ItemActions,\n  ItemGroup,\n  ItemSeparator,\n  ItemTitle,\n  ItemDescription,\n  ItemHeader,\n  ItemFooter,\n} from \"@coss-app/ui/components/item\";",
+      "exports": [
+        "Item",
+        "ItemMedia",
+        "ItemContent",
+        "ItemActions",
+        "ItemGroup",
+        "ItemSeparator",
+        "ItemTitle",
+        "ItemDescription",
+        "ItemHeader",
+        "ItemFooter"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Item",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-item--docs",
+      "variants": [
+        {
+          "name": "itemVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "outline",
+              "muted"
+            ],
+            "size": [
+              "default",
+              "sm",
+              "xs"
+            ]
+          },
+          "defaults": {
+            "variant": "default",
+            "size": "default"
+          }
+        },
+        {
+          "name": "itemMediaVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "icon",
+              "image"
+            ]
+          },
+          "defaults": {
+            "variant": "default"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "kbd",
+      "name": "Kbd",
+      "description": "鍵盤按鍵標示（Kbd、KbdGroup）。",
+      "importPath": "@coss-app/ui/components/kbd",
+      "import": "import { Kbd, KbdGroup } from \"@coss-app/ui/components/kbd\";",
+      "exports": [
+        "Kbd",
+        "KbdGroup"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Kbd",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-kbd--docs",
+      "variants": []
+    },
+    {
+      "slug": "label",
+      "name": "Label",
+      "description": "表單標籤，點擊聚焦對應控制項。",
+      "importPath": "@coss-app/ui/components/label",
+      "import": "import { Label } from \"@coss-app/ui/components/label\";",
+      "exports": [
+        "Label"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Label",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-label--docs",
+      "variants": []
+    },
+    {
+      "slug": "marker",
+      "name": "Marker",
+      "description": "對話中的分隔標記（日期分隔、「以下為新訊息」）。",
+      "importPath": "@coss-app/ui/components/marker",
+      "import": "import {\n  Marker,\n  MarkerIcon,\n  MarkerContent,\n  markerVariants,\n} from \"@coss-app/ui/components/marker\";",
+      "exports": [
+        "Marker",
+        "MarkerIcon",
+        "MarkerContent",
+        "markerVariants"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Marker",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-marker--docs",
+      "variants": [
+        {
+          "name": "markerVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "separator",
+              "border"
+            ]
+          },
+          "defaults": {}
+        }
+      ]
+    },
+    {
+      "slug": "menubar",
+      "name": "Menubar",
+      "description": "桌面應用風格的橫向選單列。",
+      "importPath": "@coss-app/ui/components/menubar",
+      "import": "import {\n  Menubar,\n  MenubarPortal,\n  MenubarMenu,\n  MenubarTrigger,\n  MenubarContent,\n  MenubarGroup,\n  MenubarSeparator,\n  MenubarLabel,\n  MenubarItem,\n  MenubarShortcut,\n  MenubarCheckboxItem,\n  MenubarRadioGroup,\n  MenubarRadioItem,\n  MenubarSub,\n  MenubarSubTrigger,\n  MenubarSubContent,\n} from \"@coss-app/ui/components/menubar\";",
+      "exports": [
+        "Menubar",
+        "MenubarPortal",
+        "MenubarMenu",
+        "MenubarTrigger",
+        "MenubarContent",
+        "MenubarGroup",
+        "MenubarSeparator",
+        "MenubarLabel",
+        "MenubarItem",
+        "MenubarShortcut",
+        "MenubarCheckboxItem",
+        "MenubarRadioGroup",
+        "MenubarRadioItem",
+        "MenubarSub",
+        "MenubarSubTrigger",
+        "MenubarSubContent"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/Menubar",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-menubar--docs",
+      "variants": []
+    },
+    {
+      "slug": "message",
+      "name": "Message",
+      "description": "對話訊息排版（頭像、標頭、內容、頁尾），align 決定左右；內容放 Bubble。",
+      "importPath": "@coss-app/ui/components/message",
+      "import": "import {\n  MessageGroup,\n  Message,\n  MessageAvatar,\n  MessageContent,\n  MessageFooter,\n  MessageHeader,\n} from \"@coss-app/ui/components/message\";",
+      "exports": [
+        "MessageGroup",
+        "Message",
+        "MessageAvatar",
+        "MessageContent",
+        "MessageFooter",
+        "MessageHeader"
+      ],
+      "category": "Messaging",
+      "title": "Messaging/Message",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/messaging-message--docs",
+      "variants": []
+    },
+    {
+      "slug": "message-scroller",
+      "name": "MessageScroller",
+      "description": "對話捲動容器：新訊息自動捲到底、回到底部／頂部按鈕、錨點；聊天室核心。",
+      "importPath": "@coss-app/ui/components/message-scroller",
+      "import": "import {\n  MessageScrollerProvider,\n  MessageScroller,\n  MessageScrollerViewport,\n  MessageScrollerContent,\n  MessageScrollerItem,\n  MessageScrollerButton,\n  useMessageScroller,\n  useMessageScrollerScrollable,\n  useMessageScrollerVisibility,\n} from \"@coss-app/ui/components/message-scroller\";",
+      "exports": [
+        "MessageScrollerProvider",
+        "MessageScroller",
+        "MessageScrollerViewport",
+        "MessageScrollerContent",
+        "MessageScrollerItem",
+        "MessageScrollerButton",
+        "useMessageScroller",
+        "useMessageScrollerScrollable",
+        "useMessageScrollerVisibility"
+      ],
+      "category": "Messaging",
+      "title": "Messaging/MessageScroller",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/messaging-messagescroller--docs",
+      "variants": []
+    },
+    {
+      "slug": "native-select",
+      "name": "NativeSelect",
+      "description": "原生 <select>，行動裝置體驗最好且最輕；選項少、不需搜尋時優先。",
+      "importPath": "@coss-app/ui/components/native-select",
+      "import": "import {\n  NativeSelect,\n  NativeSelectOptGroup,\n  NativeSelectOption,\n} from \"@coss-app/ui/components/native-select\";",
+      "exports": [
+        "NativeSelect",
+        "NativeSelectOptGroup",
+        "NativeSelectOption"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/NativeSelect",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-nativeselect--docs",
+      "variants": []
+    },
+    {
+      "slug": "navigation-menu",
+      "name": "NavigationMenu",
+      "description": "網站頂部導覽，含展開的巨型選單。",
+      "importPath": "@coss-app/ui/components/navigation-menu",
+      "import": "import {\n  NavigationMenu,\n  NavigationMenuContent,\n  NavigationMenuIndicator,\n  NavigationMenuItem,\n  NavigationMenuLink,\n  NavigationMenuList,\n  NavigationMenuTrigger,\n  navigationMenuTriggerStyle,\n  NavigationMenuPositioner,\n} from \"@coss-app/ui/components/navigation-menu\";",
+      "exports": [
+        "NavigationMenu",
+        "NavigationMenuContent",
+        "NavigationMenuIndicator",
+        "NavigationMenuItem",
+        "NavigationMenuLink",
+        "NavigationMenuList",
+        "NavigationMenuTrigger",
+        "navigationMenuTriggerStyle",
+        "NavigationMenuPositioner"
+      ],
+      "category": "Navigation",
+      "title": "Navigation/NavigationMenu",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/navigation-navigationmenu--docs",
+      "variants": []
+    },
+    {
+      "slug": "pagination",
+      "name": "Pagination",
+      "description": "分頁導覽（上一頁／頁碼／下一頁／省略號／PaginationInfo）。",
+      "importPath": "@coss-app/ui/components/pagination",
+      "import": "import {\n  Pagination,\n  PaginationContent,\n  PaginationEllipsis,\n  PaginationItem,\n  PaginationInfo,\n  PaginationLink,\n  PaginationNext,\n  PaginationPrevious,\n} from \"@coss-app/ui/components/pagination\";",
+      "exports": [
+        "Pagination",
+        "PaginationContent",
+        "PaginationEllipsis",
+        "PaginationItem",
+        "PaginationInfo",
+        "PaginationLink",
+        "PaginationNext",
+        "PaginationPrevious"
+      ],
+      "category": "Navigation",
+      "title": "Navigation/Pagination",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/navigation-pagination--docs",
+      "variants": []
+    },
+    {
+      "slug": "popover",
+      "name": "Popover",
+      "description": "點擊觸發的浮動面板，可放表單、日期選擇、篩選條件。",
+      "importPath": "@coss-app/ui/components/popover",
+      "import": "import {\n  Popover,\n  PopoverContent,\n  PopoverDescription,\n  PopoverHeader,\n  PopoverTitle,\n  PopoverTrigger,\n} from \"@coss-app/ui/components/popover\";",
+      "exports": [
+        "Popover",
+        "PopoverContent",
+        "PopoverDescription",
+        "PopoverHeader",
+        "PopoverTitle",
+        "PopoverTrigger"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/Popover",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-popover--docs",
+      "variants": []
+    },
+    {
+      "slug": "progress",
+      "name": "Progress",
+      "description": "進度條（品牌綠），可附標籤與數值。",
+      "importPath": "@coss-app/ui/components/progress",
+      "import": "import {\n  Progress,\n  ProgressTrack,\n  ProgressIndicator,\n  ProgressLabel,\n  ProgressValue,\n} from \"@coss-app/ui/components/progress\";",
+      "exports": [
+        "Progress",
+        "ProgressTrack",
+        "ProgressIndicator",
+        "ProgressLabel",
+        "ProgressValue"
+      ],
+      "category": "Feedback",
+      "title": "Feedback/Progress",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/feedback-progress--docs",
+      "variants": []
+    },
+    {
+      "slug": "questionnaire",
+      "name": "Questionnaire",
+      "description": "分步問卷／引導式問答（單選、複選、文字、略過、進度）；滿意度調查。",
+      "importPath": "@coss-app/ui/components/questionnaire",
+      "import": "import {\n  Questionnaire,\n  QuestionnaireActions,\n  QuestionnaireChoice,\n  QuestionnaireChoiceDescription,\n  QuestionnaireChoices,\n  QuestionnaireDescription,\n  QuestionnaireError,\n  QuestionnaireInput,\n  QuestionnaireItem,\n  QuestionnaireNext,\n  QuestionnairePrevious,\n  QuestionnaireProgress,\n  QuestionnaireSkip,\n  QuestionnaireSubmit,\n  QuestionnaireTitle,\n} from \"@coss-app/ui/components/questionnaire\";",
+      "exports": [
+        "Questionnaire",
+        "QuestionnaireActions",
+        "QuestionnaireChoice",
+        "QuestionnaireChoiceDescription",
+        "QuestionnaireChoices",
+        "QuestionnaireDescription",
+        "QuestionnaireError",
+        "QuestionnaireInput",
+        "QuestionnaireItem",
+        "QuestionnaireNext",
+        "QuestionnairePrevious",
+        "QuestionnaireProgress",
+        "QuestionnaireSkip",
+        "QuestionnaireSubmit",
+        "QuestionnaireTitle"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Questionnaire",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-questionnaire--docs",
+      "variants": []
+    },
+    {
+      "slug": "radio-group",
+      "name": "RadioGroup",
+      "description": "單選群組；選項少且需全部可見時用。",
+      "importPath": "@coss-app/ui/components/radio-group",
+      "import": "import {\n  RadioGroup,\n  RadioGroupItem,\n} from \"@coss-app/ui/components/radio-group\";",
+      "exports": [
+        "RadioGroup",
+        "RadioGroupItem"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/RadioGroup",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-radiogroup--docs",
+      "variants": []
+    },
+    {
+      "slug": "resizable",
+      "name": "Resizable",
+      "description": "可拖曳調整寬度或高度的分割面板。",
+      "importPath": "@coss-app/ui/components/resizable",
+      "import": "import {\n  ResizableHandle,\n  ResizablePanel,\n  ResizablePanelGroup,\n} from \"@coss-app/ui/components/resizable\";",
+      "exports": [
+        "ResizableHandle",
+        "ResizablePanel",
+        "ResizablePanelGroup"
+      ],
+      "category": "Layout",
+      "title": "Layout/Resizable",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/layout-resizable--docs",
+      "variants": []
+    },
+    {
+      "slug": "scroll-area",
+      "name": "ScrollArea",
+      "description": "自訂捲軸的捲動區域。",
+      "importPath": "@coss-app/ui/components/scroll-area",
+      "import": "import { ScrollArea, ScrollBar } from \"@coss-app/ui/components/scroll-area\";",
+      "exports": [
+        "ScrollArea",
+        "ScrollBar"
+      ],
+      "category": "Layout",
+      "title": "Layout/ScrollArea",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/layout-scrollarea--docs",
+      "variants": []
+    },
+    {
+      "slug": "select",
+      "name": "Select",
+      "description": "自訂樣式的下拉選單（Base UI）；Root 帶 items（value／label 陣列）才能在 Trigger 顯示標籤；選項多或要搜尋改用 Combobox。",
+      "importPath": "@coss-app/ui/components/select",
+      "import": "import {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectScrollDownButton,\n  SelectScrollUpButton,\n  SelectSeparator,\n  SelectTrigger,\n  SelectValue,\n} from \"@coss-app/ui/components/select\";",
+      "exports": [
+        "Select",
+        "SelectContent",
+        "SelectGroup",
+        "SelectItem",
+        "SelectLabel",
+        "SelectScrollDownButton",
+        "SelectScrollUpButton",
+        "SelectSeparator",
+        "SelectTrigger",
+        "SelectValue"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Select",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-select--docs",
+      "variants": []
+    },
+    {
+      "slug": "separator",
+      "name": "Separator",
+      "description": "分隔線，水平或垂直。",
+      "importPath": "@coss-app/ui/components/separator",
+      "import": "import { Separator } from \"@coss-app/ui/components/separator\";",
+      "exports": [
+        "Separator"
+      ],
+      "category": "Layout",
+      "title": "Layout/Separator",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/layout-separator--docs",
+      "variants": []
+    },
+    {
+      "slug": "sheet",
+      "name": "Sheet",
+      "description": "從螢幕邊緣滑入的側邊面板（編輯、篩選、詳情）；桌面優先，行動手勢用 Drawer。",
+      "importPath": "@coss-app/ui/components/sheet",
+      "import": "import {\n  Sheet,\n  SheetTrigger,\n  SheetClose,\n  SheetContent,\n  SheetHeader,\n  SheetFooter,\n  SheetTitle,\n  SheetDescription,\n} from \"@coss-app/ui/components/sheet\";",
+      "exports": [
+        "Sheet",
+        "SheetTrigger",
+        "SheetClose",
+        "SheetContent",
+        "SheetHeader",
+        "SheetFooter",
+        "SheetTitle",
+        "SheetDescription"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/Sheet",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-sheet--docs",
+      "variants": []
+    },
+    {
+      "slug": "sidebar",
+      "name": "Sidebar",
+      "description": "應用程式側邊欄（Provider／Menu／Group／Inset／Trigger／Rail），目前頁面用淡綠底；可收合、行動裝置自動變抽屜。",
+      "importPath": "@coss-app/ui/components/sidebar",
+      "import": "import {\n  Sidebar,\n  SidebarContent,\n  SidebarFooter,\n  SidebarGroup,\n  SidebarGroupAction,\n  SidebarGroupContent,\n  SidebarGroupLabel,\n  SidebarHeader,\n  SidebarInput,\n  SidebarInset,\n  SidebarMenu,\n  SidebarMenuAction,\n  SidebarMenuBadge,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarMenuSkeleton,\n  SidebarMenuSub,\n  SidebarMenuSubButton,\n  SidebarMenuSubItem,\n  SidebarProvider,\n  SidebarRail,\n  SidebarSeparator,\n  SidebarTrigger,\n  useSidebar,\n} from \"@coss-app/ui/components/sidebar\";",
+      "exports": [
+        "Sidebar",
+        "SidebarContent",
+        "SidebarFooter",
+        "SidebarGroup",
+        "SidebarGroupAction",
+        "SidebarGroupContent",
+        "SidebarGroupLabel",
+        "SidebarHeader",
+        "SidebarInput",
+        "SidebarInset",
+        "SidebarMenu",
+        "SidebarMenuAction",
+        "SidebarMenuBadge",
+        "SidebarMenuButton",
+        "SidebarMenuItem",
+        "SidebarMenuSkeleton",
+        "SidebarMenuSub",
+        "SidebarMenuSubButton",
+        "SidebarMenuSubItem",
+        "SidebarProvider",
+        "SidebarRail",
+        "SidebarSeparator",
+        "SidebarTrigger",
+        "useSidebar"
+      ],
+      "category": "Navigation",
+      "title": "Navigation/Sidebar",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/navigation-sidebar--docs",
+      "variants": [
+        {
+          "name": "sidebarMenuButtonVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "outline"
+            ],
+            "size": [
+              "default",
+              "sm",
+              "lg"
+            ]
+          },
+          "defaults": {
+            "variant": "default",
+            "size": "default"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "skeleton",
+      "name": "Skeleton",
+      "description": "載入中的骨架佔位。",
+      "importPath": "@coss-app/ui/components/skeleton",
+      "import": "import { Skeleton } from \"@coss-app/ui/components/skeleton\";",
+      "exports": [
+        "Skeleton"
+      ],
+      "category": "Feedback",
+      "title": "Feedback/Skeleton",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/feedback-skeleton--docs",
+      "variants": []
+    },
+    {
+      "slug": "slider",
+      "name": "Slider",
+      "description": "滑桿，單值或區間。",
+      "importPath": "@coss-app/ui/components/slider",
+      "import": "import { Slider } from \"@coss-app/ui/components/slider\";",
+      "exports": [
+        "Slider"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Slider",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-slider--docs",
+      "variants": []
+    },
+    {
+      "slug": "sonner",
+      "name": "Sonner",
+      "description": "Sonner 版 Toast（命令式 toast.success(...)）；與 toast.tsx 二擇一，不要同時掛兩個 Toaster。",
+      "importPath": "@coss-app/ui/components/sonner",
+      "import": "import { Toaster } from \"@coss-app/ui/components/sonner\";",
+      "exports": [
+        "Toaster"
+      ],
+      "category": "Feedback",
+      "title": "Feedback/Sonner",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/feedback-sonner--docs",
+      "variants": []
+    },
+    {
+      "slug": "spinner",
+      "name": "Spinner",
+      "description": "載入旋轉圖示；按鈕內用 data-icon=\"inline-start\"。",
+      "importPath": "@coss-app/ui/components/spinner",
+      "import": "import { Spinner } from \"@coss-app/ui/components/spinner\";",
+      "exports": [
+        "Spinner"
+      ],
+      "category": "Feedback",
+      "title": "Feedback/Spinner",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/feedback-spinner--docs",
+      "variants": []
+    },
+    {
+      "slug": "switch",
+      "name": "Switch",
+      "description": "開關，立即生效的設定（啟用、通知）。",
+      "importPath": "@coss-app/ui/components/switch",
+      "import": "import { Switch } from \"@coss-app/ui/components/switch\";",
+      "exports": [
+        "Switch"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Switch",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-switch--docs",
+      "variants": []
+    },
+    {
+      "slug": "table",
+      "name": "Table",
+      "description": "資料表格（Header／Body／Footer／Caption／Row／Head／Cell）；選取列用 data-state=\"selected\"。",
+      "importPath": "@coss-app/ui/components/table",
+      "import": "import {\n  Table,\n  TableHeader,\n  TableBody,\n  TableFooter,\n  TableHead,\n  TableRow,\n  TableCell,\n  TableCaption,\n} from \"@coss-app/ui/components/table\";",
+      "exports": [
+        "Table",
+        "TableHeader",
+        "TableBody",
+        "TableFooter",
+        "TableHead",
+        "TableRow",
+        "TableCell",
+        "TableCaption"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Table",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-table--docs",
+      "variants": []
+    },
+    {
+      "slug": "tabs",
+      "name": "Tabs",
+      "description": "分頁籤切換同層級內容（line／default 樣式）。",
+      "importPath": "@coss-app/ui/components/tabs",
+      "import": "import {\n  Tabs,\n  TabsList,\n  TabsTrigger,\n  TabsContent,\n  tabsListVariants,\n} from \"@coss-app/ui/components/tabs\";",
+      "exports": [
+        "Tabs",
+        "TabsList",
+        "TabsTrigger",
+        "TabsContent",
+        "tabsListVariants"
+      ],
+      "category": "Navigation",
+      "title": "Navigation/Tabs",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/navigation-tabs--docs",
+      "variants": [
+        {
+          "name": "tabsListVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "line"
+            ]
+          },
+          "defaults": {
+            "variant": "default"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "textarea",
+      "name": "Textarea",
+      "description": "多行文字輸入框。",
+      "importPath": "@coss-app/ui/components/textarea",
+      "import": "import { Textarea } from \"@coss-app/ui/components/textarea\";",
+      "exports": [
+        "Textarea"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Textarea",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-textarea--docs",
+      "variants": []
+    },
+    {
+      "slug": "toast",
+      "name": "Toast",
+      "description": "Base UI 版 Toast：外層包 <Toaster>，以 toast.add({ title, type }) 觸發，支援 loading／promise；與 sonner.tsx 二擇一。",
+      "importPath": "@coss-app/ui/components/toast",
+      "import": "import {\n  Toaster,\n  Toast,\n  ToastAction,\n  ToastClose,\n  ToastContent,\n  ToastDescription,\n  ToastPortal,\n  ToastProvider,\n  ToastTitle,\n  ToastViewport,\n  createToastManager,\n  toast,\n  useToastManager,\n} from \"@coss-app/ui/components/toast\";",
+      "exports": [
+        "Toaster",
+        "Toast",
+        "ToastAction",
+        "ToastClose",
+        "ToastContent",
+        "ToastDescription",
+        "ToastPortal",
+        "ToastProvider",
+        "ToastTitle",
+        "ToastViewport",
+        "createToastManager",
+        "toast",
+        "useToastManager"
+      ],
+      "category": "Feedback",
+      "title": "Feedback/Toast",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/feedback-toast--docs",
+      "variants": []
+    },
+    {
+      "slug": "toggle",
+      "name": "Toggle",
+      "description": "單一切換按鈕（按下／彈起）。",
+      "importPath": "@coss-app/ui/components/toggle",
+      "import": "import { Toggle, toggleVariants } from \"@coss-app/ui/components/toggle\";",
+      "exports": [
+        "Toggle",
+        "toggleVariants"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/Toggle",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-toggle--docs",
+      "variants": [
+        {
+          "name": "toggleVariants",
+          "groups": {
+            "variant": [
+              "default",
+              "outline"
+            ],
+            "size": [
+              "default",
+              "sm",
+              "lg"
+            ]
+          },
+          "defaults": {
+            "variant": "default",
+            "size": "default"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "toggle-group",
+      "name": "ToggleGroup",
+      "description": "一組可單選或多選的切換按鈕（檢視模式、篩選）。",
+      "importPath": "@coss-app/ui/components/toggle-group",
+      "import": "import {\n  ToggleGroup,\n  ToggleGroupItem,\n} from \"@coss-app/ui/components/toggle-group\";",
+      "exports": [
+        "ToggleGroup",
+        "ToggleGroupItem"
+      ],
+      "category": "Inputs",
+      "title": "Inputs/ToggleGroup",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/inputs-togglegroup--docs",
+      "variants": []
+    },
+    {
+      "slug": "tooltip",
+      "name": "Tooltip",
+      "description": "滑過或聚焦時的簡短提示；僅補充說明，不放必要資訊；App 根部建議包一層 TooltipProvider 統一延遲。",
+      "importPath": "@coss-app/ui/components/tooltip",
+      "import": "import {\n  Tooltip,\n  TooltipTrigger,\n  TooltipContent,\n  TooltipProvider,\n} from \"@coss-app/ui/components/tooltip\";",
+      "exports": [
+        "Tooltip",
+        "TooltipTrigger",
+        "TooltipContent",
+        "TooltipProvider"
+      ],
+      "category": "Overlays",
+      "title": "Overlays/Tooltip",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/overlays-tooltip--docs",
+      "variants": []
+    },
+    {
+      "slug": "trace",
+      "name": "Trace",
+      "description": "可展開的處理紀錄（時間軸式步驟與細節），如工單處理歷程、AI 思考過程。",
+      "importPath": "@coss-app/ui/components/trace",
+      "import": "import {\n  Trace,\n  TraceLine,\n  TraceIcon,\n  TraceTitle,\n  TraceDescription,\n  TraceCollapsible,\n  TraceCollapsibleTrigger,\n  TraceCollapsibleContent,\n} from \"@coss-app/ui/components/trace\";",
+      "exports": [
+        "Trace",
+        "TraceLine",
+        "TraceIcon",
+        "TraceTitle",
+        "TraceDescription",
+        "TraceCollapsible",
+        "TraceCollapsibleTrigger",
+        "TraceCollapsibleContent"
+      ],
+      "category": "Data Display",
+      "title": "Data Display/Trace",
+      "docsUrl": "https://ui.coss.com.tw/?path=/docs/data-display-trace--docs",
+      "variants": []
+    }
+  ],
+  "tokens": {
+    "colors": [
+      {
+        "name": "background",
+        "group": "表面與文字",
+        "light": "#f7f8fe",
+        "dark": "#0e1124",
+        "utility": true,
+        "comment": "grey 10：App 底色"
+      },
+      {
+        "name": "foreground",
+        "group": "表面與文字",
+        "light": "#2d336b",
+        "dark": "#e4e7f7",
+        "utility": true,
+        "comment": "grey default：內文"
+      },
+      {
+        "name": "heading",
+        "group": "表面與文字",
+        "light": "#222962",
+        "dark": "#f3f4fc",
+        "utility": true,
+        "comment": "grey 80：大標"
+      },
+      {
+        "name": "card",
+        "group": "表面與文字",
+        "light": "#ffffff",
+        "dark": "#171b36",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "card-foreground",
+        "group": "表面與文字",
+        "light": "#2d336b",
+        "dark": "#e4e7f7",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "popover",
+        "group": "表面與文字",
+        "light": "#ffffff",
+        "dark": "#1c2140",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "popover-foreground",
+        "group": "表面與文字",
+        "light": "#2d336b",
+        "dark": "#e4e7f7",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "primary",
+        "group": "品牌與主要動作",
+        "light": "#00a756",
+        "dark": "#00a756",
+        "utility": true,
+        "comment": "primary dark：主要按鈕"
+      },
+      {
+        "name": "primary-foreground",
+        "group": "品牌與主要動作",
+        "light": "#ffffff",
+        "dark": "#ffffff",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "primary-hover",
+        "group": "品牌與主要動作",
+        "light": "#008746",
+        "dark": "#008746",
+        "utility": true,
+        "comment": "主要按鈕 hover"
+      },
+      {
+        "name": "primary-disabled",
+        "group": "品牌與主要動作",
+        "light": "#80d3ab",
+        "dark": "#0c6146",
+        "utility": true,
+        "comment": "主要按鈕停用"
+      },
+      {
+        "name": "brand",
+        "group": "品牌與主要動作",
+        "light": "#07ce6f",
+        "dark": "#3ddc8e",
+        "utility": true,
+        "comment": "primary default：進度、狀態點"
+      },
+      {
+        "name": "secondary",
+        "group": "中性與邊框",
+        "light": "#eff0f8",
+        "dark": "#232845",
+        "utility": true,
+        "comment": "grey 20"
+      },
+      {
+        "name": "secondary-foreground",
+        "group": "中性與邊框",
+        "light": "#2d336b",
+        "dark": "#e4e7f7",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "muted",
+        "group": "中性與邊框",
+        "light": "#eff0f8",
+        "dark": "#232845",
+        "utility": true,
+        "comment": "grey 20：輸入框填色"
+      },
+      {
+        "name": "muted-foreground",
+        "group": "中性與邊框",
+        "light": "#5566a4",
+        "dark": "#9aa3cf",
+        "utility": true,
+        "comment": "grey 60：次要文字"
+      },
+      {
+        "name": "placeholder",
+        "group": "中性與邊框",
+        "light": "#8f9bc8",
+        "dark": "#6f79a8",
+        "utility": true,
+        "comment": "grey 50"
+      },
+      {
+        "name": "accent",
+        "group": "中性與邊框",
+        "light": "#eff0f8",
+        "dark": "#262c4e",
+        "utility": true,
+        "comment": "hover 底"
+      },
+      {
+        "name": "accent-foreground",
+        "group": "中性與邊框",
+        "light": "#2d336b",
+        "dark": "#e4e7f7",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "destructive",
+        "group": "狀態色",
+        "light": "#ef4564",
+        "dark": "#ff6b85",
+        "utility": true,
+        "comment": "red default"
+      },
+      {
+        "name": "destructive-foreground",
+        "group": "狀態色",
+        "light": "#c7334e",
+        "dark": "#ff9aac",
+        "utility": true,
+        "comment": "深珊瑚：錯誤淡底上的字"
+      },
+      {
+        "name": "destructive-muted",
+        "group": "狀態色",
+        "light": "#fff1f4",
+        "dark": "#3a1628",
+        "utility": true,
+        "comment": "珊瑚霧：錯誤淡底"
+      },
+      {
+        "name": "success-foreground",
+        "group": "狀態色",
+        "light": "#00a756",
+        "dark": "#3ddc8e",
+        "utility": true,
+        "comment": "成功標籤字（同 primary）"
+      },
+      {
+        "name": "success-muted",
+        "group": "狀態色",
+        "light": "#ecfef5",
+        "dark": "#12372a",
+        "utility": true,
+        "comment": "薄荷霧：成功淡底"
+      },
+      {
+        "name": "info",
+        "group": "狀態色",
+        "light": "#0066ff",
+        "dark": "#5c9dff",
+        "utility": true,
+        "comment": "blue default：連結、勾選框"
+      },
+      {
+        "name": "info-muted",
+        "group": "狀態色",
+        "light": "#f1f6ff",
+        "dark": "#16264a",
+        "utility": true,
+        "comment": "blue lighter：資訊提示底"
+      },
+      {
+        "name": "info-foreground",
+        "group": "狀態色",
+        "light": "#0032b1",
+        "dark": "#a9c8ff",
+        "utility": true,
+        "comment": "blue dark：資訊提示文字"
+      },
+      {
+        "name": "info-subtle",
+        "group": "狀態色",
+        "light": "#f3f7ff",
+        "dark": "#121d3a",
+        "utility": true,
+        "comment": "blue lightest：大面積提示區"
+      },
+      {
+        "name": "warning",
+        "group": "狀態色",
+        "light": "#c65300",
+        "dark": "#ff9a4d",
+        "utility": true,
+        "comment": "Orange Dark：待受理"
+      },
+      {
+        "name": "warning-muted",
+        "group": "狀態色",
+        "light": "#fff4ec",
+        "dark": "#3a2414",
+        "utility": true,
+        "comment": "橘霧：警示淡底"
+      },
+      {
+        "name": "warning-bright",
+        "group": "狀態色",
+        "light": "#ff8227",
+        "dark": "#ffa860",
+        "utility": true,
+        "comment": "亮橘：只給圖示與點綴，不放文字"
+      },
+      {
+        "name": "star",
+        "group": "狀態色",
+        "light": "#ffb400",
+        "dark": "#ffc633",
+        "utility": true,
+        "comment": "星等黃：評分星星專用"
+      },
+      {
+        "name": "toast",
+        "group": "浮層與預覽",
+        "light": "#1e1e1e",
+        "dark": "#f3f4fc",
+        "utility": true,
+        "comment": "Grey_100"
+      },
+      {
+        "name": "toast-foreground",
+        "group": "浮層與預覽",
+        "light": "#ffffff",
+        "dark": "#171b36",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "overlay",
+        "group": "浮層與預覽",
+        "light": "#3a3d5c",
+        "dark": "#05060f",
+        "utility": true,
+        "comment": "彈窗遮罩（搭配 50% 透明）"
+      },
+      {
+        "name": "viewer",
+        "group": "浮層與預覽",
+        "light": "#0e1124",
+        "dark": null,
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "viewer-foreground",
+        "group": "浮層與預覽",
+        "light": "#ffffff",
+        "dark": null,
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "banner-blue",
+        "group": "看板主題色",
+        "light": "#007dfa",
+        "dark": null,
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "banner-green",
+        "group": "看板主題色",
+        "light": "#08a24b",
+        "dark": null,
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "banner-orange",
+        "group": "看板主題色",
+        "light": "#d06100",
+        "dark": null,
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "banner-purple",
+        "group": "看板主題色",
+        "light": "#7041b2",
+        "dark": null,
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "banner-black",
+        "group": "看板主題色",
+        "light": "#353b41",
+        "dark": null,
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "banner-foreground",
+        "group": "看板主題色",
+        "light": "#ffffff",
+        "dark": null,
+        "utility": true,
+        "comment": "看板上的字與按鈕底"
+      },
+      {
+        "name": "stat-1",
+        "group": "即時統計色階",
+        "light": "#0032b1",
+        "dark": "#a9c8ff",
+        "utility": true,
+        "comment": "blue dark"
+      },
+      {
+        "name": "stat-2",
+        "group": "即時統計色階",
+        "light": "#0066ff",
+        "dark": "#5c9dff",
+        "utility": true,
+        "comment": "blue default"
+      },
+      {
+        "name": "stat-3",
+        "group": "即時統計色階",
+        "light": "#8f9bc8",
+        "dark": "#6f79a8",
+        "utility": true,
+        "comment": "grey 50"
+      },
+      {
+        "name": "stat-4",
+        "group": "即時統計色階",
+        "light": "#b1b7e6",
+        "dark": "#4a5384",
+        "utility": true,
+        "comment": "grey 40"
+      },
+      {
+        "name": "stat-5",
+        "group": "即時統計色階",
+        "light": "#dee1f4",
+        "dark": "#2c3258",
+        "utility": true,
+        "comment": "grey 30"
+      },
+      {
+        "name": "stat-soft",
+        "group": "即時統計色階",
+        "light": "#d9e6ff",
+        "dark": "#1f3566",
+        "utility": true,
+        "comment": "blue light"
+      },
+      {
+        "name": "stat-on-strong",
+        "group": "即時統計色階",
+        "light": "#ffffff",
+        "dark": "#0e1124",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "border",
+        "group": "中性與邊框",
+        "light": "#dee1f4",
+        "dark": "#2c3258",
+        "utility": true,
+        "comment": "grey 30：分隔線"
+      },
+      {
+        "name": "border-strong",
+        "group": "中性與邊框",
+        "light": "#b1b7e6",
+        "dark": "#3f4775",
+        "utility": true,
+        "comment": "grey 40：中性按鈕框"
+      },
+      {
+        "name": "input",
+        "group": "中性與邊框",
+        "light": "#dee1f4",
+        "dark": "#2c3258",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "ring",
+        "group": "中性與邊框",
+        "light": "#2d336b",
+        "dark": "#9aa3cf",
+        "utility": true,
+        "comment": "聚焦框線"
+      },
+      {
+        "name": "chart-1",
+        "group": "圖表",
+        "light": "#00a756",
+        "dark": "#00a756",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "chart-2",
+        "group": "圖表",
+        "light": "#0066ff",
+        "dark": "#5c9dff",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "chart-3",
+        "group": "圖表",
+        "light": "#c65300",
+        "dark": "#ff9a4d",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "chart-4",
+        "group": "圖表",
+        "light": "#ef4564",
+        "dark": "#ff6b85",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "chart-5",
+        "group": "圖表",
+        "light": "#8f9bc8",
+        "dark": "#9aa3cf",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "sidebar",
+        "group": "側邊欄",
+        "light": "#f7f8fe",
+        "dark": "#0e1124",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "sidebar-foreground",
+        "group": "側邊欄",
+        "light": "#2d336b",
+        "dark": "#e4e7f7",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "sidebar-primary",
+        "group": "側邊欄",
+        "light": "#00a756",
+        "dark": "#00a756",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "sidebar-primary-foreground",
+        "group": "側邊欄",
+        "light": "#ffffff",
+        "dark": "#ffffff",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "sidebar-accent",
+        "group": "側邊欄",
+        "light": "#ecfef5",
+        "dark": "#12372a",
+        "utility": true,
+        "comment": "primary light：目前頁面"
+      },
+      {
+        "name": "sidebar-accent-foreground",
+        "group": "側邊欄",
+        "light": "#00a756",
+        "dark": "#3ddc8e",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "sidebar-border",
+        "group": "側邊欄",
+        "light": "#dee1f4",
+        "dark": "#2c3258",
+        "utility": true,
+        "comment": ""
+      },
+      {
+        "name": "sidebar-ring",
+        "group": "側邊欄",
+        "light": "#2d336b",
+        "dark": "#9aa3cf",
+        "utility": true,
+        "comment": ""
+      }
+    ],
+    "others": [
+      {
+        "kind": "圓角",
+        "name": "radius",
+        "utility": "rounded-lg",
+        "value": "0.625rem",
+        "comment": "10px：輸入框、按鈕、面板"
+      },
+      {
+        "kind": "圓角",
+        "name": "radius-sm",
+        "utility": "rounded-sm",
+        "value": "calc(var(--radius) * 0.6)",
+        "comment": ""
+      },
+      {
+        "kind": "圓角",
+        "name": "radius-md",
+        "utility": "rounded-md",
+        "value": "calc(var(--radius) * 0.8)",
+        "comment": ""
+      },
+      {
+        "kind": "圓角",
+        "name": "radius-lg",
+        "utility": "rounded-lg",
+        "value": "var(--radius)",
+        "comment": ""
+      },
+      {
+        "kind": "圓角",
+        "name": "radius-xl",
+        "utility": "rounded-xl",
+        "value": "calc(var(--radius) * 1.4)",
+        "comment": ""
+      },
+      {
+        "kind": "圓角",
+        "name": "radius-2xl",
+        "utility": "rounded-2xl",
+        "value": "calc(var(--radius) * 1.8)",
+        "comment": ""
+      },
+      {
+        "kind": "圓角",
+        "name": "radius-3xl",
+        "utility": "rounded-3xl",
+        "value": "calc(var(--radius) * 2.2)",
+        "comment": ""
+      },
+      {
+        "kind": "圓角",
+        "name": "radius-4xl",
+        "utility": "rounded-4xl",
+        "value": "calc(var(--radius) * 2.6)",
+        "comment": ""
+      },
+      {
+        "kind": "動畫曲線",
+        "name": "ease-out",
+        "utility": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "comment": ""
+      },
+      {
+        "kind": "動畫曲線",
+        "name": "ease-in-out",
+        "utility": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "comment": ""
+      },
+      {
+        "kind": "動畫曲線",
+        "name": "ease-drawer",
+        "utility": "ease-drawer",
+        "value": "cubic-bezier(0.32, 0.72, 0, 1)",
+        "comment": ""
+      },
+      {
+        "kind": "動畫",
+        "name": "animate-reveal",
+        "utility": "animate-reveal",
+        "value": "reveal 150ms var(--ease-out)",
+        "comment": ""
+      },
+      {
+        "kind": "陰影（只給浮層）",
+        "name": "shadow-menu",
+        "utility": "shadow-menu",
+        "value": "0 4px 10px 0 rgb(60 60 85 / 0.2)",
+        "comment": ""
+      },
+      {
+        "kind": "陰影（只給浮層）",
+        "name": "shadow-picker",
+        "utility": "shadow-picker",
+        "value": "0 0 10px rgb(0 0 0 / 0.25), 0 4px 5px rgb(60 60 85 / 0.4)",
+        "comment": ""
+      },
+      {
+        "kind": "陰影（只給浮層）",
+        "name": "shadow-tab",
+        "utility": "shadow-tab",
+        "value": "0 0 4px rgb(0 0 0 / 0.2)",
+        "comment": ""
+      },
+      {
+        "kind": "陰影（只給浮層）",
+        "name": "shadow-float",
+        "utility": "shadow-float",
+        "value": "0 8px 30px rgb(34 41 98 / 0.12)",
+        "comment": ""
+      }
+    ]
+  }
+}
