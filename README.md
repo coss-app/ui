@@ -45,7 +45,7 @@ skill 內容由組件原始碼與 `globals.css` 產生（`npm run manifest`）�
 | Next.js  | 不需要 `transpilePackages`，套件是編譯好的 JS 並保留 `"use client"`                                       |
 | 字體     | 先用 `--font-sans`（例如 next/font 的 Inter），沒設定時用 `Inter`，再退回 PingFang TC／Microsoft JhengHei |
 | 色彩變數 | 全部定義在 `packages/ui/src/styles/globals.css`，專案不需要新增                                           |
-| 套件名稱 | npmjs 的 scope 是 `@coss-app`，套件名稱是 `@coss-app/ui`                                                 |
+| 套件名稱 | npmjs 的 scope 是 `@coss-app`，套件名稱是 `@coss-app/ui`                                                  |
 
 ```tsx
 <Button render={<a href="/tickets" />}>工單列表</Button>
@@ -63,6 +63,8 @@ apps/storybook/           # 文件站 ui.coss.com.tw（workspace：@coss-app/doc
   stories/docs/           # 使用手冊（MDX）
   storybook-static/       # 文件站建置產物（gitignored）
 plugins/coss-ui/          # Claude Code skill（repo 本身是 plugin marketplace）
+.claude-plugin/           # plugin marketplace 設定
+.claude/rules/            # 給 Claude Code 讀的專案規則
 scripts/                  # skill manifest 產生器、組件用途說明
 .changeset/               # 待發佈的版本變更紀錄
 .github/workflows/        # CI、文件站部署、發佈
