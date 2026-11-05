@@ -2,6 +2,7 @@ import type { Preview } from "@storybook/react-vite";
 import { withThemeByClassName } from "@storybook/addon-themes";
 import { TooltipProvider } from "@coss-app/ui/components/tooltip";
 import { DocsPage } from "./docs-page";
+import { transformSource } from "./source-transform";
 
 import "../../../packages/ui/src/styles/globals.css";
 
@@ -20,6 +21,7 @@ const preview: Preview = {
     docs: {
       page: DocsPage,
       codePanel: true,
+      source: { transform: transformSource },
     },
     controls: {
       matchers: {
