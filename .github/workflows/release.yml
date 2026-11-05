@@ -1,7 +1,8 @@
 # 發佈 @coss-app/ui
 # 版本由開發者在本機跑 `npx changeset version` 後以 PR 合併（不讓 Actions 開 PR）。
 # main 上的版本號若尚未發佈 → 發佈到 npmjs（公開套件）、打 tag、建 GitHub Release。
-# 需要 repo secret NPM_TOKEN（npmjs 的 granular token，限 @coss-app scope、可寫入）。
+# 以 npm trusted publishing（GitHub OIDC）發佈，不需要 npm token。
+# npmjs 的 @coss-app/ui 套件設定頁要登記 Trusted Publisher：coss-app／ui／release.yml。
 # 正式文件站由 docs.yml 在合併到 main 時部署。
 name: Release
 on:
@@ -10,6 +11,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  id-token: write # npm trusted publishing 用 OIDC 換取發佈憑證
 concurrency:
   group: release
   cancel-in-progress: false
@@ -17,7 +19,6 @@ jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +30,8 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
           scope: "@coss-app"
+      # trusted publishing 需要 npm 11.5.1 以上；Node 22 內建的是 npm 10
+      - run: npm install -g npm@^11.5.1
       - run: npm ci
 
       - name: 檢查版本是否已發佈

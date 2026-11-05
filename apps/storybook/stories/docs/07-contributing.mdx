@@ -32,7 +32,6 @@ npm run build
 | 名稱 | 用途 | 要新增嗎 |
 | --- | --- | --- |
 | `GITHUB_TOKEN` | Release workflow 打 tag、建 GitHub Release | 不用，GitHub Actions 自動產生 |
-| `NPM_TOKEN` | Release workflow 發佈到 npmjs | 不用，已設定在 repo secrets；過期或要更換時才更新（npmjs 的 granular token，限 `@coss-app` scope、可寫入） |
 | `CLOUDFLARE_API_TOKEN` | 部署文件站到 Cloudflare Pages | 不用，已設定在 repo secrets；過期或要更換時才更新 |
 | `CLOUDFLARE_ACCOUNT_ID` | 指定部署到哪個 Cloudflare 帳號 | 不用，已設定；換 Cloudflare 帳號時才更新 |
 
@@ -71,4 +70,4 @@ Account ID 在 Cloudflare 後台 Workers & Pages 頁面右側可以看到。
 
 3. CI 通過後合併，就會自動發佈到 npmjs、打 tag、建立 GitHub Release，並更新 ui.coss.com.tw。
 
-main 上的版本號如果已經發佈過，Release workflow 會直接略過，所以平常合併功能 PR 不會發版。發版用的 `NPM_TOKEN` 已設定在 repo secrets，不需要新增。
+main 上的版本號如果已經發佈過，Release workflow 會直接略過，所以平常合併功能 PR 不會發版。發佈到 npmjs 用 trusted publishing（GitHub OIDC），不需要 npm token，也沒有 token 到期要換的問題。
