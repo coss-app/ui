@@ -1,0 +1,128 @@
+# 安裝與設定
+
+完整圖文手冊在文件站「使用手冊」：https://ui.coss.com.tw 。這裡只留 agent 動手時需要的步驟。
+
+## 前置
+
+| 項目 | 版本 |
+| --- | --- |
+| Node.js | 22 以上 |
+| React | 18.2 或 19 |
+| Tailwind CSS | v4（v3 專案要先升級，見下方「舊專案遷移」） |
+
+`@coss-app/ui` 是 GitHub Packages 的私有套件，**安裝一定要有 token**，不論在本機、CI 或部署平台。
+
+## 認證（不要自己建立或寫入 token）
+
+- 個人 token 是使用者自己的 classic token（只勾 `read:packages`），放在環境變數 `NODE_AUTH_TOKEN`。**不要把 token 寫進任何專案檔案，也不要替使用者建立 token。**
+- 專案根目錄的 `.npmrc` 只放變數名稱，可以 commit：
+
+  ```ini
+  @coss-app:registry=https://npm.pkg.github.com
+  //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+  ```
+
+- 安裝出現 `401`／`404`：先檢查 `echo $NODE_AUTH_TOKEN` 是否為空、token 是否過期或缺 `read:packages`、帳號是否在 coss-app org（SSO 要授權）。
+- coss-app org 內的 GitHub Actions 用內建 `GITHUB_TOKEN`（workflow 需 `permissions: packages: read`）；org 外的 repo、Vercel、Cloudflare 等需另設 `NODE_AUTH_TOKEN` secret／環境變數。
+
+## 新專案
+
+### Next.js（App Router，建議）
+
+```bash
+npx create-next-app@latest my-app --typescript --tailwind --app --eslint
+cd my-app
+# 先建立 .npmrc，再安裝
+npm install @coss-app/ui next-themes
+```
+
+`app/globals.css` 整個換成：
+
+```css
+@import "@coss-app/ui/globals.css";
+
+/* 專案自己的樣式寫在下面 */
+```
+
+`app/layout.tsx`：
+
+```tsx
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "@coss-app/ui/components/toast";
+import { TooltipProvider } from "@coss-app/ui/components/tooltip";
+import "./globals.css";
+
+// variable 必須是 --font-sans：globals.css 用它當主要字體，中文自動退回 PingFang TC／微軟正黑體
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+export const metadata: Metadata = { title: "My App" };
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="zh-Hant-TW" className={inter.variable} suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <TooltipProvider>
+            <Toaster>{children}</Toaster>
+          </TooltipProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+- 組件已標記 `"use client"`，可直接在 Server Component 渲染；傳事件處理函式時，呼叫端才需要是 Client Component。
+- 不需要 `transpilePackages`，套件發佈的是編譯好的 JS。
+
+### Vite＋React
+
+```bash
+npm create vite@latest my-app -- --template react-ts
+cd my-app
+# 先建立 .npmrc，再安裝
+npm install @coss-app/ui
+npm install -D tailwindcss @tailwindcss/vite
+```
+
+`vite.config.ts` 加入 `tailwindcss()` plugin（`import tailwindcss from "@tailwindcss/vite"`），`src/index.css` 整個換成 `@import "@coss-app/ui/globals.css";`。字體沒設定 `--font-sans` 時會找名為 `Inter` 的字型，沒載入就退回中文系統字；要載入 Inter，在 `index.html` 加 Google Fonts 的 `<link>`（權重 400;500;600）。`src/main.tsx` 以 `TooltipProvider`、`Toaster` 包住 `<App />`；深色模式在 `<html>` 加 `class="dark"`。
+
+## 深色模式
+
+`<html class="dark">` 即切換。Next.js 用 `next-themes`（`attribute="class"`）。`dark:` 前綴跟著 `.dark` class 走。
+
+## 微調 token
+
+在 import 之後覆寫變數即可，不改套件：
+
+```css
+@import "@coss-app/ui/globals.css";
+
+:root {
+  --radius: 0.5rem; /* 全站圓角基準 */
+}
+```
+
+不要改 `--primary` 等品牌色，會偏離公司規範。需要新顏色，請到 coss-app/ui 提出，統一加進套件。
+
+## 舊專案遷移（shadcn Radix 版 → @coss-app/ui）
+
+1. Tailwind 必須是 v4。
+2. `npm install @coss-app/ui`，全域 CSS 換成 `@import "@coss-app/ui/globals.css";`。
+3. 逐一把 `@/components/ui/xxx` 的 import 改成 `@coss-app/ui/components/xxx`，確認沒有引用後刪除本地副本。
+4. 依下表改 Radix 寫法：
+
+| 舊寫法（Radix） | 新寫法（Base UI） |
+| --- | --- |
+| `<Button asChild><a href="/x">…</a></Button>` | `<Button render={<a href="/x" />}>…</Button>` |
+| `<DialogTrigger asChild><Button>開啟</Button></DialogTrigger>` | `<DialogTrigger render={<Button />}>開啟</DialogTrigger>` |
+| `DropdownMenuLabel` 可單獨放 | 必須放在 `DropdownMenuGroup` 內（ContextMenu、Menubar 同理） |
+| `<Accordion type="single" collapsible>` | 預設單一展開；多個用 `<Accordion multiple>` |
+| `SelectValue` 自動顯示選項文字 | 在 `Select` 傳 `items` |
+| Drawer（vaul）`direction="right"` | `swipeDirection="right"` |
+| sonner `toast("…")` | 仍可用 `components/sonner`；新程式用 `components/toast` 的 `toast.add({ title })` |
+| 選擇器 `data-[state=open]`、`data-[state=checked]` | `data-open`、`data-checked` |
+
+5. 檢查：`npm run build` 通過；深色模式正常；next/font 的 `variable` 為 `"--font-sans"`；刪掉 `@radix-ui/*`、`radix-ui`、`vaul`、`tailwindcss-animate` 與本地 `components.json`。

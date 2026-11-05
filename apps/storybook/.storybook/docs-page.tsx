@@ -9,6 +9,8 @@ import {
   Title,
   useOf,
 } from "@storybook/addon-docs/blocks";
+/* 匯出解析與 skill manifest 共用（scripts/parse-exports.mjs） */
+import { formatImport, parseExports } from "../../../scripts/parse-exports.mjs";
 
 /* 每個組件原始碼（lazy，只有打開該頁才載入）：從檔尾的 export { … } 取出可用名稱 */
 const componentSources = import.meta.glob<string>(
@@ -20,27 +22,6 @@ function moduleFromFileName(fileName: string | undefined) {
   // ./stories/button-group.stories.tsx → button-group
   const match = fileName?.match(/([\w-]+)\.stories\.tsx$/);
   return match?.[1];
-}
-
-function parseExports(source: string) {
-  const names: string[] = [];
-  for (const block of source.matchAll(/export\s*\{([^}]*)\}/g)) {
-    for (const raw of block[1].split(",")) {
-      const name = raw.trim().split(/\s+as\s+/).pop()?.trim();
-      if (name && !name.startsWith("type ")) names.push(name);
-    }
-  }
-  for (const m of source.matchAll(/export\s+(?:function|const)\s+(\w+)/g)) {
-    names.push(m[1]);
-  }
-  return [...new Set(names)];
-}
-
-function formatImport(names: string[], module: string) {
-  const from = `"@coss-app/ui/components/${module}"`;
-  const oneLine = `import { ${names.join(", ")} } from ${from};`;
-  if (oneLine.length <= 80) return oneLine;
-  return `import {\n${names.map((n) => `  ${n},`).join("\n")}\n} from ${from};`;
 }
 
 function ImportSnippet() {

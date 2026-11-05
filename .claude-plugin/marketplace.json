@@ -1,0 +1,12 @@
+{
+  "name": "coss",
+  "owner": { "name": "coss" },
+  "metadata": { "description": "coss 公司開發用的 Claude Code skill" },
+  "plugins": [
+    {
+      "name": "coss-ui",
+      "source": "./plugins/coss-ui",
+      "description": "coss UI 組件庫（@coss-app/ui）使用 skill：選型、設計規範、token、客服情境範本"
+    }
+  ]
+}

@@ -16,3 +16,5 @@ jobs:
       - run: npm run typecheck
       - run: npm run typecheck -w @coss-app/docs
       - run: npm run build
+      # skill 的 manifest／components.md／tokens.md 須與原始碼同步（不同步時執行 npm run manifest）
+      - run: npm run manifest -- --check
