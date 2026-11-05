@@ -26,7 +26,8 @@
     "./globals.css": "./dist/styles/globals.css"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json && cp -r src/styles dist/",
