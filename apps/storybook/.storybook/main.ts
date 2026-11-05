@@ -40,7 +40,10 @@ const config: StorybookConfig = {
       },
       build: {
         // 打包成靜態站時忽略 Base UI 等套件的 "use client" 指令警告（Storybook 不用 RSC）
-        rollupOptions: {
+        rolldownOptions: {
+          // 保留函式／組件名稱：Show code 的 JSX 範例以 displayName／函式名產生標籤，
+          // 被壓縮成 `<l>`、`<dn>` 就無法閱讀
+          output: { keepNames: true },
           onwarn(warning, warn) {
             if (warning.code === "MODULE_LEVEL_DIRECTIVE") return;
             warn(warning);
