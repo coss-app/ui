@@ -2,7 +2,7 @@
 
 ## 專案
 
-`@coss-app/ui`：coss 公司 React 組件庫，shadcn/ui **Base UI 版 base-nova**＋Tailwind v4，發佈到 npmjs（公開，MIT）。文件站（Storybook）https://ui.coss.com.tw，Cloudflare Pages 專案 `coss-ui`。repo `coss-app/ui`。視覺規範 `DESIGN.md`。
+`@coss-app/ui`：coss 公司 React 組件庫，shadcn/ui **Base UI 版 base-nova**＋Tailwind v4，發佈到 npmjs（公開，MIT；repo 也是公開）。文件站（Storybook）https://ui.coss.com.tw，Cloudflare Pages 專案 `coss-ui`。repo `coss-app/ui`。視覺規範 `DESIGN.md`。
 
 npm workspaces：
 

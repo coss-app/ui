@@ -21,54 +21,13 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ## 安裝
 
-### 1. 前置條件
-
-- 已安裝 Claude Code。
-- 你的 GitHub 帳號是 `coss-app` org 的成員。skill 放在私有的 `coss-app/ui` repo 裡。
-- 本機的 `git` 能讀取 `coss-app/ui`。安裝套件本身不需要認證，這裡的 git 認證只用來下載 skill。
-
-### 2. 設定 git 認證（做過就跳過）
-
-Claude Code 用本機的 `git` 下載 skill，所以先確認終端機裡 `git` 讀得到這個 repo。選一種做法。
-
-**做法 A：GitHub CLI（較簡單）**
-
-1. 安裝 GitHub CLI：macOS 用 `brew install gh`，Windows 用 `winget install GitHub.cli`，其他系統見 [cli.github.com](https://cli.github.com)。
-2. 執行 `gh auth login`，依序選 `GitHub.com`、`HTTPS`，「Authenticate Git with your GitHub credentials?」選 `Yes`，再選 `Login with a web browser`。
-3. 瀏覽器開啟後貼上終端機顯示的一次性代碼，用加入 coss-app 的帳號登入。如果要求授權 `coss-app`（SAML SSO），按授權。
-
-**做法 B：SSH 金鑰**
-
-1. 產生金鑰：`ssh-keygen -t ed25519 -C "你的 email"`，一路按 Enter。
-2. 複製公鑰：`cat ~/.ssh/id_ed25519.pub`。
-3. GitHub → Settings → SSH and GPG keys → New SSH key，貼上。
-4. 如果有 SSO，在這把金鑰旁按 Configure SSO，授權 `coss-app`。
-
-驗證：下面的指令印出一串 commit hash，就代表權限通了。
-
-```bash
-# 做法 A
-git ls-remote https://github.com/coss-app/ui.git
-
-# 做法 B
-git ls-remote git@github.com:coss-app/ui.git
-```
-
-出現 `Repository not found` 或要求輸入密碼，表示帳號不在 coss-app org、SSO 還沒授權，或金鑰沒設好。
-
-### 3. 安裝 skill
+前置條件：已安裝 Claude Code，且需要連得上 GitHub。repo 是公開的，不用登入 GitHub、不用 token，也不用設定 git 認證。
 
 在 Claude Code 裡執行：
 
 ```text
 /plugin marketplace add coss-app/ui
 /plugin install coss-ui@coss
-```
-
-只設定了 SSH 時，簡寫 `coss-app/ui` 可能會走 HTTPS 而失敗，改用完整網址加入 marketplace：
-
-```text
-/plugin marketplace add git@github.com:coss-app/ui.git
 ```
 
 裝好後執行 `/plugin`，確認 `coss-ui` 已啟用。
@@ -144,7 +103,7 @@ skill 內容跟著 `coss-app/ui` 的 main 更新，但**不會自動套用**。�
 
 | 狀況 | 怎麼辦 |
 | --- | --- |
-| `/plugin marketplace add` 出現 `Repository not found` | 照上面「設定 git 認證」，用 `git ls-remote` 驗證。多半是帳號不在 coss-app org，或 SSO 沒授權 |
+| `/plugin marketplace add` 失敗 | 確認網路連得上 github.com，並再執行一次。仍失敗時，用 `git ls-remote https://github.com/coss-app/ui.git` 看是否印出 commit hash |
 | 裝好了，AI 卻沒照規則寫 | 用 `/plugin` 確認 `coss-ui` 已啟用；提示語裡明說「用 coss UI」；確認專案的 `package.json` 有 `@coss-app/ui` |
 | AI 提到的組件，專案裡 import 不到 | 專案的 `@coss-app/ui` 版本比 skill 舊，升級套件 |
 | AI 提到的組件清單比文件站少或多 | 更新 skill（見「更新」） |
