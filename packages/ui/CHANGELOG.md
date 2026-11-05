@@ -1,5 +1,11 @@
 # @coss-app/ui
 
+## 0.1.1
+
+### Patch Changes
+
+- 改發佈到 npmjs 公開套件（MIT），安裝不再需要 GitHub token 與 `.npmrc`。
+
 ## 0.1.0
 
 ### Minor Changes

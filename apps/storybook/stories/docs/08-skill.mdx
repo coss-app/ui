@@ -6,7 +6,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 `coss-ui` skill 讓 Claude Code 在你的專案裡寫畫面時，照這個組件庫的規則來寫：用對組件、用對 import 路徑、遵守設計規範，不必每次重新解釋。
 
-只有用 Claude Code 寫程式的人需要它。沒用 Claude Code 也能正常使用組件庫，見「安裝與權限」。
+只有用 Claude Code 寫程式的人需要它。沒用 Claude Code 也能正常使用組件庫，見「安裝」。
 
 ## 它解決什麼問題
 
@@ -25,7 +25,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 - 已安裝 Claude Code。
 - 你的 GitHub 帳號是 `coss-app` org 的成員。skill 放在私有的 `coss-app/ui` repo 裡。
-- 本機的 `git` 能讀取 `coss-app/ui`。這和安裝套件用的 `NODE_AUTH_TOKEN` 是兩回事，互不影響。
+- 本機的 `git` 能讀取 `coss-app/ui`。安裝套件本身不需要認證，這裡的 git 認證只用來下載 skill。
 
 ### 2. 設定 git 認證（做過就跳過）
 

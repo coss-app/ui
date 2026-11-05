@@ -50,8 +50,8 @@ function ImportSnippet() {
       <Source code={code} language="tsx" dark />
       <p style={{ fontSize: 15, marginTop: -8 }}>
         尚未安裝？見{" "}
-        <a href="/?path=/docs/使用手冊-安裝與權限--docs" target="_top">
-          安裝與權限
+        <a href="/?path=/docs/使用手冊-安裝--docs" target="_top">
+          安裝
         </a>
         。
       </p>

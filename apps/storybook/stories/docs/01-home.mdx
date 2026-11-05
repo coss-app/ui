@@ -7,23 +7,19 @@ import pkg from "../../../../packages/ui/package.json";
 
 coss 公司通用 UI 組件庫，共 65 個組件，以 [shadcn/ui](https://ui.shadcn.com)（Base UI 版）和 Tailwind CSS v4 為基礎，套用公司設計規範「靛藍＋品牌綠」。
 
-目前版本：**{pkg.version}**　·　原始碼：[github.com/coss-app/ui](https://github.com/coss-app/ui)（需 coss-app 成員權限）
+目前版本：**{pkg.version}**　·　套件：[npmjs.com/package/@coss-app/ui](https://www.npmjs.com/package/@coss-app/ui)
 
 ## 30 秒開始
 
-開始前要先有個人 token，並設成環境變數 `NODE_AUTH_TOKEN`。每人只要做一次，步驟見「安裝與權限」的步驟 1。
+不用 token、不用 `.npmrc`，直接安裝：
 
 ```bash
-# 1. 在專案根目錄建立 .npmrc（只放變數名稱，不放 token，可以 commit）
-echo '@coss-app:registry=https://npm.pkg.github.com' >> .npmrc
-echo '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}' >> .npmrc
-
-# 2. 安裝
+# 1. 安裝
 npm install @coss-app/ui
 ```
 
 ```css
-/* 3. 全域 CSS（取代 @import "tailwindcss"） */
+/* 2. 全域 CSS（取代 @import "tailwindcss"） */
 @import "@coss-app/ui/globals.css";
 ```
 
@@ -46,7 +42,7 @@ export function CreateTicket() {
 
 上方工具列可以切換淺色／深色與螢幕寬度（375／768／1024／1440）。每個範例下方按「Show code」可以複製原始碼。
 
-注意：「token」在這個網站有兩種意思。「安裝與權限」講的是下載套件用的 GitHub token；Foundations 的色彩 token 是 CSS 變數，已經全部內建在套件裡，不需要新增。
+注意：Foundations 裡的「token」是色彩 CSS 變數，已經全部內建在套件裡，不需要新增。
 
 ## 設計原則（摘要）
 

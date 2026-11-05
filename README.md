@@ -7,16 +7,9 @@ coss 公司的 React 組件庫：65 個組件套好公司設計規範，安裝�
 | 📚 文件站   | [ui.coss.com.tw](https://ui.coss.com.tw) 有每個組件的範例、import 寫法與使用手冊 |
 | 🌈 設計規範 | 依 [DESIGN.md](./DESIGN.md) 的靛藍＋品牌綠配色，內建深色模式                     |
 | 🧱 技術基礎 | shadcn/ui（Base UI 版）＋ Tailwind CSS v4                                        |
-| 🔒 私有套件 | 發佈在 GitHub Packages，安裝需要 GitHub token                                    |
+| 📦 公開套件 | 發佈在 npmjs（MIT），安裝不需要 token                                            |
 
 ## 🚀 快速開始
-
-先建立只勾 `read:packages` 的 classic token，設成環境變數 `NODE_AUTH_TOKEN`（每人一次，步驟見文件站「安裝與權限」）。接著在專案根目錄建立 `.npmrc`，這個檔案只放變數名稱，可以 commit：
-
-```ini
-@coss-app:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
-```
 
 ```bash
 npm install @coss-app/ui
@@ -52,7 +45,7 @@ skill 內容由組件原始碼與 `globals.css` 產生（`npm run manifest`）�
 | Next.js  | 不需要 `transpilePackages`，套件是編譯好的 JS 並保留 `"use client"`                                       |
 | 字體     | 先用 `--font-sans`（例如 next/font 的 Inter），沒設定時用 `Inter`，再退回 PingFang TC／Microsoft JhengHei |
 | 色彩變數 | 全部定義在 `packages/ui/src/styles/globals.css`，專案不需要新增                                           |
-| 套件名稱 | GitHub Packages 的 scope 必須等於 org 名稱 `coss-app`，所以是 `@coss-app/ui`                              |
+| 套件名稱 | npmjs 的 scope 是 `@coss-app`，套件名稱是 `@coss-app/ui`                                                 |
 
 ```tsx
 <Button render={<a href="/tickets" />}>工單列表</Button>
@@ -124,7 +117,7 @@ DESIGN.md                 # 設計規範
    git push -u origin HEAD && gh pr create --fill
    ```
 
-3. CI 通過後合併，就會自動發佈到 GitHub Packages、打 tag、建立 GitHub Release。
+3. CI 通過後合併，就會自動發佈到 npmjs、打 tag、建立 GitHub Release。
 
 > [!NOTE]
 > main 上的版本號已經發佈過時，Release workflow 會直接略過，所以平常合併功能 PR 不會發版；但文件站會更新，可能出現尚未發版的組件。
