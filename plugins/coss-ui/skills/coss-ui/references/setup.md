@@ -10,20 +10,16 @@
 | React | 18.2 或 19 |
 | Tailwind CSS | v4（v3 專案要先升級，見下方「舊專案遷移」） |
 
-`@coss-app/ui` 是 GitHub Packages 的私有套件，**安裝一定要有 token**，不論在本機、CI 或部署平台。
+`@coss-app/ui` 是 npmjs 的公開套件，**安裝不需要 token 也不需要 `.npmrc`**：`npm install @coss-app/ui`。
 
-## 認證（不要自己建立或寫入 token）
+## 安裝失敗（401／404）
 
-- 個人 token 是使用者自己的 classic token（只勾 `read:packages`），放在環境變數 `NODE_AUTH_TOKEN`。**不要把 token 寫進任何專案檔案，也不要替使用者建立 token。**
-- 專案根目錄的 `.npmrc` 只放變數名稱，可以 commit：
+以前用過 GitHub Packages 版本的專案，`.npmrc` 可能還留著下面兩行，會讓 npm 往 GitHub Packages 找套件。**刪掉這兩行**（檔案只剩這兩行就整個刪掉），再 `npm install @coss-app/ui@latest`；CI、Vercel、Cloudflare、Docker 的 `NODE_AUTH_TOKEN`、`packages: read` 設定也一併移除：
 
-  ```ini
-  @coss-app:registry=https://npm.pkg.github.com
-  //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
-  ```
-
-- 安裝出現 `401`／`404`：先檢查 `echo $NODE_AUTH_TOKEN` 是否為空、token 是否過期或缺 `read:packages`、帳號是否在 coss-app org（SSO 要授權）。
-- coss-app org 內的 GitHub Actions 用內建 `GITHUB_TOKEN`（workflow 需 `permissions: packages: read`）；org 外的 repo、Vercel、Cloudflare 等需另設 `NODE_AUTH_TOKEN` secret／環境變數。
+```ini
+@coss-app:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
 
 ## 新專案
 
@@ -32,7 +28,6 @@
 ```bash
 npx create-next-app@latest my-app --typescript --tailwind --app --eslint
 cd my-app
-# 先建立 .npmrc，再安裝
 npm install @coss-app/ui next-themes
 ```
 
@@ -82,7 +77,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ```bash
 npm create vite@latest my-app -- --template react-ts
 cd my-app
-# 先建立 .npmrc，再安裝
 npm install @coss-app/ui
 npm install -D tailwindcss @tailwindcss/vite
 ```

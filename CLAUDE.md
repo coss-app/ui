@@ -2,7 +2,7 @@
 
 ## 專案
 
-`@coss-app/ui`：coss 公司 React 組件庫，shadcn/ui **Base UI 版 base-nova**＋Tailwind v4，發佈到 GitHub Packages（私有）。文件站（Storybook）https://ui.coss.com.tw，Cloudflare Pages 專案 `coss-ui`。repo `coss-app/ui`。視覺規範 `DESIGN.md`。
+`@coss-app/ui`：coss 公司 React 組件庫，shadcn/ui **Base UI 版 base-nova**＋Tailwind v4，發佈到 npmjs（公開，MIT）。文件站（Storybook）https://ui.coss.com.tw，Cloudflare Pages 專案 `coss-ui`。repo `coss-app/ui`。視覺規範 `DESIGN.md`。
 
 npm workspaces：
 
@@ -12,7 +12,7 @@ npm workspaces：
 ## 指令
 
 ```bash
-npm install                              # 不需要 NODE_AUTH_TOKEN（workspace 直接用原始碼）
+npm install                              # workspace 直接用原始碼
 npm run storybook                        # http://localhost:6006
 npm run typecheck                        # 只檢查 packages/ui
 npm run typecheck -w @coss-app/docs      # stories / .storybook / MDX 的型別
@@ -54,6 +54,6 @@ npm run build-storybook                  # 文件站靜態檔＋改寫 <title>
 
 - main 受保護：須走 PR 且 `ci` 檢查通過。repo 不允許 Actions 開 PR，故**不用 `changesets/action`**。
 - 流程：功能 PR 附 `npx changeset` → 要發版時開分支跑 `npx changeset version && npm install && npm run manifest`（manifest 把新版本號寫進 `components.md`／`tokens.md`／`manifest.json`，供判斷專案裝的套件夠不夠新），以 PR 合併。
-- `.github/workflows/release.yml`：main 上 `packages/ui/package.json` 版本尚未發佈 → `changeset publish`、推 tag `@coss-app/ui@x.y.z`、建 GitHub Release（取 CHANGELOG 該版段落）；已發佈則略過。
+- `.github/workflows/release.yml`：main 上 `packages/ui/package.json` 版本尚未發佈 → `changeset publish`（發佈到 npmjs）、推 tag `@coss-app/ui@x.y.z`、建 GitHub Release（取 CHANGELOG 該版段落）；已發佈則略過。
 - `docs.yml`：PR 部署預覽並留言網址；push 到 main（`apps/storybook/**`、`packages/ui/**`、`scripts/parse-exports.*`、`package-lock.json` 有變動）與 `workflow_dispatch` 部署正式站。正式站可能領先已發佈版本（含未發版組件）。
-- repo secrets：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`；發佈用內建 `GITHUB_TOKEN`。
+- repo secrets：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`、`NPM_TOKEN`（npmjs granular token，限 `@coss-app` scope、可寫入）；tag 與 Release 用內建 `GITHUB_TOKEN`。

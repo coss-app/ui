@@ -22,7 +22,7 @@ npx @tailwindcss/upgrade
 
 ## 1. 安裝
 
-需要個人 token：還沒設定環境變數 `NODE_AUTH_TOKEN` 的人，先照「安裝與權限」步驟 1 新增（每人一次）。再依步驟 2 在專案根目錄建立 `.npmrc`，然後安裝：
+直接安裝，不需要 token 或 `.npmrc`：
 
 ```bash
 npm install @coss-app/ui
@@ -40,7 +40,7 @@ shadcn 專案的 `globals.css` 通常長這樣：`@import "tailwindcss"`、`@imp
 /* 專案自己的樣式 */
 ```
 
-這裡說的 token 是色彩變數，不是安裝用的 GitHub token，不需要另外新增。變數名稱和 shadcn 相同（`--primary`、`--muted` 等），所以還沒換掉的本地組件也會直接套用新配色。
+這裡說的 token 是色彩變數，不需要另外新增。變數名稱和 shadcn 相同（`--primary`、`--muted` 等），所以還沒換掉的本地組件也會直接套用新配色。
 
 ## 3. 逐一換掉組件
 

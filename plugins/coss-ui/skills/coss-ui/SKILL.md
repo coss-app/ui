@@ -44,7 +44,7 @@ coss 公司通用組件庫：65 個 Base UI 組件＋Tailwind v4＋一份 `globa
 | 色彩、圓角、陰影的 token 名稱與值 | [tokens.md](references/tokens.md)（自動產生） |
 | 視覺規範：顏色配對、字級、間距、響應式 | [design-rules.md](references/design-rules.md) |
 | 可直接套用的整頁範本（工單表單、列表、對話、側欄版面） | [patterns.md](references/patterns.md) |
-| 新專案安裝、`.npmrc`、字體、深色模式、舊專案遷移 | [setup.md](references/setup.md) |
+| 新專案安裝、舊專案移除 GitHub Packages `.npmrc`、字體、深色模式、舊專案遷移 | [setup.md](references/setup.md) |
 
 某個組件的完整 props 與互動範例，以文件站該組件頁為準：`https://ui.coss.com.tw/?path=/docs/<分類>-<組件>--docs`（連結在 components.md 每個組件下方）。
 
