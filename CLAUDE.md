@@ -43,7 +43,7 @@ npm run build-storybook                  # 文件站靜態檔＋改寫 <title>
 
 ## Claude Code skill（plugins/coss-ui）
 
-給「其他 coss 專案」的 AI agent 用。repo 即 plugin marketplace（`.claude-plugin/marketplace.json`，消費端 `/plugin marketplace add coss-app/ui`）。
+給「其他 coss 專案」的 AI agent 用。repo 即 plugin marketplace（`.claude-plugin/marketplace.json`，消費端 `/plugin marketplace add coss-app/ui`）；`npx skills add coss-app/ui --skill coss-ui` 也掃得到（CLI 掃 repo 內 `SKILL.md`，免額外設定）。
 
 - `references/components.md`、`tokens.md`、`plugins/coss-ui/manifest.json` 由 `npm run manifest` 產生，勿手改。來源：組件原始碼（匯出、cva variants）、story 的 `meta.title`、`globals.css`。改這些後須重跑；`-- --check` 不同步即失敗，CI 會跑。
 - 新增組件：`scripts/component-notes.json` 補一句用途（缺或多都失敗）→ `npm run manifest` → 視需要更新 `decision-guide.md`。新色彩 token 若不屬 `build-manifest.mjs` 的 `TOKEN_GROUPS` 也失敗，補分組。
