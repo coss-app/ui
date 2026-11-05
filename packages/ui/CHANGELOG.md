@@ -1,5 +1,11 @@
 # @coss-app/ui
 
+## 0.1.2
+
+### Patch Changes
+
+- 改用 npm trusted publishing（GitHub OIDC）發佈，版本附上 provenance 來源證明。
+
 ## 0.1.1
 
 ### Patch Changes
