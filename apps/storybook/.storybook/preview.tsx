@@ -40,6 +40,7 @@ const preview: Preview = {
             "新專案",
             "舊專案遷移",
             "主題與深色模式",
+            "設計規範 Lint",
             "Claude Code Skill",
             "更新與版本",
             "貢獻組件",

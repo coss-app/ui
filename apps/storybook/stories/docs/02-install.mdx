@@ -49,6 +49,10 @@ npm view @coss-app/ui version
 
 npmjs 的第一版是 0.1.1。更早的版本只存在 GitHub Packages，不會搬過來。
 
+## 自動檢查寫法是否符合設計規範（選用）
+
+`@coss-app/ui` 附 lint 規則，在 `className` 亂改組件內距、顏色，或寫死色碼、任意值時報錯，並建議該用哪個 variant 或 size。設定方式見 <a href="/?path=/docs/使用手冊-設計規範-lint--docs" target="_top">設計規範 Lint</a>。
+
 ## 讓 AI 助理會用這個組件庫（選用）
 
 用 Claude Code 寫畫面的話，可以安裝 `coss-ui` skill，讓 AI 知道組件怎麼選、import 路徑、設計規範與 Base UI 的寫法。安裝、使用與更新方式見 <a href="/?path=/docs/使用手冊-claude-code-skill--docs" target="_top">Claude Code Skill</a>。
