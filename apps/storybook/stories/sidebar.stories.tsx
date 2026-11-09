@@ -61,7 +61,7 @@ function SidebarDemo({
 }: DemoProps) {
   return (
     // Sidebar 桌面版用 fixed + h-svh；在 Storybook 內以 absolute 讓它限制在示範框裡
-    <div className="relative h-[600px] overflow-hidden rounded-xl border">
+    <div className="relative h-150 overflow-hidden rounded-xl border">
       <SidebarProvider defaultOpen={defaultOpen} className="h-full min-h-0">
         <Sidebar variant={variant} collapsible={collapsible} side={side} className="absolute h-full">
           <SidebarHeader>

@@ -83,6 +83,63 @@ npm install -D tailwindcss @tailwindcss/vite
 
 `vite.config.ts` 加入 `tailwindcss()` plugin（`import tailwindcss from "@tailwindcss/vite"`），`src/index.css` 整個換成 `@import "@coss-app/ui/globals.css";`。字體沒設定 `--font-sans` 時會找名為 `Inter` 的字型，沒載入就退回中文系統字；要載入 Inter，在 `index.html` 加 Google Fonts 的 `<link>`（權重 400;500;600）。`src/main.tsx` 以 `TooltipProvider`、`Toaster` 包住 `<App />`；深色模式在 `<html>` 加 `class="dark"`。
 
+## 設計規範 lint（@shadcn/lint）
+
+`@coss-app/ui/lint.json`（0.2.0 起隨套件發佈）是給 [`@shadcn/lint`](https://github.com/shadcn-ui/lint) 用的規則：`className` 只放版面、顏色只用語意 token、不寫任意值。違規訊息會列出組件實際有的 variant／size。需要 Node 20.19+、ESLint 9.30+（或 Oxlint 1.80+）。
+
+### ESLint（Next.js 預設就有 ESLint）
+
+```bash
+npm i -D -E @shadcn/lint@0.2.5
+npm i -D eslint @typescript-eslint/parser
+```
+
+**合併進專案既有的 `eslint.config.mjs`**（保留 `create-next-app` 的 `eslint-config-next`），不要整份覆蓋。加一個設定物件：
+
+```js
+import { plugin as shadcn } from "@shadcn/lint";
+import tsParser from "@typescript-eslint/parser";
+import policy from "@coss-app/ui/lint.json" with { type: "json" };
+
+// 放進 defineConfig([...]) 或匯出的陣列
+{
+  files: ["**/*.{js,jsx,ts,tsx}"],
+  languageOptions: { parser: tsParser, parserOptions: { ecmaFeatures: { jsx: true } } },
+  plugins: { shadcn },
+  settings: policy.settings,
+  rules: policy.rules,
+}
+```
+
+`package.json` 加 `"lint": "eslint ."`（Next.js 16 起 `next lint` 已移除，用 `eslint .`）。
+
+### Oxlint
+
+`.oxlintrc.json`：
+
+```json
+{
+  "jsPlugins": ["@shadcn/lint"],
+  "extends": ["./node_modules/@coss-app/ui/lint.json"],
+  "settings": {
+    "shadcn": {
+      "ui": "@coss-app/ui/components",
+      "themeImports": ["^@coss-app/ui/"]
+    }
+  }
+}
+```
+
+Oxlint 的 `extends` 不繼承 `settings`，所以 `settings` 要自己寫一份（上面就是 `lint.json` 的內容）。
+
+### 之後
+
+- 在專案的 `AGENTS.md`／`CLAUDE.md` 加一行：「改完跑 `npm run lint`，修到零錯誤」。
+- `themeImports` 少了就會把 `bg-primary` 當成未宣告的顏色；若看到整批 token 被誤報，先檢查它。
+- 錯誤出現 `This project's cn is …` 的提示只是資訊，不影響結果。
+- 引用組件匯出的樣式函式（如 `navigationMenuTriggerStyle()`）會被 `require-static-classes` 回報；那是官方用法，在該行加 `eslint-disable-next-line shadcn/require-static-classes -- 原因`。
+- `lint.json` 與 `check-usage.mjs` 互補：lint 管組件的 `className` 與顏色；`check-usage.mjs` 另外抓 `asChild`、`data-[state=…]`、本地 `@/components/ui/` import（沒裝 ESLint 的專案也能跑）。
+
 ## 深色模式
 
 `<html class="dark">` 即切換。Next.js 用 `next-themes`（`attribute="class"`）。`dark:` 前綴跟著 `.dark` class 走。

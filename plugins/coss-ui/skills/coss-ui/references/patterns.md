@@ -371,7 +371,7 @@ export function TicketChat({
   }
 
   return (
-    <div className="flex h-[520px] flex-col rounded-lg bg-card">
+    <div className="flex h-130 flex-col rounded-lg bg-card">
       <div className="min-h-0 flex-1">
         <MessageScrollerProvider autoScroll>
           <MessageScroller>
@@ -483,7 +483,7 @@ export function AppShell({ pathname, children }: { pathname: string; children: R
         </SidebarContent>
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-[60px] items-center gap-2 px-4">
+        <header className="flex h-15 items-center gap-2 px-4">
           <SidebarTrigger />
         </header>
         <main className="flex-1 p-4 md:p-5">{children}</main>

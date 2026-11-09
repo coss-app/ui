@@ -5,7 +5,8 @@
   "license": "MIT",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "lint.json"
   ],
   "sideEffects": [
     "**/*.css"
@@ -23,7 +24,8 @@
       "types": "./dist/hooks/*.d.ts",
       "default": "./dist/hooks/*.js"
     },
-    "./globals.css": "./dist/styles/globals.css"
+    "./globals.css": "./dist/styles/globals.css",
+    "./lint.json": "./lint.json"
   },
   "publishConfig": {
     "access": "public",

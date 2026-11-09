@@ -38,7 +38,7 @@ export const Default: Story = {
           <NavigationMenuItem>
             <NavigationMenuTrigger>產品</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid w-[420px] grid-cols-2 gap-1 p-1">
+              <ul className="grid w-105 grid-cols-2 gap-1 p-1">
                 {products.map(({ icon: Icon, title, desc }) => (
                   <li key={title}>
                     <NavigationMenuLink href="#" className="items-start">
@@ -70,6 +70,7 @@ export const Default: Story = {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
+            {/* eslint-disable-next-line shadcn/require-static-classes -- 套件匯出的 navigationMenuTriggerStyle() 是官方用法 */}
             <NavigationMenuLink href="#" className={navigationMenuTriggerStyle()}>
               價格方案
             </NavigationMenuLink>

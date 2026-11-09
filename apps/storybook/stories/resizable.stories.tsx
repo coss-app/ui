@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Horizontal: Story = {
   render: (args) => (
-    <ResizablePanelGroup {...args} className="max-w-2xl rounded-lg border" style={{ height: 320 }}>
+    <ResizablePanelGroup {...args} className="h-80 max-w-2xl rounded-lg border">
       <ResizablePanel defaultSize="30%" minSize="20%">
         <div className="flex h-full items-center justify-center p-6 text-sm">工單列表</div>
       </ResizablePanel>
@@ -29,7 +29,7 @@ export const Horizontal: Story = {
 
 export const WithHandle: Story = {
   render: () => (
-    <ResizablePanelGroup orientation="horizontal" className="max-w-2xl rounded-lg border" style={{ height: 320 }}>
+    <ResizablePanelGroup orientation="horizontal" className="h-80 max-w-2xl rounded-lg border">
       <ResizablePanel defaultSize="25%">
         <div className="flex h-full items-center justify-center p-6 text-sm">收件匣</div>
       </ResizablePanel>
@@ -47,7 +47,7 @@ export const WithHandle: Story = {
 
 export const Vertical: Story = {
   render: () => (
-    <ResizablePanelGroup orientation="vertical" className="max-w-md rounded-lg border" style={{ height: 360 }}>
+    <ResizablePanelGroup orientation="vertical" className="h-90 max-w-md rounded-lg border">
       <ResizablePanel defaultSize="40%">
         <div className="flex h-full items-center justify-center p-6 text-sm">訊息紀錄</div>
       </ResizablePanel>
@@ -61,7 +61,7 @@ export const Vertical: Story = {
 
 export const Nested: Story = {
   render: () => (
-    <ResizablePanelGroup orientation="horizontal" className="max-w-2xl rounded-lg border" style={{ height: 360 }}>
+    <ResizablePanelGroup orientation="horizontal" className="h-90 max-w-2xl rounded-lg border">
       <ResizablePanel defaultSize="40%">
         <div className="flex h-full items-center justify-center p-6 text-sm">工單列表</div>
       </ResizablePanel>

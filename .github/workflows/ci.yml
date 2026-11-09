@@ -16,5 +16,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run typecheck -w @coss-app/docs
       - run: npm run build
+      # stories 用隨套件發佈的 lint.json 檢查，確保規則不誤判官方示範寫法
+      - run: npm run lint
       # skill 的 manifest／components.md／tokens.md 須與原始碼同步（不同步時執行 npm run manifest）
       - run: npm run manifest -- --check

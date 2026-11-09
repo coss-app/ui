@@ -75,7 +75,7 @@ function ChatDemo({ autoScroll = true }: { autoScroll?: boolean }) {
 
   return (
     <div className="flex max-w-xl flex-col gap-3">
-      <div className="h-[420px] rounded-xl border bg-card">
+      <div className="h-105 rounded-xl border bg-card">
         <MessageScrollerProvider autoScroll={autoScroll}>
           <MessageScroller>
             <MessageScrollerViewport aria-label="客服對話紀錄">

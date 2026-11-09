@@ -1,3 +1,4 @@
+/* eslint-disable shadcn/no-arbitrary-values, shadcn/no-inline-styles -- 文件頁需依資料動態設定色票與字級，不是消費端示範 */
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 /** DESIGN.md 第 3 節字級表 */
@@ -39,7 +40,7 @@ function TypeScale() {
         </p>
       </div>
       <div className="overflow-x-auto rounded-lg border bg-card">
-        <table className="w-full min-w-[640px] text-left">
+        <table className="w-full min-w-160 text-left">
           <thead>
             <tr className="border-b text-xs text-muted-foreground">
               <th className="px-4 py-3 font-normal">層級</th>

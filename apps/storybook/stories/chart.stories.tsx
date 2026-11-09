@@ -75,7 +75,7 @@ const baseArgs = { config: weeklyConfig, children: <></> };
 export const BarMultiple: Story = {
   args: baseArgs,
   render: () => (
-    <ChartContainer config={weeklyConfig} className="min-h-[240px] w-full max-w-2xl">
+    <ChartContainer config={weeklyConfig} className="min-h-60 w-full max-w-2xl">
       <BarChart accessibilityLayer data={weekly}>
         <CartesianGrid vertical={false} />
         <XAxis dataKey="day" tickLine={false} axisLine={false} tickMargin={8} />
@@ -91,7 +91,7 @@ export const BarMultiple: Story = {
 export const BarStacked: Story = {
   args: baseArgs,
   render: () => (
-    <ChartContainer config={weeklyConfig} className="min-h-[240px] w-full max-w-2xl">
+    <ChartContainer config={weeklyConfig} className="min-h-60 w-full max-w-2xl">
       <BarChart accessibilityLayer data={weekly}>
         <CartesianGrid vertical={false} />
         <XAxis dataKey="day" tickLine={false} axisLine={false} tickMargin={8} />
@@ -109,7 +109,7 @@ export const LineChartStory: Story = {
   name: "Line",
   args: baseArgs,
   render: () => (
-    <ChartContainer config={weeklyConfig} className="min-h-[240px] w-full max-w-2xl">
+    <ChartContainer config={weeklyConfig} className="min-h-60 w-full max-w-2xl">
       <LineChart accessibilityLayer data={weekly} margin={{ left: 12, right: 12 }}>
         <CartesianGrid vertical={false} />
         <XAxis dataKey="day" tickLine={false} axisLine={false} tickMargin={8} />
@@ -126,7 +126,7 @@ export const AreaChartStory: Story = {
   name: "Area",
   args: baseArgs,
   render: () => (
-    <ChartContainer config={weeklyConfig} className="min-h-[240px] w-full max-w-2xl">
+    <ChartContainer config={weeklyConfig} className="min-h-60 w-full max-w-2xl">
       <AreaChart accessibilityLayer data={weekly} margin={{ left: 12, right: 12 }}>
         <CartesianGrid vertical={false} />
         <XAxis dataKey="day" tickLine={false} axisLine={false} tickMargin={8} />
@@ -143,7 +143,7 @@ export const PieDonut: Story = {
   render: () => {
     const total = channels.reduce((s, c) => s + c.tickets, 0);
     return (
-      <ChartContainer config={channelConfig} className="mx-auto aspect-square max-h-[300px]">
+      <ChartContainer config={channelConfig} className="mx-auto aspect-square max-h-75">
         <PieChart>
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="channel" />} />
           <Pie data={channels} dataKey="tickets" nameKey="channel" innerRadius={60} strokeWidth={5}>
@@ -176,7 +176,7 @@ export const RadarChartStory: Story = {
   name: "Radar",
   args: baseArgs,
   render: () => (
-    <ChartContainer config={weeklyConfig} className="mx-auto aspect-square max-h-[300px]">
+    <ChartContainer config={weeklyConfig} className="mx-auto aspect-square max-h-75">
       <RadarChart data={weekly}>
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <PolarAngleAxis dataKey="day" />
@@ -191,7 +191,7 @@ export const RadarChartStory: Story = {
 export const Radial: Story = {
   args: baseArgs,
   render: () => (
-    <ChartContainer config={channelConfig} className="mx-auto aspect-square max-h-[300px]">
+    <ChartContainer config={channelConfig} className="mx-auto aspect-square max-h-75">
       <RadialBarChart data={channels} innerRadius={30} outerRadius={110}>
         <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="channel" />} />
         <RadialBar dataKey="tickets" background />

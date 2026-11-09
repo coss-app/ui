@@ -95,7 +95,7 @@ export const WithAction: Story = {
 export const WithImage: Story = {
   render: () => (
     <Card className="max-w-sm">
-      <img src={cover} alt="公告封面" className="aspect-[2/1] w-full object-cover" />
+      <img src={cover} alt="公告封面" className="aspect-2/1 w-full object-cover" />
       <CardHeader>
         <CardTitle>雙十一客服加班公告</CardTitle>
         <CardDescription>11/10–11/12 客服時段延長至 24:00</CardDescription>
