@@ -1,0 +1,158 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import pkg from "../../../../packages/ui/package.json";
+
+<Meta title="使用手冊/設計規範 Lint" />
+
+# 設計規範 Lint
+
+`@coss-app/ui` 附一份 lint 規則，搭配 [`@shadcn/lint`](https://github.com/shadcn-ui/lint) 使用。它在你寫畫面時檢查 `className` 與顏色，違規時直接告訴你該換成組件的哪個 variant 或 size，人和 AI 助理都適用。
+
+規則放在 `@coss-app/ui/lint.json`，隨套件版本發佈（0.2.0 起），目前版本：**{pkg.version}**。升級套件，規則就跟著更新。
+
+選用，不裝也能正常使用組件庫。
+
+## 它會抓什麼
+
+| 違規寫法 | 錯誤訊息的建議 |
+| --- | --- |
+| `<Button className="p-4">` | Button 自己管內距，改用 size（`xs`、`sm`、`lg`…）或在外層用 margin／gap |
+| `<Button className="bg-pink-500 rounded-none">` | 外觀由 variant 決定，列出 `default`、`outline`、`destructive`… |
+| `bg-red-500`、`text-gray-600` | 預設色票，改用語意 token（`bg-destructive`、`text-muted-foreground`） |
+| `text-[#333]`、`bg-[rgb(0,0,0)]` | 寫死的顏色，改用語意 token |
+| `p-[13px]` | 不在刻度上，改用 `p-3.25` |
+| 用變數拼出的 class，例如模板字串 `bg-` 加顏色變數 | 無法檢查，改成完整的 class 字串 |
+| `style={{ color: "red" }}` | 只會警告，改用 class 或 CSS 變數 |
+
+訊息是中文，並帶著該組件真實的 variant 與 size 清單，所以 AI 助理收到錯誤後通常一輪就能改對。
+
+## `className` 的範圍
+
+不是所有組件都禁止 `className`。依組件類型分三種：
+
+| 組件類型 | 可以放 | 不可以放 |
+| --- | --- | --- |
+| 有 variant 的組件（Button、Badge、Alert、Input…） | 版面：寬度、margin、對齊、定位 | 內距、顏色、圓角：改用 variant／size |
+| 一般組件 | 版面、排版（字級、行高）、語意文字色、`gap-*` | 內距、底色、圓角 |
+| 容器類（Card 與其 Header／Content／Footer、ScrollArea、Command、Empty…） | 再加內距、邊框、圓角、底色 | 原始色票、任意值 |
+
+標題類組件（`*Title`、`*Description`、`*Label`）禁止 `font-bold`，字重只用 400／500／600。
+
+不管哪一類，原始色票（`bg-red-500`）、任意值（`p-[13px]`）與動態組出的 class 一律檢查。
+
+## 安裝
+
+需要 Node.js 20.19 以上，以及 ESLint 9.30 以上（或 Oxlint 1.80 以上）。
+
+### 用 ESLint
+
+Next.js 專案用 `create-next-app` 建立時已經有 ESLint。安裝：
+
+```bash
+npm i -D -E @shadcn/lint@0.2.5
+npm i -D eslint @typescript-eslint/parser
+```
+
+`-E` 固定版本：`@shadcn/lint` 還在 0.x，升版前先看過變更。
+
+接著**加進**專案現有的 `eslint.config.mjs`，不要整份覆蓋，否則會失去 `eslint-config-next` 的規則。在設定陣列裡多放一個物件：
+
+```js
+import { plugin as shadcn } from "@shadcn/lint";
+import tsParser from "@typescript-eslint/parser";
+import policy from "@coss-app/ui/lint.json" with { type: "json" };
+
+// 放進 defineConfig([...]) 或匯出的陣列
+{
+  files: ["**/*.{js,jsx,ts,tsx}"],
+  languageOptions: { parser: tsParser, parserOptions: { ecmaFeatures: { jsx: true } } },
+  plugins: { shadcn },
+  settings: policy.settings,
+  rules: policy.rules,
+}
+```
+
+`package.json` 加上 lint 指令（Next.js 16 起 `next lint` 已移除）：
+
+```json
+{ "scripts": { "lint": "eslint ." } }
+```
+
+### 用 Oxlint
+
+```bash
+npm i -D -E @shadcn/lint@0.2.5
+npm i -D oxlint
+```
+
+`.oxlintrc.json`：
+
+```json
+{
+  "jsPlugins": ["@shadcn/lint"],
+  "extends": ["./node_modules/@coss-app/ui/lint.json"],
+  "settings": {
+    "shadcn": {
+      "ui": "@coss-app/ui/components",
+      "themeImports": ["^@coss-app/ui/"]
+    }
+  }
+}
+```
+
+Oxlint 的 `extends` 不會繼承 `settings`，所以 `settings` 要自己再寫一份，內容與 `lint.json` 相同。
+
+### 確認有生效
+
+寫一行違規的程式：
+
+```tsx
+import { Button } from "@coss-app/ui/components/button";
+
+export const Bad = () => <Button className="p-4 bg-pink-500">建立工單</Button>;
+```
+
+執行 `npm run lint`，會看到 Button 的內距與顏色被回報，並列出可用的 size 與 variant。沒有任何輸出就是沒生效，檢查設定檔有沒有被載入。
+
+## 刻意例外
+
+有正當理由時，在該行上一行加註解，並寫明原因：
+
+```tsx
+// eslint-disable-next-line shadcn/no-restyle -- 分頁邊界的停用樣式
+<PaginationNext className="pointer-events-none opacity-50" />
+```
+
+JSX 子節點位置要用大括號包起來：`{/* eslint-disable-next-line … -- 原因 */}`。
+
+引用組件匯出的樣式函式，例如 `className={navigationMenuTriggerStyle()}`，會被 `require-static-classes` 回報，因為 lint 讀不到函式回傳的 class。這是官方用法，加上面的註解略過即可。
+
+## 與 Claude Code skill 搭配
+
+兩者各管一部分，互補：
+
+| 檢查 | 管什麼 |
+| --- | --- |
+| 本頁的 lint | 組件的 `className`、顏色、任意值、inline style |
+| skill 的 `check-usage.mjs` | `asChild`、`data-[state=…]`、本地 `@/components/ui/` import、`font-bold` |
+| `tsc` 型別檢查 | 不存在的 variant 與 prop |
+
+在專案的 `AGENTS.md` 或 `CLAUDE.md` 加一行，讓 AI 助理寫完自己檢查：
+
+```md
+改完跑 `npm run lint`，修到零錯誤。
+```
+
+skill 的安裝見「Claude Code Skill」。
+
+## 疑難排解
+
+| 狀況 | 怎麼辦 |
+| --- | --- |
+| `bg-primary`、`text-muted-foreground` 也被回報成未宣告的顏色 | 設定裡少了 `themeImports`，確認 `settings` 有帶 `lint.json` 的內容 |
+| 出現 `This project's cn is …` 的提示 | 只是資訊，linter 改用內建版本，不影響結果 |
+| 規則太嚴，想放寬某個組件 | 不要改 `node_modules` 裡的檔案，在自己的 lint 設定覆寫 `shadcn/no-restyle` 的選項，用法見 `@shadcn/lint` 文件 |
+| 安裝後沒有 `lint.json` | 套件版本低於 0.2.0，執行 `npm install @coss-app/ui@latest` |
+
+## 給維護者
+
+`packages/ui/lint.json` 的規則要與 skill 的硬規則 6、7 保持一致。本 repo 的 CI 會用同一份規則檢查文件站的 stories（`npm run lint`），改規則後務必在本機跑過，並確認 skill 範例 `patterns.md` 的程式碼區塊零違規。流程見「貢獻組件」。

@@ -85,6 +85,8 @@ npm install -D tailwindcss @tailwindcss/vite
 
 ## 設計規範 lint（@shadcn/lint）
 
+使用者版說明在文件站「使用手冊／設計規範 Lint」（https://ui.coss.com.tw）。
+
 `@coss-app/ui/lint.json`（0.2.0 起隨套件發佈）是給 [`@shadcn/lint`](https://github.com/shadcn-ui/lint) 用的規則：`className` 只放版面、顏色只用語意 token、不寫任意值。違規訊息會列出組件實際有的 variant／size。需要 Node 20.19+、ESLint 9.30+（或 Oxlint 1.80+）。
 
 ### ESLint（Next.js 預設就有 ESLint）

@@ -52,7 +52,7 @@ skill 內容由組件原始碼與 `globals.css` 產生（`npm run manifest`）�
 | 字體          | 先用 `--font-sans`（例如 next/font 的 Inter），沒設定時用 `Inter`，再退回 PingFang TC／Microsoft JhengHei |
 | 色彩變數      | 全部定義在 `packages/ui/src/styles/globals.css`，專案不需要新增                                           |
 | 套件名稱      | npmjs 的 scope 是 `@coss-app`，套件名稱是 `@coss-app/ui`                                                  |
-| 設計規範 lint | 選用：`@shadcn/lint` 搭配套件內的 `lint.json`，檢查 `className` 與顏色；設定見 skill 的 `setup.md`        |
+| 設計規範 lint | 選用：`@shadcn/lint` 搭配套件內的 `lint.json`，檢查 `className` 與顏色；設定見文件站「設計規範 Lint」     |
 
 ```tsx
 <Button render={<a href="/tickets" />}>工單列表</Button>
