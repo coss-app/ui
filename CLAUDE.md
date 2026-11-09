@@ -16,15 +16,16 @@ npm install                              # workspace 直接用原始碼
 npm run storybook                        # http://localhost:6006
 npm run typecheck                        # 只檢查 packages/ui
 npm run typecheck -w @coss-app/docs      # stories / .storybook / MDX 的型別
+npm run lint                             # stories 用 packages/ui/lint.json（@shadcn/lint）檢查
 npm run build                            # packages/ui → dist
 npm run build-storybook                  # 文件站靜態檔＋改寫 <title>
 ```
 
-無測試、無 lint。驗證 = 兩個 typecheck＋`build`＋`build-storybook`；CI 跑前三項＋`npm run manifest -- --check`。UI 改動在 Storybook 實看淺／深色。
+無測試。驗證 = 兩個 typecheck＋`lint`＋`build`＋`build-storybook`。CI 跑兩個 typecheck＋`build`＋`lint`＋`npm run manifest -- --check`。UI 改動在 Storybook 實看淺／深色。
 
 ## 套件（packages/ui）
 
-- 建置：`tsc` → `tsc-alias` 把 `@/` 轉相對路徑 → 複製 `src/styles` 到 `dist`。`exports`：`./components/*` → `dist/components/ui/*`，另有 `./lib/*`、`./hooks/*`、`./globals.css`。組件內部 import 一律 `@/…`。
+- 建置：`tsc` → `tsc-alias` 把 `@/` 轉相對路徑 → 複製 `src/styles` 到 `dist`。`exports`：`./components/*` → `dist/components/ui/*`，另有 `./lib/*`、`./hooks/*`、`./globals.css`、`./lint.json`（給消費端 `@shadcn/lint` 用的規則，非建置產物，直接放套件根目錄）。組件內部 import 一律 `@/…`。
 - `src/styles/globals.css` 是唯一 token 來源（根目錄無 globals.css）。
 - 組件是 Base UI，非 Radix：組合用 `render` prop，不用 `asChild`；需 Slot 行為用 `@base-ui/react/use-render`（見 `form.tsx` 的 `FormControl`）。Menu 的 `*Label` 須放在 `*Group` 內。
 
@@ -48,7 +49,7 @@ npm run build-storybook                  # 文件站靜態檔＋改寫 <title>
 - `references/components.md`、`tokens.md`、`plugins/coss-ui/manifest.json` 由 `npm run manifest` 產生，勿手改。來源：組件原始碼（匯出、cva variants）、story 的 `meta.title`、`globals.css`。改這些後須重跑；`-- --check` 不同步即失敗，CI 會跑。
 - 新增組件：`scripts/component-notes.json` 補一句用途（缺或多都失敗）→ `npm run manifest` → 視需要更新 `decision-guide.md`。新色彩 token 若不屬 `build-manifest.mjs` 的 `TOKEN_GROUPS` 也失敗，補分組。
 - 新增 story 分類：同步 `preview.tsx` 的 `storySort` 與 `build-manifest.mjs` 的 `CATEGORY_ORDER`。
-- 其餘維護規則（手寫／產生檔清單、`plugin.json` 無 version、`check-usage.mjs`、`patterns.md` 驗證）見 `.claude/rules/claude-code-skill.md`，編輯 `plugins/coss-ui/**`、`scripts/**` 時載入。
+- 其餘維護規則（手寫／產生檔清單、`plugin.json` 無 version、`check-usage.mjs`、`lint.json` 與硬規則同步、`patterns.md` 驗證）見 `.claude/rules/claude-code-skill.md`，編輯 `plugins/coss-ui/**`、`scripts/**` 時載入。
 
 ## 發版與部署
 

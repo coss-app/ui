@@ -74,7 +74,7 @@ export const Vertical: Story = {
   render: () => (
     <div className="py-14">
       <Carousel orientation="vertical" opts={{ align: "start" }} className="w-full max-w-xs">
-        <CarouselContent className="h-[260px]">
+        <CarouselContent className="h-65">
           {slides.map((s, i) => (
             <CarouselItem key={s} className="basis-1/2">
               <Card>

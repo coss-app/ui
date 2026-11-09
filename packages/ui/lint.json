@@ -1,0 +1,87 @@
+{
+  "settings": {
+    "shadcn": {
+      "ui": "@coss-app/ui/components",
+      "themeImports": [
+        "^@coss-app/ui/"
+      ],
+      "note": "規範見 @coss-app/ui 的 DESIGN.md 與 coss-ui skill 的 references/design-rules.md、tokens.md。"
+    }
+  },
+  "rules": {
+    "shadcn/no-restyle": [
+      "error",
+      {
+        "allow": [
+          "layout",
+          "typography",
+          "text-color",
+          "gap-*"
+        ],
+        "message": {
+          "spacing": "{{component}} 自己管內距。請用 size（{{sizes|未定義}}），或在外層用 margin／gap 留白。",
+          "color": "{{component}} 的顏色由 variant 決定：改用 variant（{{variants|未定義}}），不要用 className 改色。",
+          "default": "{{component}} 的外觀由 variant／size 決定，className 只放版面（寬、margin、對齊、定位）。可用 variant：{{variants|未定義}}。"
+        },
+        "contracts": [
+          {
+            "pattern": "^Card$|(Content|Header|Footer|Group|Panel|Addon)$",
+            "allow": [
+              "layout",
+              "spacing",
+              "typography",
+              "text-color",
+              "border",
+              "border-*"
+            ]
+          },
+          {
+            "pattern": "^(ScrollArea|AspectRatio|Skeleton|Calendar|Command|Empty|ResizablePanelGroup|Collapsible|CollapsibleContent|ContextMenuTrigger|HoverCardTrigger|AlertDialogMedia|AvatarBadge)$",
+            "allow": [
+              "layout",
+              "spacing",
+              "typography",
+              "text-color",
+              "shape",
+              "bg-color",
+              "border-color",
+              "effects",
+              "shadow-menu"
+            ]
+          },
+          {
+            "pattern": "(Title|Description|Label)$",
+            "allow": [
+              "layout",
+              "typography",
+              "text-color",
+              "gap-*"
+            ],
+            "deny": [
+              "font-bold",
+              "font-extrabold",
+              "font-black"
+            ]
+          }
+        ]
+      }
+    ],
+    "shadcn/no-raw-colors": "error",
+    "shadcn/no-arbitrary-values": "error",
+    "shadcn/no-unknown-classes": "error",
+    "shadcn/require-static-classes": "error",
+    "shadcn/no-inline-styles": "warn"
+  },
+  "overrides": [
+    {
+      "files": [
+        "packages/ui/src/components/**"
+      ],
+      "rules": {
+        "shadcn/no-restyle": "off",
+        "shadcn/no-arbitrary-values": "off",
+        "shadcn/require-static-classes": "off"
+      }
+    }
+  ]
+}

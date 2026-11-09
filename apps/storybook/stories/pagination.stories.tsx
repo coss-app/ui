@@ -70,7 +70,6 @@ function Interactive() {
               text="上一頁"
               onClick={go(page - 1)}
               aria-disabled={page === 1}
-              className={page === 1 ? "pointer-events-none opacity-50" : undefined}
             />
           </PaginationItem>
           {Array.from({ length: total }, (_, i) => i + 1).map((p) => (
@@ -86,7 +85,6 @@ function Interactive() {
               text="下一頁"
               onClick={go(page + 1)}
               aria-disabled={page === total}
-              className={page === total ? "pointer-events-none opacity-50" : undefined}
             />
           </PaginationItem>
         </PaginationContent>

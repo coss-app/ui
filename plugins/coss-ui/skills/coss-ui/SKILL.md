@@ -18,7 +18,7 @@ coss 公司通用組件庫：65 個 Base UI 組件＋Tailwind v4＋一份 `globa
    - `<Button render={<a href="/tickets" />}>工單列表</Button>`
 4. **選單類的 `*Label` 必須放在 `*Group` 裡**（DropdownMenu、ContextMenu、Menubar 都一樣），單獨放會出錯。
 5. **Select 要在 Root 傳 `items`**（`{ value, label }` 陣列）才會在 Trigger 顯示文字，否則顯示的是 value。
-6. **調整外觀走 variant／size／`className`**，不改組件原始碼。`className` 只放版面（寬、間距、對齊），不用來改顏色與圓角——那些是設計規範決定的。
+6. **調整外觀走 variant／size／`className`**，不改組件原始碼。有 variant 的組件（Button、Badge、Alert、Input…）的 `className` 只放版面（寬、margin、對齊、定位），不用來改內距、顏色與圓角，要換外觀就換 variant／size。其他組件的 `className` 可加排版、語意文字色、`gap-*`；容器類（Card*、ScrollArea、Command、Empty…）可再加內距、邊框、圓角與底色。`@shadcn/lint` 的 `lint.json` 照這條規則檢查。
 7. **顏色只用語意 token class**：`bg-primary`、`text-muted-foreground`、`border-border`。不寫 HEX、不寫 `bg-[#…]`、不用 `bg-gray-500`、`text-black`、`bg-green-500` 這類 Tailwind 預設色。完整清單見 [tokens.md](references/tokens.md)。
 8. **按鈕內的圖示**加 `data-icon="inline-start"` 或 `"inline-end"`（內距會自動調整）：`<Button><PlusIcon data-icon="inline-start" />建立工單</Button>`。圖示用 `lucide-react`。
 9. **深色模式靠 `<html class="dark">`**，`dark:` 前綴跟著它走。用 token 就不必寫兩套顏色。
@@ -56,6 +56,7 @@ coss 公司通用組件庫：65 個 Base UI 組件＋Tailwind v4＋一份 `globa
 4. 寫完檢查：
    - 跑專案的 typecheck（會抓到 `asChild`、不存在的 variant／prop）。
    - 對改過的檔案或資料夾跑本 skill 的 `scripts/check-usage.mjs`（路徑相對於本 skill 資料夾）：`node <本 skill 資料夾>/scripts/check-usage.mjs src`。它抓型別檢查抓不到的：寫死的 HEX 與 Tailwind 任意色值、預設色票（`gray-600`、`green-500`）、純黑、`font-bold`、`asChild`、`data-[state=…]`、本地 `@/components/ui/` import。有違規就改成語意 token 再重跑；刻意例外才在該行加 `coss-ui-ignore` 註解。
+   - 專案若已接 `@shadcn/lint`（見 [setup.md](references/setup.md)「設計規範 lint」），跑 `npm run lint` 並修到零錯誤：它會指出在組件上改 padding、圓角、顏色的 `className`，並列出可改用的 variant／size。
    - 人工確認：`*Label` 在 `*Group` 內、一個畫面只有一個主要按鈕。
 5. 組件真的缺功能或有 bug：不要在專案裡複製修改，回報到 coss-app/ui（github.com/coss-app/ui）統一修。
 

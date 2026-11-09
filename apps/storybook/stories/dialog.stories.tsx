@@ -96,7 +96,7 @@ export const LongContent: Story = {
   render: () => (
     <Dialog>
       <DialogTrigger render={<Button variant="secondary" />}>查看處理紀錄</DialogTrigger>
-      <DialogContent className="max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-h-4/5 overflow-y-auto">
         <DialogHeader>
           <DialogTitle>處理紀錄</DialogTitle>
           <DialogDescription>工單 #1024「訂單未出貨」的完整處理歷程。</DialogDescription>

@@ -1,3 +1,4 @@
+/* eslint-disable shadcn/no-arbitrary-values, shadcn/no-inline-styles -- 文件頁需依資料動態設定色票與字級，不是消費端示範 */
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import globalsCss from "../../../../packages/ui/src/styles/globals.css?raw";

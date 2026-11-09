@@ -11,9 +11,13 @@
     "build-storybook": "npm run build-storybook -w @coss-app/docs",
     "changeset": "changeset",
     "release": "npm run build && changeset publish",
-    "manifest": "node scripts/build-manifest.mjs"
+    "manifest": "node scripts/build-manifest.mjs",
+    "lint": "eslint apps/storybook/stories"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.0"
+    "@changesets/cli": "^2.29.0",
+    "@shadcn/lint": "0.2.5",
+    "@typescript-eslint/parser": "^8.72.1",
+    "eslint": "^9.39.5"
   }
 }

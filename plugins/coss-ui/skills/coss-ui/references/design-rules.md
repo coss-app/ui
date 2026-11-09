@@ -67,6 +67,7 @@
 - **間距以 4px 為單位**，常用 4／8／10／16／20／30。面板內距 20（`p-5`）、彈窗內距 30、側欄左右 16。
 - **陰影**：一般面板不加陰影，靠 `bg-background`（底）與 `bg-card`（白色面板）的明度差分層。只有浮在內容上的東西（選單、彈窗、Toast）有陰影，且組件已內建；自己做的浮層用 `shadow-menu`／`shadow-float`。
 - 不替輸入框加預設框線，不替一般面板加外框。
+- **`className` 的範圍**：有 variant 的組件（Button、Badge、Alert、Input…）只放版面，外觀換 variant／size；其他組件可加排版、語意文字色、`gap-*`；容器類（Card*、ScrollArea、Command、Empty…）可再加內距、邊框、圓角、底色。範圍由 `@coss-app/ui/lint.json` 的 contracts 定義。
 
 ## 版面
 

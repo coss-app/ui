@@ -45,13 +45,14 @@ skill 內容由組件原始碼與 `globals.css` 產生（`npm run manifest`）�
 
 ## 📝 使用須知
 
-| 項目     | 說明                                                                                                      |
-| -------- | --------------------------------------------------------------------------------------------------------- |
-| Base UI  | 組件底層是 Base UI，不是 Radix；替換渲染元素用 `render`，不是 `asChild`                                   |
-| Next.js  | 不需要 `transpilePackages`，套件是編譯好的 JS 並保留 `"use client"`                                       |
-| 字體     | 先用 `--font-sans`（例如 next/font 的 Inter），沒設定時用 `Inter`，再退回 PingFang TC／Microsoft JhengHei |
-| 色彩變數 | 全部定義在 `packages/ui/src/styles/globals.css`，專案不需要新增                                           |
-| 套件名稱 | npmjs 的 scope 是 `@coss-app`，套件名稱是 `@coss-app/ui`                                                  |
+| 項目          | 說明                                                                                                      |
+| ------------- | --------------------------------------------------------------------------------------------------------- |
+| Base UI       | 組件底層是 Base UI，不是 Radix；替換渲染元素用 `render`，不是 `asChild`                                   |
+| Next.js       | 不需要 `transpilePackages`，套件是編譯好的 JS 並保留 `"use client"`                                       |
+| 字體          | 先用 `--font-sans`（例如 next/font 的 Inter），沒設定時用 `Inter`，再退回 PingFang TC／Microsoft JhengHei |
+| 色彩變數      | 全部定義在 `packages/ui/src/styles/globals.css`，專案不需要新增                                           |
+| 套件名稱      | npmjs 的 scope 是 `@coss-app`，套件名稱是 `@coss-app/ui`                                                  |
+| 設計規範 lint | 選用：`@shadcn/lint` 搭配套件內的 `lint.json`，檢查 `className` 與顏色；設定見 skill 的 `setup.md`        |
 
 ```tsx
 <Button render={<a href="/tickets" />}>工單列表</Button>
@@ -63,6 +64,7 @@ skill 內容由組件原始碼與 `globals.css` 產生（`npm run manifest`）�
 packages/ui/              # 發佈的套件 @coss-app/ui
   src/components/ui/      # 組件
   src/styles/globals.css  # 色彩變數與全域樣式
+  lint.json               # 給 @shadcn/lint 的設計規範規則（隨套件發佈）
   dist/                   # 建置產物（gitignored）
 apps/storybook/           # 文件站 ui.coss.com.tw（workspace：@coss-app/docs）
   stories/                # 每個組件一個 *.stories.tsx
@@ -74,6 +76,7 @@ plugins/coss-ui/          # Claude Code skill（repo 本身是 plugin marketplac
 scripts/                  # skill manifest 產生器、組件用途說明
 .changeset/               # 待發佈的版本變更紀錄
 .github/workflows/        # CI、文件站部署、發佈
+eslint.config.mjs         # stories 的 lint 設定
 DESIGN.md                 # 設計規範
 ```
 
@@ -86,6 +89,7 @@ DESIGN.md                 # 設計規範
 | `npm install`             | 安裝依賴                                          |
 | `npm run storybook`       | 啟動文件站，瀏覽全部組件（http://localhost:6006） |
 | `npm run typecheck`       | 型別檢查                                          |
+| `npm run lint`            | 用 `lint.json` 檢查 stories 的 `className` 與顏色 |
 | `npm run build`           | 建置套件到 `packages/ui/dist`                     |
 | `npm run build-storybook` | 建置文件站靜態檔                                  |
 | `npm run manifest`        | 重新產生 Claude Code skill 的組件索引與 token     |
@@ -94,12 +98,12 @@ DESIGN.md                 # 設計規範
 
 給 Claude Code 讀的專案規則，編輯對應檔案時自動載入；整體說明在 [CLAUDE.md](./CLAUDE.md)。
 
-| 名稱                                                               | 用途                                                                       |
-| ------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| [`claude-code-skill.md`](./.claude/rules/claude-code-skill.md)     | skill 維護：產生檔勿手改、plugin.json 不設 version、違規檢查腳本、範例驗證 |
-| [`globals-css.md`](./.claude/rules/globals-css.md)                 | globals.css 慣例：掃描來源、字體後備值、色彩 token 三處同步                |
-| [`storybook-branding.md`](./.claude/rules/storybook-branding.md)   | 文件站品牌：分頁標題、favicon、建置後改寫 `<title>`、靜態檔                |
-| [`ui-component-styles.md`](./.claude/rules/ui-component-styles.md) | 組件 class 慣例：輸入框、浮層、選中色、圓角、字重                          |
+| 名稱                                                               | 用途                                                                          |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| [`claude-code-skill.md`](./.claude/rules/claude-code-skill.md)     | skill 維護：產生檔勿手改、plugin.json 不設 version、檢查腳本與 lint.json 同步 |
+| [`globals-css.md`](./.claude/rules/globals-css.md)                 | globals.css 慣例：掃描來源、字體後備值、色彩 token 三處同步                   |
+| [`storybook-branding.md`](./.claude/rules/storybook-branding.md)   | 文件站品牌：分頁標題、favicon、建置後改寫 `<title>`、靜態檔                   |
+| [`ui-component-styles.md`](./.claude/rules/ui-component-styles.md) | 組件 class 慣例：輸入框、浮層、選中色、圓角、字重                             |
 
 ## 🛠️ 維護
 
