@@ -2,7 +2,7 @@
 
 跨專案的互動與版面規則：同一個功能在 PC 與手機該怎麼呈現、觸控怎麼處理、載入怎麼回饋。視覺（色彩、字級、圓角）見 [design-rules.md](design-rules.md)；兩個組件都像時怎麼選見 [decision-guide.md](decision-guide.md)。
 
-> **預定元件**：下表標「預定」的包裝元件（`ResponsiveDialog` 等）尚未收進 `@coss-app/ui`。在它們發佈前，用 `@coss-app/ui/hooks/use-mobile` 的 `useIsMobile()` 切換 `Dialog`／`Drawer`，內容抽成共用元件，行為照本文。**不要**為此另加 bottom sheet 套件。
+> **套件不提供「桌面 Dialog／手機 Drawer」的包裝元件**：各專案自行封裝，用 `@coss-app/ui/hooks/use-mobile` 的 `useIsMobile()` 或專案自己的 media query hook 切換 `Dialog`／`Drawer`，內容抽成共用元件，行為照本文。**不要**為此另加 bottom sheet 套件。
 
 ## 1. 斷點與判斷原則
 
@@ -17,19 +17,19 @@
 
 手機上不留浮動的下拉、選單、Popover。
 
-| 元件 | 桌面 `≥ md` | 手機 `< md` | 預定元件 |
-| --- | --- | --- | --- |
-| 短彈窗（確認、≤ 3 欄） | 置中 `Dialog` | 底部 `Drawer`，可下滑關閉；主要按鈕固定在底部並補 safe area | `ResponsiveDialog` |
-| 確認框（刪除、停用、放棄變更） | `AlertDialog` | 底部 `Drawer`；確認在上、取消在下，皆滿寬 | `ConfirmDialog` |
-| 長表單（新增資料、多欄位）；判斷標準與路由見下方「短彈窗或長表單？」 | 置中 `Dialog` | **全螢幕頁面**：路由切換、標題列左側返回鈕、送出鈕黏底；表單本體抽成共用元件兩邊共用 | — |
-| 表單下拉 `Select` | 浮動清單 | `Drawer`＋48px 選項列，選了就關、目前選項打勾；可分組、帶圖示與說明 | `ResponsiveSelect` |
-| 列表篩選 | 下拉膠囊 | 搜尋框＋「篩選」鈕（顯示已選數量）→ 面板列出各條件與「清除篩選」，點條件疊第二層選項 Drawer | `FilterSelect`、`FilterPanel` |
-| 日期 | `Popover`＋`Calendar` | `Drawer` | `DatePicker` |
-| 多選下拉（標籤、負責人等「點開才出現可複選清單」） | `Combobox` 多選（`ComboboxChips`） | `Drawer`＋48px 勾選列，頂端搜尋框（選項 > 10 必備），底部固定「確認」鈕（顯示已選數量）；勾選當下不關閉 | `ResponsiveMultiSelect` |
-| 動作選單 `DropdownMenu`、頭像選單 | 下拉（可有子選單） | `Drawer`；子選單（主題、語言）改成分段按鈕直接切換 | — |
-| 說明 ⓘ、表情等小面板 `Popover` | `Popover` | `Drawer`；本身已在 Drawer 內時改就地展開 | — |
-| 通知面板 | `Popover` | 由右往左滑出的整高 `Drawer`（`swipeDirection="right"`，往右滑關閉） | — |
-| 側欄 | 固定 260px | 左側抽屜（`Sidebar` 自動處理） | — |
+| 元件 | 桌面 `≥ md` | 手機 `< md` |
+| --- | --- | --- |
+| 短彈窗（確認、≤ 3 欄） | 置中 `Dialog` | 底部 `Drawer`，可下滑關閉；主要按鈕固定在底部並補 safe area |
+| 確認框（刪除、停用、放棄變更） | `AlertDialog` | 底部 `Drawer`；確認在上、取消在下，皆滿寬 |
+| 長表單（新增資料、多欄位）；判斷標準與路由見下方「短彈窗或長表單？」 | 置中 `Dialog` | **全螢幕頁面**：路由切換、標題列左側返回鈕、送出鈕黏底；表單本體抽成共用元件兩邊共用 |
+| 表單下拉 `Select` | 浮動清單 | `Drawer`＋48px 選項列，選了就關、目前選項打勾；可分組、帶圖示與說明 |
+| 列表篩選 | 下拉膠囊 | 搜尋框＋「篩選」鈕（顯示已選數量）→ 面板列出各條件與「清除篩選」，點條件疊第二層選項 Drawer |
+| 日期 | `Popover`＋`Calendar` | `Drawer` |
+| 多選下拉（標籤、負責人等「點開才出現可複選清單」） | `Combobox` 多選（`ComboboxChips`） | `Drawer`＋48px 勾選列，頂端搜尋框（選項 > 10 必備），底部固定「確認」鈕（顯示已選數量）；勾選當下不關閉 |
+| 動作選單 `DropdownMenu`、頭像選單 | 下拉（可有子選單） | `Drawer`；子選單（主題、語言）改成分段按鈕直接切換 |
+| 說明 ⓘ、表情等小面板 `Popover` | `Popover` | `Drawer`；本身已在 Drawer 內時改就地展開 |
+| 通知面板 | `Popover` | 由右往左滑出的整高 `Drawer`（`swipeDirection="right"`，往右滑關閉） |
+| 側欄 | 固定 260px | 左側抽屜（`Sidebar` 自動處理） |
 
 ### 短彈窗或長表單？
 

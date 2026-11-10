@@ -41,6 +41,7 @@ const preview: Preview = {
             "舊專案遷移",
             "主題與深色模式",
             "設計規範 Lint",
+            "UX 規則",
             "Claude Code Skill",
             "更新與版本",
             "貢獻組件",
