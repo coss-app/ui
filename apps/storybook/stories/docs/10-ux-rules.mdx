@@ -1,0 +1,185 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="使用手冊/UX 規則" />
+
+# UX 規則
+
+同一個功能在電腦和手機上該怎麼呈現、觸控怎麼處理、載入時怎麼回饋，公司各專案都照這一頁做，使用者換專案也不會重新學一次。視覺（色彩、字級、圓角）見「首頁」的設計原則與 repo 內的 `DESIGN.md`；兩個組件都像時怎麼選，見各組件頁與 Claude Code Skill 的選型指南。
+
+AI 助理用 <a href="/?path=/docs/使用手冊-claude-code-skill--docs" target="_top">Claude Code Skill</a> 時會自動讀到同一份規則（`ux-rules.md`），寫出來的畫面就會符合這裡的規範。
+
+> 套件不提供「桌面 Dialog、手機 Drawer」的包裝元件，各專案自行封裝（範例見下方「手機改 Drawer 的寫法」）。
+
+## 基本原則
+
+- **mobile-first**：先寫手機樣式，再用 `md:`、`lg:` 往上加。斷點沿用 Tailwind：手機 `< md`（768px）、平板 `md`–`lg`、桌面 `≥ lg`（1024px）。
+- **寬度決定版面，指標能力決定互動。** 彈窗用 Dialog 還是 Drawer、表格還是卡片，看寬度；「是不是觸控」看 `(hover)`、`(pointer)` media query 或 Tailwind 的 `pointer-coarse:`。不用 `navigator.userAgent`，也不用寬度推斷：iPad 同時有觸控與滑鼠。
+- 套件的 `useIsMobile()`（`@coss-app/ui/hooks/use-mobile`）是**寬度**判斷，只用在版面切換，不能拿來決定 hover 或點擊行為。
+- **驗收寬度**：375、768、1024、1440，再加真機。模擬器測不到 hover 殘留、點擊延遲、safe area 與軟鍵盤，只在桌面寬度看過不算完成。
+
+## 浮層與選擇器：手機一律底部 Drawer
+
+手機上不留浮動的下拉、選單、Popover。
+
+| 元件 | 桌面 `≥ md` | 手機 `< md` |
+| --- | --- | --- |
+| 短彈窗（確認、≤ 3 欄），如「轉派工單」 | 置中 `Dialog` | 底部 `Drawer`，可下滑關閉；主要按鈕固定在底部並補 safe area |
+| 確認框（刪除工單、停用帳號、放棄變更） | `AlertDialog` | 底部 `Drawer`；確認在上、取消在下，皆滿寬 |
+| 長表單（建立工單、多欄位） | 置中 `Dialog` | **全螢幕頁面**：換頁、標題列左側返回鈕、送出鈕黏在底部 |
+| 表單下拉 `Select`，如「指派給」 | 浮動清單 | `Drawer`＋48px 選項列，選了就關、目前選項打勾；可分組、帶圖示與說明 |
+| 列表篩選，如「狀態」「負責人」 | 下拉膠囊 | 搜尋框＋「篩選」鈕（顯示已選數量）→ 面板列出各條件與「清除篩選」，點條件疊第二層選項 Drawer |
+| 日期，如「到期日」 | `Popover`＋`Calendar` | `Drawer` |
+| 多選下拉，如「標籤」「協作人員」 | `Combobox` 多選（`ComboboxChips`） | `Drawer`＋48px 勾選列，頂端搜尋框，底部固定「確認」鈕（顯示已選數量）；勾選當下不關閉 |
+| 動作選單 `DropdownMenu`、頭像選單 | 下拉（可有子選單） | `Drawer`；子選單（主題、語言）改成分段按鈕直接切換 |
+| 說明 ⓘ、表情等小面板 `Popover` | `Popover` | `Drawer`；本身已在 Drawer 內時改就地展開 |
+| 通知面板 | `Popover` | 由右往左滑出的整高 `Drawer`（`swipeDirection="right"`，往右滑關閉） |
+| 側欄 | 固定 260px | 左側抽屜（`Sidebar` 自動處理） |
+
+補充規則：
+
+- **選項超過 10 個自動可搜尋**：桌面改 `Combobox`（頂端搜尋框），手機 `Drawer` 頂端搜尋框；比對選項文字與分組名稱。
+- **不疊 Drawer**：彈窗或 Drawer 裡不再開 Drawer。唯一例外是「篩選」面板內的選擇器、彈窗內的 `Select` 疊成第二層。彈窗內「選人」這類情境，直接在 Drawer 內列「搜尋框＋清單」。
+- **直接顯示在頁面上的 Checkbox、Radio 維持 inline**，不收進 Drawer。Radio 超過 6–7 個改 `Select`。
+- **「點開才出現」的複選清單走多選下拉**：選項超過 5–6 個的 Checkbox 群組不要整排攤在頁面上，改 `Combobox` 多選。單選 Drawer 是「選了就關」，多選要按「確認」才關。
+- `HoverCard`、`Tooltip` 只放補充資訊（觸控裝置看不到）；必要資訊要有點擊也能取得的替代。
+- `NativeSelect` 是不想引入 Drawer 時的簡易替代，不是首選。
+- 表單有未儲存變更時，離開前先跳確認框（放棄變更）。
+- 全螢幕圖片預覽、影片這類「內容本身」是例外：所有尺寸都全螢幕，不當彈窗也不當 Drawer。
+
+### 手機改 Drawer 的寫法
+
+用 `useIsMobile()` 切換，內容抽成共用元件，呼叫端不必分辨裝置：
+
+```tsx
+"use client";
+
+import type { ReactNode } from "react";
+import { useIsMobile } from "@coss-app/ui/hooks/use-mobile";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@coss-app/ui/components/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "@coss-app/ui/components/drawer";
+
+export function ResponsiveDialog({
+  open,
+  onOpenChange,
+  title,
+  children,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title: string;
+  children: ReactNode;
+}) {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <Drawer open={open} onOpenChange={onOpenChange} showSwipeHandle>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>{title}</DrawerTitle>
+          </DrawerHeader>
+          <div className="p-5">{children}</div>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
+        {children}
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+確認框、下拉、日期照同一個模式：桌面用對應的浮層，手機換 `Drawer`，選項列高 48px。
+
+## 短彈窗或長表單？
+
+**全部**符合才是短彈窗（手機用 Drawer）；任一條不符就是長表單（手機換頁）：
+
+- 欄位 ≤ 3 個，且都是單行輸入、下拉、日期這類短控制項。
+- 沒有 `Textarea`、檔案上傳、可新增或刪除的動態列、分步流程。
+- 內容在手機（375×667）開著軟鍵盤時仍放得下，不需要在 Drawer 內捲動。
+
+拿不準就當長表單。
+
+長表單的路由與行為：
+
+- **有獨立路由**（如 `/tickets/new`、`/people/[id]/edit`）。PC 與手機都能直接開網址、重新整理、分享連結；頁面自己在 server 端驗權限，無權就轉回列表。
+- **入口依點擊當下的寬度分流**：`≥ md` 開彈窗（不換路由），`< md` `router.push` 到該頁面。
+- **PC 直接開網址**：照樣顯示頁面版，不自動彈窗、不轉址。
+- **表單本體只寫一份**，抽成共用元件，用 `variant="dialog"` 或 `variant="page"` 區分外框；不要為兩種版面各寫一套欄位與驗證。
+- **頁面版外框**：標題列左側返回鈕、送出鈕黏在底部（補 safe area）。
+- **返回**：從站內點進來用 `router.back()`；直接開網址沒有上一頁，`replace` 回列表。送出成功也用 `replace` 回列表，避免返回時回到空白表單。
+- **未儲存變更**：返回鈕先跳「放棄變更」確認框；重新整理、關分頁用 `beforeunload` 擋。瀏覽器返回手勢與側欄連結攔不到，這是已知限制，不要硬擋。
+
+## 窄版版面
+
+| 版面 | 桌面 | 平板 | 手機 |
+| --- | --- | --- | --- |
+| 內容面板 | 四周留 16px、內距 20px | 同桌面 | 滿版、圓角歸零、內距 16px |
+| 列表／表格 | 表格＋篩選列 | 表格（可橫向捲動、首欄固定） | 卡片列表（標題＋狀態標籤＋兩行次要資訊）；篩選收進「篩選」面板 |
+| 三欄詳情（清單、對話、屬性） | 三欄並排 | 清單｜對話；屬性開底部 Drawer | 單欄逐層進入（清單到詳情，換頁，左上返回）；屬性開底部 Drawer |
+| Toast | 左下角 | 左下角 | 底部置中、左右各留 16px，避開 safe area |
+| 登入／註冊 | 雙欄卡片 | 同桌面 | 單欄，插圖隱藏 |
+
+## 觸控與輸入
+
+- **粗指標（`pointer-coarse:`）下可互動目標 ≥ 44px**，視覺可維持 40px，用內距或 `pointer-coarse:` 加大點擊區。手機選項列 48px。
+- **勿停用縮放**：不寫 `user-scalable=no`、`maximum-scale=1`。
+- **輸入框字級**：觸控裝置下 16px，否則 iOS 聚焦時會放大頁面。`globals.css` 已對 `input`、`textarea`、`select` 處理；元件有 `md:text-sm` 時，同時加 `md:pointer-coarse:text-base`（iPad 直放時才不會放大）。
+- **Enter 送出**（對話輸入框，如工單回覆）：
+  - 電腦（`(hover: hover) and (pointer: fine)`）：Enter 送出、Shift＋Enter 換行。
+  - 手機、iPad（含實體鍵盤）：Enter 換行。
+  - ⌘／Ctrl＋Enter 一律送出。
+  - **輸入法組字中不送出**（`event.isComposing` 或 `keyCode === 229`）。中文使用者選字按 Enter 會誤送。
+  - 一般表單的多行欄位不啟用 Enter 送出。
+- **hover 樣式只給能 hover 的裝置**（`@media (hover: hover)`），避免觸控後卡住 hover 狀態。
+
+## 視窗高度與 safe area
+
+- App 外框、底部固定 UI 用 `h-dvh`；首屏用 `min-h-svh`。不用 `h-screen`、`100vh`：手機網址列會讓高度溢出。
+- 設定 `viewport-fit=cover`，固定的頂列、底列、貼邊元素補 `env(safe-area-inset-*)`；手機橫放時左右也要補。
+
+## 載入與即時回饋
+
+**點了就要立刻有反應。**
+
+- **使用者的選擇立即生效**：分頁籤、篩選不等 server；資料回來後以 server 為準，失敗時回彈。
+- **內容區用骨架，不用整頁 spinner。** 骨架版型與真實內容一致（表格保留真實表頭、手機用卡片骨架），避免資料到達時跳版。
+- **只在真的有等待時顯示**：載入超過 200ms 才換成骨架，這段時間保留舊內容（不用 CSS `delay-*`，舊內容已卸載會變空白）；骨架一出現至少停留 400ms，避免一閃即逝。
+- **周邊保持可用**：工具列、搜尋框不卸載；會再觸發請求的控制項（分頁鈕）載入中停用，避免連點。
+- **按鈕送出**：按鈕內左側 `Spinner`、`disabled`、文字改進行式（「送出中」），不蓋全頁遮罩。
+- **首次載入的小區塊**失敗時要給錯誤與重試，不讓骨架一直轉。網址沒有實際變動就不導覽、不進入載入中。
+- **樂觀更新**（如工單回覆送出）：立即清空輸入框並顯示半透明的「傳送中」；失敗時淡出，把文字與附件放回輸入框並跳錯誤 toast。
+
+## 導覽與狀態保存
+
+- 列表的篩選、搜尋、頁碼放**網址參數**，重新整理與分享連結都能還原。
+- 列表到詳情的返回鈕：站內上一頁就是該列表時走 `history.back()`（保留捲動位置、篩選、頁碼）；否則開這個分頁上次看的列表網址並捲回。不用單純的 `<a href>` 當返回鈕。
+- **換頁轉場只做進場**：桌面淡入；手機往下一層由右滑入、返回由左滑入、同層只淡入。使用者偏好減少動態時只淡入。
+
+## 可及性
+
+- 互動元素用 `button`、`a`，不用可點的 `div`。純圖示鈕有 `aria-label`；裝飾圖示 `aria-hidden`。
+- 每個欄位有 label；錯誤用 `aria-invalid` 加 `aria-describedby` 關聯；必填不只靠顏色。
+- `Dialog`、`Drawer` 有標題（可 `sr-only`）、Esc 關閉、焦點陷阱，關閉後焦點回到觸發元素。
+- 狀態不只靠顏色（同時有文字或圖示）；淺色、深色模式文字對比都 ≥ 4.5:1。
+- 骨架容器 `role="status"`、`aria-busy="true"` 並附 `sr-only` 載入文字，骨架本體 `aria-hidden`；toast、未讀數等動態更新用適當等級的 `aria-live`。
+- 表格表頭用 `th scope`，可排序欄位加 `aria-sort`；`<html lang>` 依語系。
