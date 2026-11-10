@@ -16,7 +16,7 @@ const copy: Record<(typeof types)[number], { title: string; description: string 
 /** 掛載時先跳一則，畫面才有內容；固定 id 避免 StrictMode 重複新增 */
 function ShowOnMount({ id, children }: { id: string; children?: React.ReactNode }) {
   React.useEffect(() => {
-    // 子元件的 effect 比外層 Toaster（Provider）先跑，Provider 還沒訂閱 toast manager；延到下一輪再加
+    // 子組件的 effect 比外層 Toaster（Provider）先跑，Provider 還沒訂閱 toast manager；延到下一輪再加
     const timer = setTimeout(() => {
       toast.add({ id, title: "歡迎回來", description: "您有 5 張待處理工單。", type: "info", timeout: 0 });
     });

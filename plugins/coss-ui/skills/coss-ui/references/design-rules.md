@@ -30,7 +30,7 @@
 | 刪除、結束等破壞性動作 | `variant="destructive"` |
 | 文字連結式動作 | `variant="link"` |
 
-- **載入中**：按鈕內左側放 `<Spinner data-icon="inline-start" />`，按鈕 `disabled`，文字改進行式（「送出中」「寄送中」），不蓋全頁遮罩。
+- **載入中**：按下立即擋住重複送出；超過 300ms 才在按鈕內左側放 `<Spinner data-icon="inline-start" />`、文字改進行式（「送出中」「寄送中」），不蓋全頁遮罩。時機規則見 [ux-rules.md](ux-rules.md)。
 - **停用**不要自己改色，用 `disabled`，組件會處理（主要鈕換淡綠，其他半透明）。
 - 圖示：`data-icon="inline-start"` 放文字前、`inline-end` 放文字後，圖示用 `lucide-react`，不用自訂尺寸。
 
@@ -40,14 +40,14 @@
 - 輸入框高 40px、淡霧灰底、**沒有預設框線**；聚焦時才出現框線並轉白底，錯誤時紅框。不要為「看起來像輸入框」自己加 `border`。
 - 錯誤用組件的機制：`aria-invalid`＋`FieldError`／`FormMessage`，錯誤文字 14/600 珊瑚色，不要自己拼 `text-red-500`。
 - 說明文字用 `FieldDescription`／`FormDescription`，不要放在 placeholder 裡（placeholder 只放範例值）。
-- 必要時的送出鈕：送出中顯示 Spinner＋進行式文字並停用。
+- 送出鈕：送出中停用；超過 300ms 才顯示 Spinner＋進行式文字。
 
 ## 文字
 
 - 字體 Inter＋中文系統字，全站只用這一套，不另外指定 `font-family`。
 - **字重只用 400／500／600**：內文 400、標題／按鈕／標籤 600。不用 `font-bold`、`font-extrabold`。
 - 字距一律預設（0），不加 `tracking-*`。
-- 行高：單行元件 1，多行段落 1.5。
+- 行高：單行組件 1，多行段落 1.5。
 
 | 層級 | 大小 / 字重 | Tailwind 參考 |
 | --- | --- | --- |

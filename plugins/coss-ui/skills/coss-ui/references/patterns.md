@@ -6,7 +6,7 @@
 
 ## 1. 建立工單：彈窗＋驗證表單（Form）
 
-重點：`Form` 系列會自動把 zod 錯誤帶到 `FormMessage` 並設定 `aria-invalid`；送出中按鈕停用並顯示 Spinner；`DialogTrigger`／`DialogClose` 用 `render` 組合按鈕。
+重點：`Form` 系列會自動把 zod 錯誤帶到 `FormMessage` 並設定 `aria-invalid`；送出中按鈕立即停用，超過 300ms 才顯示 Spinner 與進行式文字（`useDelayedFlag`，避免快速完成時閃一下，見 [ux-rules.md](ux-rules.md)）；`DialogTrigger`／`DialogClose` 用 `render` 組合按鈕。
 
 ```tsx
 "use client";
@@ -51,6 +51,27 @@ const schema = z.object({
 
 type Values = z.infer<typeof schema>;
 
+/** active 持續超過 delay 才回傳 true；變成 true 後至少維持 minVisible，避免一閃即逝 */
+function useDelayedFlag(active: boolean, delay = 300, minVisible = 400) {
+  const [shown, setShown] = React.useState(false);
+  const shownAt = React.useRef(0);
+  React.useEffect(() => {
+    if (active) {
+      if (shown) return;
+      const timer = setTimeout(() => {
+        shownAt.current = Date.now();
+        setShown(true);
+      }, delay);
+      return () => clearTimeout(timer);
+    }
+    if (!shown) return;
+    const remaining = minVisible - (Date.now() - shownAt.current);
+    const timer = setTimeout(() => setShown(false), Math.max(0, remaining));
+    return () => clearTimeout(timer);
+  }, [active, shown, delay, minVisible]);
+  return shown;
+}
+
 export function CreateTicketDialog() {
   const [open, setOpen] = React.useState(false);
   const form = useForm<Values>({
@@ -58,6 +79,7 @@ export function CreateTicketDialog() {
     defaultValues: { customer: "", email: "", category: "", description: "" },
   });
   const submitting = form.formState.isSubmitting;
+  const showSpinner = useDelayedFlag(submitting);
 
   async function onSubmit(values: Values) {
     await new Promise((resolve) => setTimeout(resolve, 800)); // 換成實際 API
@@ -140,8 +162,8 @@ export function CreateTicketDialog() {
             <DialogFooter>
               <DialogClose render={<Button type="button" variant="outline" />}>取消</DialogClose>
               <Button type="submit" disabled={submitting}>
-                {submitting && <Spinner data-icon="inline-start" />}
-                {submitting ? "建立中" : "建立工單"}
+                {showSpinner && <Spinner data-icon="inline-start" />}
+                {showSpinner ? "建立中" : "建立工單"}
               </Button>
             </DialogFooter>
           </form>
@@ -497,7 +519,7 @@ export function AppShell({ pathname, children }: { pathname: string; children: R
 
 ## 5. 非同步操作回饋
 
-重點：按鈕送出中停用並顯示 Spinner；結果用 Toast，失敗要給原因；進行中的狀態用 `toast.promise` 一次涵蓋 loading → 成功／失敗。
+重點：按鈕送出中停用，超過 300ms 才顯示 Spinner（同範本 1 的 `useDelayedFlag`）；結果用 Toast，失敗要給原因；進行中的狀態用 `toast.promise` 一次涵蓋 loading → 成功／失敗。
 
 ```tsx
 "use client";
