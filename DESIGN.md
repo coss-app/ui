@@ -353,8 +353,9 @@ Figma 只有 1440 桌面版，窄版依下列規則推導。mobile-first：先�
 | Toast      | 左下角           | 左下角                       | 底部置中，左右各留 16px，避開安全區                                                |
 
 - 手機不留浮動的小選單與 popover；確認框也是底部 Sheet，確認鈕在上、取消在下，都滿寬。
-- 觸控目標至少 40×40px；選項列 48px。
+- 粗指標（觸控）下可互動目標至少 44px，視覺高度可維持 40px；選項列 48px。
 - 驗收寬度：375、768、1024、1440，再加真機。
+- 互動與 UX 細則（手機一律 Drawer、不疊 Sheet、選項 > 10 加搜尋、Enter 送出與輸入法、載入回饋）見 skill 的 `plugins/coss-ui/skills/coss-ui/references/ux-rules.md`。
 
 ## 6. Interaction & Motion
 

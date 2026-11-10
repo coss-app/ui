@@ -32,7 +32,7 @@ coss 公司通用組件庫：65 個 Base UI 組件＋Tailwind v4＋一份 `globa
 - **面板靠底色分層，不加陰影**：`Card` 本身就是白底、10px 圓角。只有浮層（選單、彈窗、Toast）有陰影，組件已內建。
 - **字重只用 400／500／600**，不用 `font-bold`。不用純黑文字，內文用 `text-foreground`，次要用 `text-muted-foreground`。
 - **輸入框預設沒有框線**，只在聚焦與錯誤時出現；錯誤用 `aria-invalid`，不要手寫紅框。
-- **手機優先**：觸控目標至少 40×40，手機上的短彈窗用 `Drawer`／`Sheet`，不是置中 `Dialog`。
+- **手機優先**：粗指標下觸控目標至少 44px；手機上的短彈窗、確認框、下拉、日期、選單一律底部 `Drawer`，不是置中 `Dialog` 或浮動 Popover／Select。完整規則見 [ux-rules.md](references/ux-rules.md)。
 - 細節與 DESIGN.md 的取捨見 [design-rules.md](references/design-rules.md)。
 
 ## 要找什麼，讀哪份
@@ -42,7 +42,8 @@ coss 公司通用組件庫：65 個 Base UI 組件＋Tailwind v4＋一份 `globa
 | 有哪些組件、各自 import 與 variant | [components.md](references/components.md)（自動產生） |
 | 兩個組件都像，不知選哪個（Dialog／Sheet／Drawer、Select／Combobox…） | [decision-guide.md](references/decision-guide.md) |
 | 色彩、圓角、陰影的 token 名稱與值 | [tokens.md](references/tokens.md)（自動產生） |
-| 視覺規範：顏色配對、字級、間距、響應式 | [design-rules.md](references/design-rules.md) |
+| 視覺規範：顏色配對、字級、間距 | [design-rules.md](references/design-rules.md) |
+| UX 規則：手機浮層與選擇器怎麼呈現（Drawer）、觸控與輸入、safe area、載入回饋、導覽、可及性 | [ux-rules.md](references/ux-rules.md) |
 | 可直接套用的整頁範本（工單表單、列表、對話、側欄版面） | [patterns.md](references/patterns.md) |
 | 新專案安裝、舊專案移除 GitHub Packages `.npmrc`、字體、深色模式、舊專案遷移 | [setup.md](references/setup.md) |
 

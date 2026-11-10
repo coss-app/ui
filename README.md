@@ -28,7 +28,7 @@ import { cn } from "@coss-app/ui/lib/utils";
 
 ## 🤖 Claude Code skill
 
-用 Claude Code 寫畫面時，安裝 `coss-ui` skill，讓 AI 知道組件選型、設計規範與 Base UI 寫法：
+用 Claude Code 寫畫面時，安裝 `coss-ui` skill，讓 AI 知道組件選型、設計規範、手機與觸控的 UX 規則，以及 Base UI 寫法：
 
 ```text
 /plugin marketplace add coss-app/ui
