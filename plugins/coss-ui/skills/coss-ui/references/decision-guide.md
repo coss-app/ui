@@ -14,14 +14,14 @@
 | 滑過就預覽（客戶資料摘要） | `HoverCard` | 只有滑鼠才看得到，不放必要資訊 |
 | 一句提示文字 | `Tooltip` | 只補充說明；圖示鈕一定要有 `aria-label` |
 
-響應式做法：桌面 `Dialog`、手機 `Drawer`。用 `@coss-app/ui/hooks/use-mobile` 的 `useIsMobile()` 切換，內容抽成共用元件。長表單在手機上改成整頁，不放彈窗。
+響應式做法：桌面 `Dialog`、手機 `Drawer`，確認框、下拉、日期、選單同理。用 `@coss-app/ui/hooks/use-mobile` 的 `useIsMobile()` 切換，內容抽成共用元件。長表單在手機上改成整頁，不放彈窗。完整規則（含不疊 Drawer、選項 > 10 加搜尋）見 [ux-rules.md](ux-rules.md)。
 
 ## 下拉選擇：Select／NativeSelect／Combobox／Command／DropdownMenu
 
 | 情境 | 用 |
 | --- | --- |
-| 選項少（約 10 個內）、不需搜尋、要最好的手機體驗 | `NativeSelect` |
-| 選項少、要統一的自訂樣式 | `Select`（Root 傳 `items`） |
+| 一般下拉選值（桌面 `Select`，手機改底部 `Drawer`＋48px 選項列） | `Select`（Root 傳 `items`） |
+| 不想引入 Drawer 的簡單表單、要原生手機選擇器 | `NativeSelect`（簡易替代，不是首選） |
 | 選項多、需要輸入搜尋、或可多選（標籤、負責人） | `Combobox`（多選用 `ComboboxChips`） |
 | 全域搜尋、跳頁、執行指令（Cmd+K） | `Command`（`CommandDialog`） |
 | 點一下出現「動作」清單（更多動作、轉派、刪除） | `DropdownMenu`，不是 Select |
@@ -42,11 +42,11 @@ Select 選的是「值」，DropdownMenu 觸發的是「動作」，不要互換
 | 前後有圖示、文字或按鈕（搜尋框、金額、單位） | `InputGroup`＋`InputGroupInput`＋`InputGroupAddon` |
 | 多行文字 | `Textarea`（要前後綴用 `InputGroupTextarea`） |
 | 驗證碼 | `InputOTP` |
-| 日期 | `Popover`＋`Calendar` |
+| 日期 | `Popover`＋`Calendar`（手機改 `Drawer`） |
 | 單一布林、需按送出才生效 | `Checkbox` |
 | 單一布林、切換後立即生效（啟用通知） | `Switch` |
 | 多個選項擇一且要全部看得到 | `RadioGroup`（超過 6–7 個改 Select） |
-| 多個選項可複選 | 多個 `Checkbox`，或 `Combobox` 多選 |
+| 多個選項可複選 | 5–6 個內用多個 `Checkbox` 直接列在頁面；更多用 `Combobox` 多選（手機 `Drawer`＋確認鈕，見 [ux-rules.md](ux-rules.md)） |
 | 數值範圍 | `Slider` |
 | 一組按鈕式切換（檢視模式、篩選） | `ToggleGroup`（單顆用 `Toggle`） |
 | 分步問答、滿意度調查 | `Questionnaire` |
