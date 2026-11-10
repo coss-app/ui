@@ -7,14 +7,14 @@
 | 情境 | 用 | 備註 |
 | --- | --- | --- |
 | 桌面上的一般任務（轉派工單、編輯資料） | `Dialog` | 置中、25px 圓角；可點遮罩或按 ✕ 關閉 |
-| 不可逆或需明確確認（刪除、結案、離開未存檔） | `AlertDialog` | 點遮罩不會關閉；必須按確認或取消 |
+| 不可復原的動作（刪除、離開未存檔） | `AlertDialog` | 點遮罩不會關閉；必須按確認或取消。可復原的動作（停用、封存）不跳確認，直接執行並給「復原」toast |
 | 從邊緣滑入的長內容（工單詳情、篩選條件、編輯面板） | `Sheet` | 桌面優先；用 `side` 指定邊 |
 | 手機底部面板、需要手勢拖曳關閉 | `Drawer` | 手機優先；方向用 `swipeDirection`（不是 vaul 的 `direction`） |
 | 貼著觸發元素的小面板（篩選、日期、快速表單） | `Popover` | 手機上不留 popover，改 `Drawer` |
 | 滑過就預覽（客戶資料摘要） | `HoverCard` | 只有滑鼠才看得到，不放必要資訊 |
 | 一句提示文字 | `Tooltip` | 只補充說明；圖示鈕一定要有 `aria-label` |
 
-響應式做法：桌面 `Dialog`、手機 `Drawer`，確認框、下拉、日期、選單同理。用 `@coss-app/ui/hooks/use-mobile` 的 `useIsMobile()` 切換，內容抽成共用元件。長表單在手機上改成整頁，不放彈窗。完整規則（含不疊 Drawer、選項 > 10 加搜尋）見 [ux-rules.md](ux-rules.md)。
+響應式做法：桌面 `Dialog`、手機 `Drawer`，確認框、下拉、日期、選單同理。用 `@coss-app/ui/hooks/use-mobile` 的 `useIsMobile()` 切換，內容抽成共用組件。長表單在手機上改成整頁，不放彈窗。完整規則（含不疊 Drawer、選項 > 10 加搜尋）見 [ux-rules.md](ux-rules.md)。
 
 ## 下拉選擇：Select／NativeSelect／Combobox／Command／DropdownMenu
 
