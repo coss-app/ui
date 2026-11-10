@@ -17,6 +17,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 | 寫死色碼或用 `bg-green-500`、`text-gray-600` | 只用語意 token（`bg-primary`、`text-muted-foreground`），深色模式自動切換 |
 | 到處放綠色按鈕、用綠色表示選中 | 綠色只給主要動作與目前位置，選中用資訊藍 |
 | 不知道 Dialog、Sheet、Drawer 或 Select、Combobox 該選哪個 | 有選型表，依情境決定 |
+| 手機上仍用置中 Dialog、浮動下拉，觸控目標太小、輸入框被 iOS 放大 | 手機一律底部 Drawer，粗指標下目標 ≥ 44px，照 UX 規則處理 |
 | 忘了 Select 要傳 `items`、選單的 `Label` 要放在 `Group` 內 | 規則寫在 skill 裡，寫之前就會讀到 |
 
 ## 安裝
@@ -76,7 +77,8 @@ AI 會依需求只讀需要的那份：
 | `components.md` | 全部組件的用途、import 寫法、variant 清單與文件連結（自動產生） |
 | `decision-guide.md` | 選型：彈窗、下拉選擇、表單、回饋、導覽、內容容器、對話 |
 | `tokens.md` | 色彩、圓角、陰影的 token 名稱與淺色／深色值（自動產生） |
-| `design-rules.md` | 顏色配對、按鈕用法、表單、字級、間距、響應式 |
+| `design-rules.md` | 顏色配對、按鈕用法、表單、字級、間距 |
+| `ux-rules.md` | UX 規則：手機浮層與選擇器一律 Drawer、短彈窗或長表單、觸控與輸入、safe area、載入回饋、導覽、可及性（同 <a href="/?path=/docs/使用手冊-ux-規則--docs" target="_top">UX 規則</a>） |
 | `patterns.md` | 可直接套用的範本：建立工單表單、工單列表、客服對話、後台側欄、非同步回饋 |
 | `setup.md` | 新專案安裝、字體、深色模式、舊專案遷移 |
 
