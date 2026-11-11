@@ -5,62 +5,62 @@ description: 在 React 專案使用 coss 公司組件庫 @coss-app/ui（Base UI 
 
 # coss UI（`@coss-app/ui`）
 
-coss 公司通用組件庫：65 個 Base UI 組件＋Tailwind v4＋一份 `globals.css` token。文件站（可操作範例與 props）：https://ui.coss.com.tw
+coss 公司通用組件庫：65 個 Base UI 組件＋Tailwind v4＋一份 `globals.css` token。文件站（範例與 props）：https://ui.coss.com.tw
 
-這不是 Radix 版 shadcn。憑 shadcn 的記憶寫會出錯，先照下面的規則。
+這不是 Radix 版 shadcn。憑 shadcn 的記憶寫會出錯，先照下列規則。
 
 ## 硬規則
 
-1. **import 一律走套件路徑**：`import { Button } from "@coss-app/ui/components/button";`。檔名是 kebab-case（`button-group`、`alert-dialog`）。不從 `@/components/ui/...` 引、不複製組件原始碼到專案、不新增本地同名組件。
-2. **全域 CSS 只有一行**：`@import "@coss-app/ui/globals.css";`（已含 tailwindcss，不要再 import 一次）。
+1. **import 一律走套件路徑**：`import { Button } from "@coss-app/ui/components/button";`，檔名 kebab-case（`button-group`、`alert-dialog`）。不從 `@/components/ui/...` 引、不複製組件原始碼到專案、不新增本地同名組件。
+2. **全域 CSS 只有一行**：`@import "@coss-app/ui/globals.css";`（已含 tailwindcss，不再 import 一次）。
 3. **Base UI 組合用 `render`，不用 `asChild`**：
    - `<DialogTrigger render={<Button />}>開啟</DialogTrigger>`
    - `<Button render={<a href="/tickets" />}>工單列表</Button>`
-4. **選單類的 `*Label` 必須放在 `*Group` 裡**（DropdownMenu、ContextMenu、Menubar 都一樣），單獨放會出錯。
-5. **Select 要在 Root 傳 `items`**（`{ value, label }` 陣列）才會在 Trigger 顯示文字，否則顯示的是 value。
-6. **調整外觀走 variant／size／`className`**，不改組件原始碼。有 variant 的組件（Button、Badge、Alert、Input…）的 `className` 只放版面（寬、margin、對齊、定位），不用來改內距、顏色與圓角，要換外觀就換 variant／size。其他組件的 `className` 可加排版、語意文字色、`gap-*`；容器類（Card*、ScrollArea、Command、Empty…）可再加內距、邊框、圓角與底色。`@shadcn/lint` 的 `lint.json` 照這條規則檢查。
-7. **顏色只用語意 token class**：`bg-primary`、`text-muted-foreground`、`border-border`。不寫 HEX、不寫 `bg-[#…]`、不用 `bg-gray-500`、`text-black`、`bg-green-500` 這類 Tailwind 預設色。完整清單見 [tokens.md](references/tokens.md)。
-8. **按鈕內的圖示**加 `data-icon="inline-start"` 或 `"inline-end"`（內距會自動調整）：`<Button><PlusIcon data-icon="inline-start" />建立工單</Button>`。圖示用 `lucide-react`。
+4. **選單類的 `*Label` 必須放在 `*Group` 內**（DropdownMenu、ContextMenu、Menubar 皆同），單獨放會出錯。
+5. **`Select` 在 Root 傳 `items`**（`{ value, label }` 陣列），Trigger 才顯示文字；否則顯示 value。
+6. **調整外觀走 variant／size／`className`**，不改組件原始碼。有 variant 的組件（Button、Badge、Alert、Input…）的 `className` 只放版面（寬、margin、對齊、定位），不改內距、顏色、圓角，要換外觀就換 variant／size。其他組件的 `className` 可加排版、語意文字色、`gap-*`；容器類（Card*、ScrollArea、Command、Empty…）可再加內距、邊框、圓角、底色。`@shadcn/lint` 的 `lint.json` 照此規則檢查。
+7. **顏色只用語意 token class**：`bg-primary`、`text-muted-foreground`、`border-border`。不寫 HEX、`bg-[#…]`，不用 `bg-gray-500`、`text-black`、`bg-green-500` 等 Tailwind 預設色。清單見 [tokens.md](references/tokens.md)。
+8. **按鈕內圖示**加 `data-icon="inline-start"` 或 `"inline-end"`（內距自動調整）：`<Button><PlusIcon data-icon="inline-start" />建立工單</Button>`。圖示用 `lucide-react`。
 9. **深色模式靠 `<html class="dark">`**，`dark:` 前綴跟著它走。用 token 就不必寫兩套顏色。
-10. **樣式自訂的狀態選擇器**是 `data-open`、`data-checked`（Base UI），不是 Radix 的 `data-[state=open]`。
+10. **狀態選擇器**是 `data-open`、`data-checked`（Base UI），不是 Radix 的 `data-[state=open]`。
 
-## 設計規範（寫畫面時的判斷）
+## 設計判斷
 
-- **綠色（`primary`）只給主要動作與「目前所在位置」**。一個畫面只放一個主要按鈕（`<Button>` 預設）。次要用 `variant="outline"`，輔助用 `secondary`，列表列上的動作用 `neutral`，圖示鈕用 `ghost`。
-- **資訊用藍色**：連結、勾選、選中、處理中。不用綠色表示「選中」。
-- **狀態用 Badge／Alert 的 variant**，且一律同時有文字：待受理＝`warning`、處理中＝`info`、已結案／成功＝`success`、逾期／失敗＝`destructive`、分類＝`default`。
-- **面板靠底色分層，不加陰影**：`Card` 本身就是白底、10px 圓角。只有浮層（選單、彈窗、Toast）有陰影，組件已內建。
-- **字重只用 400／500／600**，不用 `font-bold`。不用純黑文字，內文用 `text-foreground`，次要用 `text-muted-foreground`。
-- **輸入框預設沒有框線**，只在聚焦與錯誤時出現；錯誤用 `aria-invalid`，不要手寫紅框。
-- **手機優先**：粗指標下觸控目標至少 44px；手機上的短彈窗、確認框、下拉、日期、選單一律底部 `Drawer`，不是置中 `Dialog` 或浮動 Popover／Select。完整規則見 [ux-rules.md](references/ux-rules.md)。
-- 細節與 DESIGN.md 的取捨見 [design-rules.md](references/design-rules.md)。
+- 綠色（`primary`）只給主要動作與「目前所在位置」。一個畫面一個主要按鈕（`<Button>` 預設）；次要 `variant="outline"`，輔助 `secondary`，列表列動作 `neutral`，圖示鈕 `ghost`。
+- 資訊用藍色：連結、勾選、選中、處理中。選中不用綠色。
+- 狀態用 Badge／Alert 的 variant，且一律附文字：待受理＝`warning`、處理中＝`info`、已結案／成功＝`success`、逾期／失敗＝`destructive`、分類＝`default`。
+- 面板靠底色分層，不加陰影：`Card` 本身就是白底、10px 圓角。只有浮層（選單、彈窗、Toast）有陰影（組件已內建）。
+- 字重只用 400／500／600，不用 `font-bold`；不用純黑文字，內文 `text-foreground`，次要 `text-muted-foreground`。
+- 輸入框預設無框線，只在聚焦與錯誤時出現；錯誤用 `aria-invalid`，不手寫紅框。
+- 手機優先：粗指標下觸控目標 ≥ 44px；手機上的短彈窗、確認框、下拉、日期、選單一律底部 `Drawer`，不用置中 `Dialog` 或浮動 Popover／Select。完整規則見 [ux-rules.md](references/ux-rules.md)。
+- 其餘細節見 [design-rules.md](references/design-rules.md)。
 
 ## 要找什麼，讀哪份
 
 | 需求 | 讀 |
 | --- | --- |
 | 有哪些組件、各自 import 與 variant | [components.md](references/components.md)（自動產生） |
-| 兩個組件都像，不知選哪個（Dialog／Sheet／Drawer、Select／Combobox…） | [decision-guide.md](references/decision-guide.md) |
+| 兩個組件都像、不知選哪個（Dialog／Sheet／Drawer、Select／Combobox…） | [decision-guide.md](references/decision-guide.md) |
 | 色彩、圓角、陰影的 token 名稱與值 | [tokens.md](references/tokens.md)（自動產生） |
 | 視覺規範：顏色配對、字級、間距 | [design-rules.md](references/design-rules.md) |
-| UX 規則：手機浮層與選擇器怎麼呈現（Drawer）、資料呈現（截斷、空狀態）、觸控與手勢、safe area、載入回饋、動態、可及性 | [ux-rules.md](references/ux-rules.md) |
-| 可直接套用的整頁範本（工單表單、列表、對話、側欄版面） | [patterns.md](references/patterns.md) |
+| UX 規則：手機浮層與選擇器（Drawer）、資料呈現、觸控與輸入法、表單行為（驗證時機、autocomplete）、手勢、safe area 與軟鍵盤、載入回饋與錯誤狀態、連結與快捷鍵、文案、動態、可及性 | [ux-rules.md](references/ux-rules.md) |
+| 整頁範本（工單表單、列表、對話、側欄版面） | [patterns.md](references/patterns.md) |
 | 新專案安裝、舊專案移除 GitHub Packages `.npmrc`、字體、深色模式、舊專案遷移 | [setup.md](references/setup.md) |
 
-某個組件的完整 props 與互動範例，以文件站該組件頁為準：`https://ui.coss.com.tw/?path=/docs/<分類>-<組件>--docs`（連結在 components.md 每個組件下方）。
+組件完整 props 與互動範例以文件站該組件頁為準：`https://ui.coss.com.tw/?path=/docs/<分類>-<組件>--docs`（連結在 components.md 每個組件下方）。
 
 ## 工作方式
 
-1. 先看專案 `package.json` 的 `@coss-app/ui` 版本，與 references 標示的版本比對。專案版本較舊時，新組件可能不存在；import 失敗先檢查這點，不要自己補一個本地組件。
-2. 用到不熟的組件，先查 components.md 與 decision-guide.md，再動手。**要精確的 props 與型別**，直接讀專案裡的 `node_modules/@coss-app/ui/dist/components/ui/<檔名>.d.ts`：它一定對得上專案安裝的版本，比文件可靠。
-3. 表單：簡單表單用 `Field` 系列；要 zod 驗證、錯誤訊息自動帶出，用 `Form`（react-hook-form）。兩者不混用在同一個表單。
+1. 比對專案 `package.json` 的 `@coss-app/ui` 版本與 references 標示的版本。專案版本較舊時新組件可能不存在；import 失敗先查這點，不自己補本地組件。
+2. 用到不熟的組件，先查 components.md 與 decision-guide.md 再動手。要精確的 props 與型別，讀專案內 `node_modules/@coss-app/ui/dist/components/ui/<檔名>.d.ts`（必定對得上已安裝版本，比文件可靠）。
+3. 表單：簡單表單用 `Field` 系列；要 zod 驗證與自動帶出錯誤用 `Form`（react-hook-form）。同一表單不混用兩者。
 4. 寫完檢查：
-   - 跑專案的 typecheck（會抓到 `asChild`、不存在的 variant／prop）。
-   - 對改過的檔案或資料夾跑本 skill 的 `scripts/check-usage.mjs`（路徑相對於本 skill 資料夾）：`node <本 skill 資料夾>/scripts/check-usage.mjs src`。它抓型別檢查抓不到的：寫死的 HEX 與 Tailwind 任意色值、預設色票（`gray-600`、`green-500`）、純黑、`font-bold`、`asChild`、`data-[state=…]`、本地 `@/components/ui/` import。有違規就改成語意 token 再重跑；刻意例外才在該行加 `coss-ui-ignore` 註解。
-   - 專案若已接 `@shadcn/lint`（見 [setup.md](references/setup.md)「設計規範 lint」），跑 `npm run lint` 並修到零錯誤：它會指出在組件上改 padding、圓角、顏色的 `className`，並列出可改用的 variant／size。
+   - 跑專案 typecheck（抓 `asChild`、不存在的 variant／prop）。
+   - 對改過的檔案或資料夾跑 `node <本 skill 資料夾>/scripts/check-usage.mjs src`。它抓型別檢查抓不到的：寫死 HEX 與 Tailwind 任意色值、預設色票（`gray-600`、`green-500`）、純黑、`font-bold`、`asChild`、`data-[state=…]`、本地 `@/components/ui/` import。有違規就改成語意 token 再重跑；刻意例外在該行加 `coss-ui-ignore` 註解。
+   - 專案已接 `@shadcn/lint`（見 [setup.md](references/setup.md)「設計規範 lint」）時，跑 `npm run lint` 修到零錯誤：它指出在組件上改 padding、圓角、顏色的 `className`，並列出可改用的 variant／size。
    - 人工確認：`*Label` 在 `*Group` 內、一個畫面只有一個主要按鈕。
-5. 組件真的缺功能或有 bug：不要在專案裡複製修改，回報到 coss-app/ui（github.com/coss-app/ui）統一修。
+5. 組件缺功能或有 bug：不在專案內複製修改，回報到 coss-app/ui（github.com/coss-app/ui）統一修。
 
 ## 文字與情境
 
-介面文字、範例與錯誤訊息用繁體中文（台灣）。範例情境偏客服工單系統（工單、客戶、客服人員、SLA）。
+介面文字、範例、錯誤訊息用繁體中文（台灣）。範例情境偏客服工單系統（工單、客戶、客服人員、SLA）。
