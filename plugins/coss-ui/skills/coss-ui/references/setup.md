@@ -1,6 +1,6 @@
 # 安裝與設定
 
-完整圖文手冊在文件站「使用手冊」：https://ui.coss.com.tw 。這裡只留 agent 動手時需要的步驟。
+圖文手冊在文件站「使用手冊」：https://ui.coss.com.tw 。本檔只留 agent 動手需要的步驟。
 
 ## 前置
 
@@ -8,13 +8,13 @@
 | --- | --- |
 | Node.js | 22 以上 |
 | React | 18.2 或 19 |
-| Tailwind CSS | v4（v3 專案要先升級，見下方「舊專案遷移」） |
+| Tailwind CSS | v4（v3 專案先升級，見「舊專案遷移」） |
 
-`@coss-app/ui` 是 npmjs 的公開套件，**安裝不需要 token 也不需要 `.npmrc`**：`npm install @coss-app/ui`。
+`@coss-app/ui` 是 npmjs 公開套件，安裝不需要 token 或 `.npmrc`：`npm install @coss-app/ui`。
 
 ## 安裝失敗（401／404）
 
-以前用過 GitHub Packages 版本的專案，`.npmrc` 可能還留著下面兩行，會讓 npm 往 GitHub Packages 找套件。**刪掉這兩行**（檔案只剩這兩行就整個刪掉），再 `npm install @coss-app/ui@latest`；CI、Vercel、Cloudflare、Docker 的 `NODE_AUTH_TOKEN`、`packages: read` 設定也一併移除：
+曾用 GitHub Packages 版的專案，`.npmrc` 可能殘留下列兩行，使 npm 往 GitHub Packages 找套件。刪除這兩行（檔案只剩這兩行就整個刪掉），再 `npm install @coss-app/ui@latest`；CI、Vercel、Cloudflare、Docker 的 `NODE_AUTH_TOKEN`、`packages: read` 設定也一併移除：
 
 ```ini
 @coss-app:registry=https://npm.pkg.github.com
@@ -69,8 +69,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-- 組件已標記 `"use client"`，可直接在 Server Component 渲染；傳事件處理函式時，呼叫端才需要是 Client Component。
-- 不需要 `transpilePackages`，套件發佈的是編譯好的 JS。
+- 組件已標 `"use client"`，可直接在 Server Component 渲染；傳事件處理函式時，呼叫端才需是 Client Component。
+- 不需要 `transpilePackages`（套件發佈編譯後的 JS）。
 
 ### Vite＋React
 
@@ -81,22 +81,25 @@ npm install @coss-app/ui
 npm install -D tailwindcss @tailwindcss/vite
 ```
 
-`vite.config.ts` 加入 `tailwindcss()` plugin（`import tailwindcss from "@tailwindcss/vite"`），`src/index.css` 整個換成 `@import "@coss-app/ui/globals.css";`。字體沒設定 `--font-sans` 時會找名為 `Inter` 的字型，沒載入就退回中文系統字；要載入 Inter，在 `index.html` 加 Google Fonts 的 `<link>`（權重 400;500;600）。`src/main.tsx` 以 `TooltipProvider`、`Toaster` 包住 `<App />`；深色模式在 `<html>` 加 `class="dark"`。
+- `vite.config.ts` 加 `tailwindcss()` plugin（`import tailwindcss from "@tailwindcss/vite"`）。
+- `src/index.css` 整個換成 `@import "@coss-app/ui/globals.css";`。
+- 字體：未設 `--font-sans` 時找名為 `Inter` 的字型，沒載入就退回中文系統字；要載入 Inter，在 `index.html` 加 Google Fonts `<link>`（權重 400;500;600）。
+- `src/main.tsx` 以 `TooltipProvider`、`Toaster` 包住 `<App />`；深色模式在 `<html>` 加 `class="dark"`。
 
 ## 設計規範 lint（@shadcn/lint）
 
-使用者版說明在文件站「使用手冊／設計規範 Lint」（https://ui.coss.com.tw）。
+使用者版說明在文件站「使用手冊／設計規範 Lint」。
 
-`@coss-app/ui/lint.json`（0.2.0 起隨套件發佈）是給 [`@shadcn/lint`](https://github.com/shadcn-ui/lint) 用的規則：`className` 只放版面、顏色只用語意 token、不寫任意值。違規訊息會列出組件實際有的 variant／size。需要 Node 20.19+、ESLint 9.30+（或 Oxlint 1.80+）。
+`@coss-app/ui/lint.json`（0.2.0 起隨套件發佈）是給 [`@shadcn/lint`](https://github.com/shadcn-ui/lint) 的規則：`className` 只放版面、顏色只用語意 token、不寫任意值。違規訊息會列出組件實際有的 variant／size。需 Node 20.19+、ESLint 9.30+（或 Oxlint 1.80+）。
 
-### ESLint（Next.js 預設就有 ESLint）
+### ESLint（Next.js 預設就有）
 
 ```bash
 npm i -D -E @shadcn/lint@0.2.5
 npm i -D eslint @typescript-eslint/parser
 ```
 
-**合併進專案既有的 `eslint.config.mjs`**（保留 `create-next-app` 的 `eslint-config-next`），不要整份覆蓋。加一個設定物件：
+合併進專案既有的 `eslint.config.mjs`（保留 `create-next-app` 的 `eslint-config-next`），不整份覆蓋。加一個設定物件：
 
 ```js
 import { plugin as shadcn } from "@shadcn/lint";
@@ -113,7 +116,7 @@ import policy from "@coss-app/ui/lint.json" with { type: "json" };
 }
 ```
 
-`package.json` 加 `"lint": "eslint ."`（Next.js 16 起 `next lint` 已移除，用 `eslint .`）。
+`package.json` 加 `"lint": "eslint ."`（Next.js 16 起 `next lint` 已移除）。
 
 ### Oxlint
 
@@ -132,23 +135,23 @@ import policy from "@coss-app/ui/lint.json" with { type: "json" };
 }
 ```
 
-Oxlint 的 `extends` 不繼承 `settings`，所以 `settings` 要自己寫一份（上面就是 `lint.json` 的內容）。
+Oxlint 的 `extends` 不繼承 `settings`，所以 `settings` 要自己寫一份（即上面 `lint.json` 的內容）。
 
 ### 之後
 
-- 在專案的 `AGENTS.md`／`CLAUDE.md` 加一行：「改完跑 `npm run lint`，修到零錯誤」。
-- `themeImports` 少了就會把 `bg-primary` 當成未宣告的顏色；若看到整批 token 被誤報，先檢查它。
-- 錯誤出現 `This project's cn is …` 的提示只是資訊，不影響結果。
+- 在專案 `AGENTS.md`／`CLAUDE.md` 加一行：「改完跑 `npm run lint`，修到零錯誤」。
+- `themeImports` 缺少會把 `bg-primary` 當成未宣告顏色；整批 token 被誤報時先查它。
+- 出現 `This project's cn is …` 只是資訊，不影響結果。
 - 引用組件匯出的樣式函式（如 `navigationMenuTriggerStyle()`）會被 `require-static-classes` 回報；那是官方用法，在該行加 `eslint-disable-next-line shadcn/require-static-classes -- 原因`。
-- `lint.json` 與 `check-usage.mjs` 互補：lint 管組件的 `className` 與顏色；`check-usage.mjs` 另外抓 `asChild`、`data-[state=…]`、本地 `@/components/ui/` import（沒裝 ESLint 的專案也能跑）。
+- `lint.json` 與 `check-usage.mjs` 互補：lint 管組件的 `className` 與顏色；`check-usage.mjs` 另抓 `asChild`、`data-[state=…]`、本地 `@/components/ui/` import（沒裝 ESLint 的專案也能跑）。
 
 ## 深色模式
 
-`<html class="dark">` 即切換。Next.js 用 `next-themes`（`attribute="class"`）。`dark:` 前綴跟著 `.dark` class 走。
+`<html class="dark">` 即切換；`dark:` 前綴跟著 `.dark` class。Next.js 用 `next-themes`（`attribute="class"`）。
 
 ## 微調 token
 
-在 import 之後覆寫變數即可，不改套件：
+在 import 之後覆寫變數，不改套件：
 
 ```css
 @import "@coss-app/ui/globals.css";
@@ -158,13 +161,13 @@ Oxlint 的 `extends` 不繼承 `settings`，所以 `settings` 要自己寫一份
 }
 ```
 
-不要改 `--primary` 等品牌色，會偏離公司規範。需要新顏色，請到 coss-app/ui 提出，統一加進套件。
+不改 `--primary` 等品牌色（會偏離公司規範）。需要新顏色，到 coss-app/ui 提出，統一加進套件。
 
 ## 舊專案遷移（shadcn Radix 版 → @coss-app/ui）
 
 1. Tailwind 必須是 v4。
 2. `npm install @coss-app/ui`，全域 CSS 換成 `@import "@coss-app/ui/globals.css";`。
-3. 逐一把 `@/components/ui/xxx` 的 import 改成 `@coss-app/ui/components/xxx`，確認沒有引用後刪除本地副本。
+3. 逐一把 `@/components/ui/xxx` import 改成 `@coss-app/ui/components/xxx`，確認沒有引用後刪除本地副本。
 4. 依下表改 Radix 寫法：
 
 | 舊寫法（Radix） | 新寫法（Base UI） |

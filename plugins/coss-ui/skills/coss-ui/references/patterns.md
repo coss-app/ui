@@ -1,12 +1,12 @@
 # 客服情境範本
 
-可直接複製改名的整頁寫法。每段都是完整檔案（含 import），已通過 TypeScript 型別檢查。範例文字是繁體中文客服工單情境，換成實際需求時保留結構、換掉文案與資料。
+整頁範本，可複製改名。每段為完整檔案（含 import），已通過 TypeScript 型別檢查。範例為繁體中文客服工單情境；套用時保留結構，替換文案與資料。
 
 直接依賴：`lucide-react`。第一個範本另需專案自行安裝 `react-hook-form`、`zod`、`@hookform/resolvers`。
 
 ## 1. 建立工單：彈窗＋驗證表單（Form）
 
-重點：`Form` 系列會自動把 zod 錯誤帶到 `FormMessage` 並設定 `aria-invalid`；送出中按鈕立即停用，超過 300ms 才顯示 Spinner 與進行式文字（`useDelayedFlag`，避免快速完成時閃一下，見 [ux-rules.md](ux-rules.md)）；`DialogTrigger`／`DialogClose` 用 `render` 組合按鈕。
+重點：`Form` 系列自動把 zod 錯誤帶到 `FormMessage` 並設 `aria-invalid`；送出中按鈕立即停用，Spinner 與進行式文字延遲顯示（`useDelayedFlag`，時機見 [ux-rules.md](ux-rules.md)「9」）；`DialogTrigger`／`DialogClose` 用 `render` 組合按鈕。
 
 ```tsx
 "use client";
@@ -519,7 +519,7 @@ export function AppShell({ pathname, children }: { pathname: string; children: R
 
 ## 5. 非同步操作回饋
 
-重點：按鈕送出中停用，超過 300ms 才顯示 Spinner（同範本 1 的 `useDelayedFlag`）；結果用 Toast，失敗要給原因；進行中的狀態用 `toast.promise` 一次涵蓋 loading → 成功／失敗。
+重點：按鈕送出中停用，Spinner 延遲顯示（同範本 1 的 `useDelayedFlag`）；結果用 Toast，失敗要給原因；`toast.promise` 一次涵蓋 loading → 成功／失敗。
 
 ```tsx
 "use client";
