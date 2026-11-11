@@ -4,9 +4,16 @@
 
 直接依賴：`lucide-react`。第一個範本另需專案自行安裝 `react-hook-form`、`zod`、`@hookform/resolvers`。
 
-## 1. 建立工單：彈窗＋驗證表單（Form）
+## 1. 建立工單：桌面彈窗＋手機整頁＋驗證表單（Form）
 
-重點：`Form` 系列自動把 zod 錯誤帶到 `FormMessage` 並設 `aria-invalid`；送出中按鈕立即停用，Spinner 與進行式文字延遲顯示（`useDelayedFlag`，時機見 [ux-rules.md](ux-rules.md)「9」）；`DialogTrigger`／`DialogClose` 用 `render` 組合按鈕。
+建立工單有 `Textarea`，屬長表單（判斷見 [ux-rules.md](ux-rules.md)「短彈窗或長表單」）：桌面開彈窗，手機換到獨立頁面 `/tickets/new`。
+
+重點：
+- 表單本體 `TicketForm` 只寫一份，用 `variant="dialog" | "page"` 切換外框；`CreateTicketPage` 是路由頁（標題列返回鈕、送出鈕黏底並補 safe area）。
+- 入口 `CreateTicketEntry` 是指向 `/tickets/new` 的真連結：`≥ md` 攔截一般點擊改開彈窗，手機與 ⌘／中鍵照連結換頁。專案用框架路由時，把 `<a>` 換成框架的 `Link`（`render={<Link href="/tickets/new" />}`）。
+- `onDone`／`onBack` 由路由層提供：送出成功用 `replace` 回列表，返回依規則用 `router.back()` 或 `replace`（見 [ux-rules.md](ux-rules.md)「長表單的路由與行為」）。
+- 問題類別用 `NativeSelect`，避免範本再包一層手機 `Drawer` 選擇器；專案已封裝 `Select` 的手機 `Drawer` 時改用 `Select`（Root 傳 `items`）。
+- `Form` 系列自動把 zod 錯誤帶到 `FormMessage` 並設 `aria-invalid`；送出中按鈕立即停用，Spinner 與進行式文字延遲顯示（`useDelayedFlag`，時機見 [ux-rules.md](ux-rules.md)「9」）。
 
 ```tsx
 "use client";
@@ -15,17 +22,15 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { PlusIcon } from "lucide-react";
+import { ArrowLeftIcon, PlusIcon } from "lucide-react";
 import { Button } from "@coss-app/ui/components/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@coss-app/ui/components/dialog";
 import {
   Form,
@@ -41,6 +46,7 @@ import { NativeSelect, NativeSelectOption } from "@coss-app/ui/components/native
 import { Spinner } from "@coss-app/ui/components/spinner";
 import { Textarea } from "@coss-app/ui/components/textarea";
 import { toast } from "@coss-app/ui/components/toast";
+import { useIsMobile } from "@coss-app/ui/hooks/use-mobile";
 
 const schema = z.object({
   customer: z.string().min(2, "請輸入客戶姓名（至少 2 個字）"),
@@ -72,8 +78,16 @@ function useDelayedFlag(active: boolean, delay = 300, minVisible = 400) {
   return shown;
 }
 
-export function CreateTicketDialog() {
-  const [open, setOpen] = React.useState(false);
+/** 表單本體：欄位與驗證只寫這一份，彈窗與整頁共用 */
+function TicketForm({
+  variant,
+  onDone,
+  onCancel,
+}: {
+  variant: "dialog" | "page";
+  onDone: () => void;
+  onCancel: () => void;
+}) {
   const form = useForm<Values>({
     resolver: zodResolver(schema),
     defaultValues: { customer: "", email: "", category: "", description: "" },
@@ -85,91 +99,147 @@ export function CreateTicketDialog() {
     await new Promise((resolve) => setTimeout(resolve, 800)); // 換成實際 API
     toast.add({ title: "工單已建立", description: `已通知 ${values.customer}`, type: "success" });
     form.reset();
-    setOpen(false);
+    onDone();
   }
 
+  const submit = (
+    <Button type="submit" disabled={submitting} className={variant === "page" ? "w-full" : undefined}>
+      {showSpinner && <Spinner data-icon="inline-start" />}
+      {showSpinner ? "建立中" : "建立工單"}
+    </Button>
+  );
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button />}>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={variant === "page" ? "flex flex-1 flex-col gap-4" : "flex flex-col gap-4"}
+      >
+        <FormField
+          control={form.control}
+          name="customer"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>客戶姓名</FormLabel>
+              <FormControl>
+                <Input placeholder="王小明" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>聯絡信箱</FormLabel>
+              <FormControl>
+                <Input type="email" placeholder="name@example.com" {...field} />
+              </FormControl>
+              <FormDescription>處理進度會寄到這個信箱。</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>問題類別</FormLabel>
+              <FormControl>
+                <NativeSelect {...field}>
+                  <NativeSelectOption value="">請選擇</NativeSelectOption>
+                  <NativeSelectOption value="account">帳號與登入</NativeSelectOption>
+                  <NativeSelectOption value="billing">帳單與付款</NativeSelectOption>
+                  <NativeSelectOption value="device">設備故障</NativeSelectOption>
+                </NativeSelect>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>問題描述</FormLabel>
+              <FormControl>
+                <Textarea placeholder="請描述發生的狀況與時間" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {variant === "dialog" ? (
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={onCancel}>
+              取消
+            </Button>
+            {submit}
+          </DialogFooter>
+        ) : (
+          <div
+            className="sticky bottom-0 mt-auto -mx-4 border-t bg-card px-4 pt-3 pb-(--submit-bar-pb)"
+            // safe area 沒有對應 token：用 CSS 變數傳值（lint 不允許任意值 class 與 inline 樣式屬性）
+            style={{ "--submit-bar-pb": "max(0.75rem, env(safe-area-inset-bottom))" } as React.CSSProperties}
+          >
+            {submit}
+          </div>
+        )}
+      </form>
+    </Form>
+  );
+}
+
+/** 路由頁 /tickets/new：手機入口，也是 PC 直接開網址時的頁面版 */
+export function CreateTicketPage({ onBack, onDone }: { onBack: () => void; onDone: () => void }) {
+  return (
+    <div className="flex min-h-svh flex-col bg-card">
+      <header className="flex h-14 items-center gap-2 border-b px-2">
+        <Button variant="ghost" size="icon" aria-label="返回" onClick={onBack}>
+          <ArrowLeftIcon />
+        </Button>
+        <h1 className="text-lg font-semibold">建立工單</h1>
+      </header>
+      <div className="flex flex-1 flex-col px-4 pt-4">
+        <TicketForm variant="page" onDone={onDone} onCancel={onBack} />
+      </div>
+    </div>
+  );
+}
+
+/** 列表頁的入口：真連結；≥ md 攔截一般點擊改開彈窗 */
+export function CreateTicketEntry() {
+  const isMobile = useIsMobile();
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <>
+      <Button
+        render={<a href="/tickets/new" />}
+        onClick={(event) => {
+          // 手機、⌘／Ctrl／Shift 點擊、中鍵：照連結換頁
+          if (isMobile || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+          event.preventDefault();
+          setOpen(true);
+        }}
+      >
         <PlusIcon data-icon="inline-start" />
         建立工單
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>建立工單</DialogTitle>
-          <DialogDescription>填寫問題內容，客服人員會在 1 個工作天內回覆。</DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-            <FormField
-              control={form.control}
-              name="customer"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>客戶姓名</FormLabel>
-                  <FormControl>
-                    <Input placeholder="王小明" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>聯絡信箱</FormLabel>
-                  <FormControl>
-                    <Input type="email" placeholder="name@example.com" {...field} />
-                  </FormControl>
-                  <FormDescription>處理進度會寄到這個信箱。</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>問題類別</FormLabel>
-                  <FormControl>
-                    <NativeSelect {...field}>
-                      <NativeSelectOption value="">請選擇</NativeSelectOption>
-                      <NativeSelectOption value="account">帳號與登入</NativeSelectOption>
-                      <NativeSelectOption value="billing">帳單與付款</NativeSelectOption>
-                      <NativeSelectOption value="device">設備故障</NativeSelectOption>
-                    </NativeSelect>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>問題描述</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="請描述發生的狀況與時間" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <DialogFooter>
-              <DialogClose render={<Button type="button" variant="outline" />}>取消</DialogClose>
-              <Button type="submit" disabled={submitting}>
-                {showSpinner && <Spinner data-icon="inline-start" />}
-                {showSpinner ? "建立中" : "建立工單"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+      </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>建立工單</DialogTitle>
+            <DialogDescription>填寫問題內容，客服人員會在 1 個工作天內回覆。</DialogDescription>
+          </DialogHeader>
+          <TicketForm variant="dialog" onDone={() => setOpen(false)} onCancel={() => setOpen(false)} />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 ```
