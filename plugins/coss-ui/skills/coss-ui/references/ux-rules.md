@@ -125,6 +125,7 @@
 - App 外框、底部固定 UI 用 `h-dvh`；首屏用 `min-h-svh`。不用 `h-screen`／`100vh`（手機網址列會讓高度溢出）。
 - 設定 `viewport-fit=cover`；固定的頂列、底列、貼邊元素補 `env(safe-area-inset-*)`，手機橫放時左右也補。
 - 軟鍵盤不得蓋住輸入框與底部固定鈕：聚焦欄位捲到可見處；底部固定列隨鍵盤上移（`viewport` meta 加 `interactive-widget=resizes-content`，或用 `visualViewport`）。只能在真機驗。
+- 捲軸槽：`globals.css` 已在 `<html>` 設 `scrollbar-gutter: stable`，內容變長變短時版面不橫跳；不要另補 padding／margin 抵銷捲軸，也不用 `100vw` 排版。由內層 `overflow-auto` 容器捲動、且內容高度會變的區塊，自己加 `scrollbar-gutter-stable`（html 的設定對它無效）。
 - Drawer、彈窗、對話區內的捲動區加 `overscroll-behavior: contain`，捲到底不傳給背景頁面。
 - 有黏頂列或黏底列時，捲動容器加 `scroll-padding-top`／`scroll-padding-bottom`，錨點目標加 `scroll-margin-top`，聚焦或跳轉到的元素才不被固定列遮住（WCAG 2.4.11）。
 
