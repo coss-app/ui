@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import "./shadcn-tailwind.css";
 
 /* 掃描已編譯的組件，避免消費端 Tailwind 漏掉 class（src 與 dist 皆適用） */
 @source "../components";

@@ -166,7 +166,7 @@ Oxlint 的 `extends` 不繼承 `settings`，所以 `settings` 要自己寫一份
 ## 舊專案遷移（shadcn Radix 版 → @coss-app/ui）
 
 1. Tailwind 必須是 v4。
-2. `npm install @coss-app/ui`，全域 CSS 換成 `@import "@coss-app/ui/globals.css";`。
+2. `npm install @coss-app/ui`，全域 CSS 換成 `@import "@coss-app/ui/globals.css";`（原有的 `@import "shadcn/tailwind.css"` 一併刪掉，套件已內建）。
 3. 逐一把 `@/components/ui/xxx` import 改成 `@coss-app/ui/components/xxx`，確認沒有引用後刪除本地副本。
 4. 依下表改 Radix 寫法：
 
@@ -181,4 +181,4 @@ Oxlint 的 `extends` 不繼承 `settings`，所以 `settings` 要自己寫一份
 | sonner `toast("…")` | 仍可用 `components/sonner`；新程式用 `components/toast` 的 `toast.add({ title })` |
 | 選擇器 `data-[state=open]`、`data-[state=checked]` | `data-open`、`data-checked` |
 
-5. 檢查：`npm run build` 通過；深色模式正常；next/font 的 `variable` 為 `"--font-sans"`；刪掉 `@radix-ui/*`、`radix-ui`、`vaul`、`tailwindcss-animate` 與本地 `components.json`。
+5. 檢查：`npm run build` 通過；深色模式正常；next/font 的 `variable` 為 `"--font-sans"`；刪掉 `@radix-ui/*`、`radix-ui`、`vaul`、`tailwindcss-animate`、不再使用的 `shadcn` 套件（`npm uninstall shadcn`；其相依套件會讓 `npm audit` 報弱點）與本地 `components.json`。

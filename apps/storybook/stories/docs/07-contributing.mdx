@@ -48,10 +48,11 @@ Account ID 在 Cloudflare 後台 Workers & Pages 頁面右側可以看到。
 
 1. `cd packages/ui && npx shadcn@latest add <name>`。更新既有組件要加 `--overwrite`，這會蓋掉已經調整過的樣式，執行後先看 diff。
 2. 把 `from "cn"` 改成 `from "@/lib/utils"`，並從 `package.json` 移除 CLI 自動加的 `cn` 依賴。
-3. 依 `DESIGN.md` 改 class：輸入框用 `bg-muted` 且無框、浮層用 `shadow-menu`、選中用 `bg-info`、主要動作用 `rounded-full`，字重只用 400／500／600。
-4. 在 `apps/storybook/stories/` 新增 `<name>.stories.tsx`。import 一律寫 `@coss-app/ui/components/<name>`，展示所有 variant 與狀態，範例文字用繁體中文。
-5. 在 `scripts/component-notes.json` 補一句用途說明，執行 `npm run manifest`，把更新後的 `plugins/coss-ui` 一起提交。這會更新給 AI 助理用的 skill（組件清單、variants、token）；漏做的話 CI 的 `manifest --check` 會失敗。兩個組件容易混淆時，同步補上 `plugins/coss-ui/skills/coss-ui/references/decision-guide.md`。
-6. 執行 `npx changeset` 記錄變更。破壞性變更選 minor，並寫清楚使用者要怎麼改。
+3. `shadcn` 只能放在 devDependencies（使用端不該裝到 shadcn CLI 的相依套件），`npm run check:deps` 會檢查。同時把 `node_modules/shadcn/dist/tailwind.css` 與 `packages/ui/src/styles/shadcn-tailwind.css` 做 diff，有差異就同步過去，並更新檔頭的版本號。
+4. 依 `DESIGN.md` 改 class：輸入框用 `bg-muted` 且無框、浮層用 `shadow-menu`、選中用 `bg-info`、主要動作用 `rounded-full`，字重只用 400／500／600。
+5. 在 `apps/storybook/stories/` 新增 `<name>.stories.tsx`。import 一律寫 `@coss-app/ui/components/<name>`，展示所有 variant 與狀態，範例文字用繁體中文。
+6. 在 `scripts/component-notes.json` 補一句用途說明，執行 `npm run manifest`，把更新後的 `plugins/coss-ui` 一起提交。這會更新給 AI 助理用的 skill（組件清單、variants、token）；漏做的話 CI 的 `manifest --check` 會失敗。兩個組件容易混淆時，同步補上 `plugins/coss-ui/skills/coss-ui/references/decision-guide.md`。
+7. 執行 `npx changeset` 記錄變更。破壞性變更選 minor，並寫清楚使用者要怎麼改。
 
 ## 發佈流程
 

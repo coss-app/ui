@@ -2,7 +2,7 @@
 
 # coss UI token
 
-對應 `@coss-app/ui` **0.2.0**。來源是 `globals.css`（唯一 token 來源），消費端引入 `@coss-app/ui/globals.css` 即得到全部。
+對應 `@coss-app/ui` **0.3.0**。來源是 `globals.css`（唯一 token 來源），消費端引入 `@coss-app/ui/globals.css` 即得到全部。
 
 寫 class 時只用語意名稱，不寫 HEX 或任意值（如 `bg-[#00a756]`）：深色模式由 token 自動切換。
 「Utility」欄的名稱可搭配 `bg-`、`text-`、`border-`、`ring-`、`fill-` 等色彩前綴，例如 `bg-primary`、`text-muted-foreground`、`border-border`。

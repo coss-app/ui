@@ -1,5 +1,16 @@
 # @coss-app/ui
 
+## 0.3.0
+
+### Minor Changes
+
+- bccc5d0: `globals.css`：`<html>` 預設加上 `scrollbar-gutter: stable`，預留捲軸槽。篩選、分頁、展開收合、載入完成讓頁面在「可捲動／不可捲動」之間切換時，內容不再橫向跳動（只影響 Windows、Linux 等固定捲軸的環境）。短頁右側會固定留一條捲軸寬的空白；要取消可在專案樣式加 `html { scrollbar-gutter: auto }`。
+
+### Patch Changes
+
+- 不再讓使用端安裝 `shadcn` CLI：`globals.css` 唯一用到的 `shadcn/tailwind.css` 改為套件內建的 `shadcn-tailwind.css`，`shadcn` 移到 devDependencies。使用端 `npm audit` 不再因 `ts-morph → minimatch`、`@shadcn/registry → deepmerge` 出現 7 筆無法自行修正的弱點。樣式與 class 不變。
+- 2b8cf01: Toast：手機版（底部置中）與桌面版（左下角）的切換斷點由 `sm`（640px）改為 `md`（768px），與其他元件及 UX 規則的手機斷點一致。
+
 ## 0.2.0
 
 ### Minor Changes

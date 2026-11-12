@@ -30,7 +30,7 @@ npm install @coss-app/ui
 
 ## 2. 換掉全域 CSS
 
-shadcn 專案的 `globals.css` 通常長這樣：`@import "tailwindcss"`、`@import "tw-animate-css"`、`:root { --background… }`、`.dark { … }`、`@theme inline { … }`、`@layer base { … }`。
+shadcn 專案的 `globals.css` 通常長這樣：`@import "tailwindcss"`、`@import "tw-animate-css"`、`@import "shadcn/tailwind.css"`、`:root { --background… }`、`.dark { … }`、`@theme inline { … }`、`@layer base { … }`。
 
 把這些全部刪掉，換成下面一行；專案自己的樣式留在後面：
 
@@ -39,6 +39,8 @@ shadcn 專案的 `globals.css` 通常長這樣：`@import "tailwindcss"`、`@imp
 
 /* 專案自己的樣式 */
 ```
+
+`shadcn/tailwind.css` 的內容已內建在套件裡，換掉之後專案不再需要 `shadcn` 套件；沒有其他地方用到的話執行 `npm uninstall shadcn`（它的相依套件會讓 `npm audit` 報出弱點）。
 
 這裡說的 token 是色彩變數，不需要另外新增。變數名稱和 shadcn 相同（`--primary`、`--muted` 等），所以還沒換掉的本地組件也會直接套用新配色。
 

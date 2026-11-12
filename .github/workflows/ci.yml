@@ -20,3 +20,5 @@ jobs:
       - run: npm run lint
       # skill 的 manifest／components.md／tokens.md 須與原始碼同步（不同步時執行 npm run manifest）
       - run: npm run manifest -- --check
+      # 套件不可把 shadcn CLI 列為 dependencies（使用端會連帶裝到無法自行修正的弱點）
+      - run: npm run check:deps
