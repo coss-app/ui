@@ -12,6 +12,7 @@
     "changeset": "changeset",
     "release": "npm run build && changeset publish",
     "manifest": "node scripts/build-manifest.mjs",
+    "check:deps": "node scripts/check-no-shadcn-dep.mjs",
     "lint": "eslint apps/storybook/stories"
   },
   "devDependencies": {

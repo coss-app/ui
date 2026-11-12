@@ -21,7 +21,7 @@ npm run build                            # packages/ui → dist
 npm run build-storybook                  # 文件站靜態檔＋改寫 <title>
 ```
 
-無測試。驗證 = 兩個 typecheck＋`lint`＋`build`＋`build-storybook`。CI 跑兩個 typecheck＋`build`＋`lint`＋`npm run manifest -- --check`。UI 改動在 Storybook 實看淺／深色。
+無測試。驗證 = 兩個 typecheck＋`lint`＋`build`＋`build-storybook`。CI 跑兩個 typecheck＋`build`＋`lint`＋`npm run manifest -- --check`＋`npm run check:deps`。UI 改動在 Storybook 實看淺／深色。
 
 ## 套件（packages/ui）
 
@@ -35,6 +35,7 @@ npm run build-storybook                  # 文件站靜態檔＋改寫 <title>
 
 1. `from "cn"` 改成 `from "@/lib/utils"`，並從 `package.json` 移除 CLI 自動加的 `cn` 依賴。
 2. `--overwrite` 會蓋掉已依 DESIGN.md 調整的 class：先看 diff，再重套樣式。
+3. `shadcn` 只能在 devDependencies（CLI 可能加回 dependencies；`npm run check:deps` 會擋，CI 也跑）。`src/styles/shadcn-tailwind.css` 是 `shadcn/dist/tailwind.css` 的複本（使用端因此不必安裝 shadcn CLI，避開其相依套件的 npm audit 弱點）：add 之後與 `node_modules/shadcn/dist/tailwind.css` 做 diff，有差異就同步（新組件可能用到新的 utility），並更新檔頭的版本號。
 
 ## 文件站（apps/storybook）
 
