@@ -286,6 +286,10 @@
       )
       transparent;
   }
+  /* 預留捲軸槽：內容高度變化（篩選、分頁、展開、載入完成）時版面不橫跳；Base UI 彈窗鎖捲動時也會設同值。消費端可覆寫 */
+  html {
+    scrollbar-gutter: stable;
+  }
   body {
     @apply bg-background text-foreground m-0;
   }
