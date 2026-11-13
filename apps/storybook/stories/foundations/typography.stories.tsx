@@ -101,7 +101,8 @@ function FontFamilyProbe() {
 const meta = {
   title: "Foundations/Typography",
   component: TypeScale,
-  parameters: { controls: { disable: true } },
+  // 文件站內部的展示頁，Show code 只會是 <TypeScale />，對消費端沒用，直接隱藏
+  parameters: { controls: { disable: true }, docs: { codePanel: false, canvas: { sourceState: "none" } } },
 } satisfies Meta<typeof TypeScale>;
 
 export default meta;

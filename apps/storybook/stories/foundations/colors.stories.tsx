@@ -96,6 +96,7 @@ function ColorTokens() {
         <h1 className="text-[25px] font-semibold text-heading">色彩 Tokens</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           以下色彩變數讀自 globals.css 的 :root，已全部內建在套件裡，專案 import globals.css 就能使用，不需要新增。HEX 是目前主題（淺色／深色）的實際值，切換工具列的主題時會跟著更新。
+          完整 globals.css 原始碼在下方 Show code，可直接複製。專案請用 @import "@coss-app/ui/globals.css"；若貼上原始碼，檔頭的 ./shadcn-tailwind.css（套件內檔案）與 tw-animate-css 要一併處理。
         </p>
       </div>
       {groups.map((group) => (
@@ -115,7 +116,11 @@ function ColorTokens() {
 const meta = {
   title: "Foundations/Colors",
   component: ColorTokens,
-  parameters: { controls: { disable: true } },
+  parameters: {
+    controls: { disable: true },
+    // Show code 顯示完整 globals.css（可直接複製）；identity transform 避免全域 transformSource 改動 CSS
+    docs: { source: { code: globalsCss, language: "css", transform: (code: string) => code } },
+  },
 } satisfies Meta<typeof ColorTokens>;
 
 export default meta;

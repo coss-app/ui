@@ -59,9 +59,16 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => (
+    (Story, context) => (
       <TooltipProvider>
-        <div className="min-h-screen bg-background p-6 text-foreground">
+        {/* 單一 story 檢視撐滿視窗（背景連續）；Docs 頁預覽依內容高度，否則一顆 Button 也有整個視窗高 */}
+        <div
+          className={
+            context.viewMode === "docs"
+              ? "bg-background p-6 text-foreground"
+              : "min-h-screen bg-background p-6 text-foreground"
+          }
+        >
           <Story />
         </div>
       </TooltipProvider>

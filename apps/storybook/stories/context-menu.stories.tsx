@@ -73,6 +73,8 @@ function MessageContextMenu({ defaultOpen }: { defaultOpen?: boolean }) {
 const meta = {
   title: "Overlays/ContextMenu",
   component: MessageContextMenu,
+  // 預設展開的浮層會浮在範例外：預留高度，Docs 頁預覽才不會蓋到下一個範例
+  decorators: [(Story) => <div className="min-h-90"><Story /></div>],
 } satisfies Meta<typeof MessageContextMenu>;
 
 export default meta;
