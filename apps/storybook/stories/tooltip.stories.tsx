@@ -34,6 +34,8 @@ const meta = {
     content: { control: "text" },
   },
   args: { side: "top", content: "複製工單連結" },
+  // 預設展開的浮層會浮在範例外：預留高度，Docs 頁預覽才不會蓋到下一個範例
+  decorators: [(Story) => <div className="min-h-40"><Story /></div>],
 } satisfies Meta<typeof IconTooltip>;
 
 export default meta;

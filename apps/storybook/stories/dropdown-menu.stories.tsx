@@ -81,6 +81,8 @@ const meta = {
     align: { control: "select", options: ["start", "center", "end"] },
   },
   args: { side: "bottom", align: "start" },
+  // 預設展開的浮層會浮在範例外：預留高度，Docs 頁預覽才不會蓋到下一個範例
+  decorators: [(Story) => <div className="min-h-136"><Story /></div>],
 } satisfies Meta<typeof TicketActionsMenu>;
 
 export default meta;

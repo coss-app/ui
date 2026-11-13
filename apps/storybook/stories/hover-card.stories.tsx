@@ -40,6 +40,8 @@ const meta = {
     align: { control: "select", options: ["start", "center", "end"] },
   },
   args: { side: "bottom", align: "center" },
+  // 預設展開的浮層會浮在範例外：預留高度，Docs 頁預覽才不會蓋到下一個範例
+  decorators: [(Story) => <div className="min-h-72"><Story /></div>],
 } satisfies Meta<typeof CustomerHoverCard>;
 
 export default meta;
