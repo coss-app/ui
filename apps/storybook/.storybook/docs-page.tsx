@@ -9,17 +9,14 @@ import {
   Title,
   useOf,
 } from "@storybook/addon-docs/blocks";
-/* 匯出解析與 skill manifest 共用（scripts/parse-exports.mjs） */
 import { formatImport, parseExports } from "../../../scripts/parse-exports.mjs";
 
-/* 每個組件原始碼（lazy，只有打開該頁才載入）：從檔尾的 export { … } 取出可用名稱 */
 const componentSources = import.meta.glob<string>(
   "../../../packages/ui/src/components/ui/*.tsx",
   { query: "?raw", import: "default" },
 );
 
 function moduleFromFileName(fileName: string | undefined) {
-  // ./stories/button-group.stories.tsx → button-group
   const match = fileName?.match(/([\w-]+)\.stories\.tsx$/);
   return match?.[1];
 }
@@ -59,7 +56,6 @@ function ImportSnippet() {
   );
 }
 
-/** 組件 Docs 頁：標題 → 引用方式 → 說明 → 主要範例＋Controls → 全部範例 */
 export function DocsPage() {
   return (
     <>

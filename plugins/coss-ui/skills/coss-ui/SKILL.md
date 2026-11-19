@@ -43,8 +43,8 @@ coss 公司通用組件庫：65 個 Base UI 組件＋Tailwind v4＋一份 `globa
 | 兩個組件都像、不知選哪個（Dialog／Sheet／Drawer、Select／Combobox…） | [decision-guide.md](references/decision-guide.md) |
 | 色彩、圓角、陰影的 token 名稱與值 | [tokens.md](references/tokens.md)（自動產生） |
 | 視覺規範：顏色配對、字級、間距 | [design-rules.md](references/design-rules.md) |
-| UX 規則：手機浮層與選擇器（Drawer）、資料呈現、觸控與輸入法、表單行為（驗證時機、autocomplete）、手勢、safe area 與軟鍵盤、載入回饋與錯誤狀態、連結與快捷鍵、文案、動態、可及性 | [ux-rules.md](references/ux-rules.md) |
-| 整頁範本（工單表單、列表、對話、側欄版面） | [patterns.md](references/patterns.md) |
+| UX 規則：手機浮層與選擇器（Drawer）、資料呈現、觸控與輸入法、表單行為（驗證時機、autocomplete）、手勢、safe area 與軟鍵盤、載入回饋與錯誤狀態、連結與快捷鍵、頭像選單（登出、主題、語言）、文案、動態、可及性 | [ux-rules.md](references/ux-rules.md) |
+| 整頁範本（工單表單、列表、對話、側欄＋頭像選單版面） | [patterns.md](references/patterns.md) |
 | 新專案安裝、舊專案移除 GitHub Packages `.npmrc`、字體、深色模式、舊專案遷移 | [setup.md](references/setup.md) |
 
 組件完整 props 與互動範例以文件站該組件頁為準：`https://ui.coss.com.tw/?path=/docs/<分類>-<組件>--docs`（連結在 components.md 每個組件下方）。

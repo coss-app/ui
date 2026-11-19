@@ -1,16 +1,3 @@
-#!/usr/bin/env node
-/**
- * 由組件原始碼、story、globals.css 產生 coss-ui skill 的參考資料：
- *   plugins/coss-ui/manifest.json                                   機器可讀（日後 MCP 讀同一份）
- *   plugins/coss-ui/skills/coss-ui/references/components.md         組件索引
- *   plugins/coss-ui/skills/coss-ui/references/tokens.md             色彩與其他 token
- *
- * 用法：
- *   npm run manifest             寫入檔案
- *   npm run manifest -- --check  與磁碟內容比對，不一致就 exit 1（CI 用）
- *
- * 用途說明（component-notes.json）為手寫；任何組件缺說明、或說明對不到組件，都會失敗。
- */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -23,12 +10,12 @@ const STORIES_DIR = path.join(ROOT, "apps/storybook/stories");
 const GLOBALS_CSS = path.join(ROOT, "packages/ui/src/styles/globals.css");
 const PKG_JSON = path.join(ROOT, "packages/ui/package.json");
 const NOTES_JSON = path.join(ROOT, "scripts/component-notes.json");
+const TOKEN_NOTES_JSON = path.join(ROOT, "scripts/token-notes.json");
 const PLUGIN_DIR = path.join(ROOT, "plugins/coss-ui");
 const MANIFEST_JSON = path.join(PLUGIN_DIR, "manifest.json");
 const REFERENCES_DIR = path.join(PLUGIN_DIR, "skills/coss-ui/references");
 
 const DOCS_ORIGIN = "https://ui.coss.com.tw";
-/* 與 apps/storybook/.storybook/preview.tsx 的 storySort 一致 */
 const CATEGORY_ORDER = ["Inputs", "Overlays", "Navigation", "Data Display", "Feedback", "Messaging", "Layout"];
 const GENERATED_NOTICE =
   "<!-- 由 scripts/build-manifest.mjs 產生，請勿手改。改組件、story、globals.css 或 component-notes.json 後執行 npm run manifest。 -->";
@@ -37,14 +24,11 @@ const errors = [];
 const fail = (message) => errors.push(message);
 const read = (file) => fs.readFileSync(file, "utf8");
 
-/** button-group → ButtonGroup（只用於標題顯示） */
 const pascal = (slug) =>
   slug
     .split("-")
     .map((s) => s[0].toUpperCase() + s.slice(1))
     .join("");
-
-/* ───────── cva variants ───────── */
 
 function propertyName(node) {
   if (!node.name) return undefined;
@@ -64,7 +48,6 @@ function literalText(node) {
   return undefined;
 }
 
-/** 找出檔內所有 `const xxx = cva(base, { variants, defaultVariants })`，只取名稱，不取 class 字串 */
 function parseCva(source, fileName) {
   const sf = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const found = [];
@@ -103,8 +86,6 @@ function parseCva(source, fileName) {
   return found;
 }
 
-/* ───────── 組件 ───────── */
-
 function storyInfo(slug) {
   const file = path.join(STORIES_DIR, `${slug}.stories.tsx`);
   if (!fs.existsSync(file)) {
@@ -121,7 +102,6 @@ function storyInfo(slug) {
   if (!CATEGORY_ORDER.includes(category)) {
     fail(`${slug}.stories.tsx：分類「${category}」不在 CATEGORY_ORDER（需與 preview.tsx 的 storySort 同步）`);
   }
-  /* Storybook 的 id：每段轉小寫，非英數字元換成 "-"，不拆 camelCase */
   const id = title
     .split("/")
     .map((s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-"))
@@ -158,9 +138,6 @@ function collectComponents(notes) {
   });
 }
 
-/* ───────── tokens ───────── */
-
-/** 取出 `header {` 到對應 `}` 之間的文字（計算大括號深度，容許內層 @keyframes） */
 function extractBlock(css, header) {
   const start = css.indexOf(header);
   if (start === -1) {
@@ -176,12 +153,11 @@ function extractBlock(css, header) {
   return "";
 }
 
-/** 單行宣告 `--name: value; /* 註解 *\/`；跨行的值（如 --font-sans）不收 */
 function parseDeclarations(block) {
   const decls = new Map();
   for (const line of block.split("\n")) {
-    const m = line.match(/^\s*(--[\w-]+)\s*:\s*(.+?);\s*(?:\/\*\s*(.*?)\s*\*\/)?\s*$/);
-    if (m) decls.set(m[1].slice(2), { value: m[2], comment: m[3] ?? "" });
+    const m = line.match(/^\s*(--[\w-]+)\s*:\s*(.+?);\s*$/);
+    if (m) decls.set(m[1].slice(2), { value: m[2] });
   }
   return decls;
 }
@@ -198,15 +174,19 @@ const TOKEN_GROUPS = [
   ["側邊欄", /^sidebar/],
 ];
 
-function collectTokens(css) {
+function collectTokens(css, tokenNotes) {
   const root = parseDeclarations(extractBlock(css, ":root {"));
   const dark = parseDeclarations(extractBlock(css, ".dark {"));
   const theme = parseDeclarations(extractBlock(css, "@theme {"));
   const inline = parseDeclarations(extractBlock(css, "@theme inline {"));
 
   const colors = [];
-  for (const [name, { value, comment }] of root) {
+  for (const [name, { value }] of root) {
     if (!value.startsWith("#")) continue;
+    const note = tokenNotes[name];
+    if (!note?.note) fail(`token-notes.json 缺「${name}」的說明`);
+    if (!inline.has(`color-${name}`)) fail(`globals.css 色彩 token「${name}」缺 @theme inline 的 --color-${name}`);
+    if (!dark.has(name) && !note?.sameInDark) fail(`globals.css 色彩 token「${name}」缺 .dark 值（淺深色同值須在 token-notes.json 標 sameInDark）`);
     const group = TOKEN_GROUPS.find(([, re]) => re.test(name));
     if (!group) fail(`globals.css 色彩 token「${name}」不屬於任何 TOKEN_GROUPS 分組（請在 build-manifest.mjs 補上）`);
     colors.push({
@@ -214,15 +194,17 @@ function collectTokens(css) {
       group: group?.[0] ?? "?",
       light: value,
       dark: dark.get(name)?.value ?? null,
-      /* 有 @theme inline 的 --color-<name> 才會產生 bg-／text-／border- utility */
       utility: inline.has(`color-${name}`),
-      comment,
+      comment: note?.note ?? "",
     });
+  }
+  for (const name of Object.keys(tokenNotes)) {
+    if (name !== "radius" && !root.has(name)) fail(`token-notes.json 的「${name}」在 globals.css 找不到`);
   }
 
   const others = [];
   const push = (kind, name, utility, value, comment) => others.push({ kind, name, utility, value, comment });
-  push("圓角", "radius", "rounded-lg", root.get("radius")?.value ?? "?", root.get("radius")?.comment ?? "");
+  push("圓角", "radius", "rounded-lg", root.get("radius")?.value ?? "?", tokenNotes.radius?.note ?? "");
   for (const [name, { value }] of inline) {
     if (name.startsWith("radius-")) push("圓角", name, `rounded-${name.slice(7)}`, value, "");
   }
@@ -233,8 +215,6 @@ function collectTokens(css) {
   }
   return { colors, others };
 }
-
-/* ───────── 輸出 ───────── */
 
 function renderComponentsMd(components, pkgVersion) {
   const lines = [
@@ -301,7 +281,7 @@ function main() {
   const pkg = JSON.parse(read(PKG_JSON));
   const notes = JSON.parse(read(NOTES_JSON));
   const components = collectComponents(notes);
-  const tokens = collectTokens(read(GLOBALS_CSS));
+  const tokens = collectTokens(read(GLOBALS_CSS), JSON.parse(read(TOKEN_NOTES_JSON)));
 
   const manifest = {
     package: pkg.name,

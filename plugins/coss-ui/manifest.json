@@ -1606,7 +1606,7 @@
         "light": "#ffffff",
         "dark": "#171b36",
         "utility": true,
-        "comment": ""
+        "comment": "卡片底色"
       },
       {
         "name": "card-foreground",
@@ -1614,7 +1614,7 @@
         "light": "#2d336b",
         "dark": "#e4e7f7",
         "utility": true,
-        "comment": ""
+        "comment": "卡片上的文字"
       },
       {
         "name": "popover",
@@ -1622,7 +1622,7 @@
         "light": "#ffffff",
         "dark": "#1c2140",
         "utility": true,
-        "comment": ""
+        "comment": "浮層底色"
       },
       {
         "name": "popover-foreground",
@@ -1630,7 +1630,7 @@
         "light": "#2d336b",
         "dark": "#e4e7f7",
         "utility": true,
-        "comment": ""
+        "comment": "浮層上的文字"
       },
       {
         "name": "primary",
@@ -1646,7 +1646,7 @@
         "light": "#ffffff",
         "dark": "#ffffff",
         "utility": true,
-        "comment": ""
+        "comment": "主要色底上的字"
       },
       {
         "name": "primary-hover",
@@ -1686,7 +1686,7 @@
         "light": "#2d336b",
         "dark": "#e4e7f7",
         "utility": true,
-        "comment": ""
+        "comment": "secondary 底上的字"
       },
       {
         "name": "muted",
@@ -1726,7 +1726,7 @@
         "light": "#2d336b",
         "dark": "#e4e7f7",
         "utility": true,
-        "comment": ""
+        "comment": "accent 底上的字"
       },
       {
         "name": "destructive",
@@ -1846,7 +1846,7 @@
         "light": "#ffffff",
         "dark": "#171b36",
         "utility": true,
-        "comment": ""
+        "comment": "Toast 上的字"
       },
       {
         "name": "overlay",
@@ -1862,7 +1862,7 @@
         "light": "#0e1124",
         "dark": null,
         "utility": true,
-        "comment": ""
+        "comment": "圖片預覽全螢幕底：照片是內容，淺深色同值"
       },
       {
         "name": "viewer-foreground",
@@ -1870,7 +1870,7 @@
         "light": "#ffffff",
         "dark": null,
         "utility": true,
-        "comment": ""
+        "comment": "圖片預覽上的字與控制鈕"
       },
       {
         "name": "banner-blue",
@@ -1878,7 +1878,7 @@
         "light": "#007dfa",
         "dark": null,
         "utility": true,
-        "comment": ""
+        "comment": "看板主題色：內容色，淺深色同值"
       },
       {
         "name": "banner-green",
@@ -1886,7 +1886,7 @@
         "light": "#08a24b",
         "dark": null,
         "utility": true,
-        "comment": ""
+        "comment": "看板主題色：內容色，淺深色同值"
       },
       {
         "name": "banner-orange",
@@ -1894,7 +1894,7 @@
         "light": "#d06100",
         "dark": null,
         "utility": true,
-        "comment": ""
+        "comment": "看板主題色：內容色，淺深色同值"
       },
       {
         "name": "banner-purple",
@@ -1902,7 +1902,7 @@
         "light": "#7041b2",
         "dark": null,
         "utility": true,
-        "comment": ""
+        "comment": "看板主題色：內容色，淺深色同值"
       },
       {
         "name": "banner-black",
@@ -1910,7 +1910,7 @@
         "light": "#353b41",
         "dark": null,
         "utility": true,
-        "comment": ""
+        "comment": "看板主題色：內容色，淺深色同值"
       },
       {
         "name": "banner-foreground",
@@ -1974,7 +1974,7 @@
         "light": "#ffffff",
         "dark": "#0e1124",
         "utility": true,
-        "comment": ""
+        "comment": "即時統計深色段上的字"
       },
       {
         "name": "border",
@@ -1998,7 +1998,7 @@
         "light": "#dee1f4",
         "dark": "#2c3258",
         "utility": true,
-        "comment": ""
+        "comment": "輸入框邊線"
       },
       {
         "name": "ring",
@@ -2014,7 +2014,7 @@
         "light": "#00a756",
         "dark": "#00a756",
         "utility": true,
-        "comment": ""
+        "comment": "圖表系列 1"
       },
       {
         "name": "chart-2",
@@ -2022,7 +2022,7 @@
         "light": "#0066ff",
         "dark": "#5c9dff",
         "utility": true,
-        "comment": ""
+        "comment": "圖表系列 2"
       },
       {
         "name": "chart-3",
@@ -2030,7 +2030,7 @@
         "light": "#c65300",
         "dark": "#ff9a4d",
         "utility": true,
-        "comment": ""
+        "comment": "圖表系列 3"
       },
       {
         "name": "chart-4",
@@ -2038,7 +2038,7 @@
         "light": "#ef4564",
         "dark": "#ff6b85",
         "utility": true,
-        "comment": ""
+        "comment": "圖表系列 4"
       },
       {
         "name": "chart-5",
@@ -2046,7 +2046,7 @@
         "light": "#8f9bc8",
         "dark": "#9aa3cf",
         "utility": true,
-        "comment": ""
+        "comment": "圖表系列 5"
       },
       {
         "name": "sidebar",
@@ -2054,7 +2054,7 @@
         "light": "#f7f8fe",
         "dark": "#0e1124",
         "utility": true,
-        "comment": ""
+        "comment": "側邊欄底色"
       },
       {
         "name": "sidebar-foreground",
@@ -2062,7 +2062,7 @@
         "light": "#2d336b",
         "dark": "#e4e7f7",
         "utility": true,
-        "comment": ""
+        "comment": "側邊欄文字"
       },
       {
         "name": "sidebar-primary",
@@ -2070,7 +2070,7 @@
         "light": "#00a756",
         "dark": "#00a756",
         "utility": true,
-        "comment": ""
+        "comment": "側邊欄主要色"
       },
       {
         "name": "sidebar-primary-foreground",
@@ -2078,7 +2078,7 @@
         "light": "#ffffff",
         "dark": "#ffffff",
         "utility": true,
-        "comment": ""
+        "comment": "側邊欄主要色上的字"
       },
       {
         "name": "sidebar-accent",
@@ -2094,7 +2094,7 @@
         "light": "#00a756",
         "dark": "#3ddc8e",
         "utility": true,
-        "comment": ""
+        "comment": "側邊欄目前頁面的字"
       },
       {
         "name": "sidebar-border",
@@ -2102,7 +2102,7 @@
         "light": "#dee1f4",
         "dark": "#2c3258",
         "utility": true,
-        "comment": ""
+        "comment": "側邊欄分隔線"
       },
       {
         "name": "sidebar-ring",
@@ -2110,7 +2110,7 @@
         "light": "#2d336b",
         "dark": "#9aa3cf",
         "utility": true,
-        "comment": ""
+        "comment": "側邊欄聚焦框線"
       }
     ],
     "others": [

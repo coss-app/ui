@@ -514,13 +514,43 @@ export function TicketChat({
 
 附件（上傳中、失敗、完成）用 `Attachment`＋`AttachmentMedia`＋`AttachmentContent`＋`AttachmentTitle`＋`AttachmentDescription`，上傳中的 media 放 `<Spinner />`。日期分隔用 `<Marker variant="separator">11 月 5 日</Marker>`（import 自 `components/marker`）。
 
-## 4. 後台外框：側欄＋內容
+## 4. 後台外框：側欄＋頂列頭像選單
 
-重點：`SidebarProvider` 包住 `Sidebar` 與 `SidebarInset`；目前頁面用 `isActive`（淡綠底）；手機自動變抽屜，由 `SidebarTrigger` 開啟。
+重點：`SidebarProvider` 包住 `Sidebar` 與 `SidebarInset`；目前頁面用 `isActive`（淡綠底）；手機自動變抽屜，由 `SidebarTrigger` 開啟。頂列最右側放頭像選單：登出、主題、語言都收在裡面（頂列不另放切換鈕）；桌面 `DropdownMenu`（主題、語言為子選單），手機底部 `Drawer`（主題、語言為分段按鈕）。主題用 `next-themes`，語言與登出由 props 傳入，不綁特定 i18n 套件。
 
 ```tsx
+"use client";
+
 import * as React from "react";
-import { BarChart3Icon, InboxIcon, TicketIcon, UsersIcon } from "lucide-react";
+import { useTheme } from "next-themes";
+import {
+  BarChart3Icon,
+  InboxIcon,
+  LanguagesIcon,
+  LogOutIcon,
+  SettingsIcon,
+  SunMoonIcon,
+  TicketIcon,
+  UsersIcon,
+} from "lucide-react";
+import { Avatar, AvatarFallback } from "@coss-app/ui/components/avatar";
+import { Button } from "@coss-app/ui/components/button";
+import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@coss-app/ui/components/drawer";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@coss-app/ui/components/dropdown-menu";
+import { ToggleGroup, ToggleGroupItem } from "@coss-app/ui/components/toggle-group";
+import { useIsMobile } from "@coss-app/ui/hooks/use-mobile";
 import {
   Sidebar,
   SidebarContent,
@@ -537,13 +567,163 @@ import {
   SidebarTrigger,
 } from "@coss-app/ui/components/sidebar";
 
+const themes = [
+  { value: "light", label: "淺色" },
+  { value: "dark", label: "深色" },
+  { value: "system", label: "跟隨系統" },
+];
+const locales = [
+  { value: "zh-TW", label: "繁體中文" },
+  { value: "en", label: "English" },
+  { value: "ja", label: "日本語" },
+];
+
+type UserMenuProps = {
+  user: { name: string; email: string };
+  locale: string;
+  onLocaleChange: (locale: string) => void;
+  onSignOut: () => void;
+};
+
+const userTrigger = <Button variant="ghost" size="icon" aria-label="帳號選單" className="pointer-coarse:size-11" />;
+
+/** 頂列最右側：身分 → 個人設定 → 主題、語言 → 分隔線 → 登出 */
+export function UserMenu({ user, locale, onLocaleChange, onSignOut }: UserMenuProps) {
+  const isMobile = useIsMobile();
+  const { theme = "system", setTheme } = useTheme();
+  const avatar = (
+    <Avatar size="lg">
+      <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
+    </Avatar>
+  );
+  const identity = (
+    <div className="min-w-0">
+      <p className="truncate text-sm font-semibold text-heading">{user.name}</p>
+      <p className="truncate text-xs text-muted-foreground" title={user.email}>
+        {user.email}
+      </p>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer>
+        <DrawerTrigger render={userTrigger}>{avatar}</DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle className="sr-only">帳號選單</DrawerTitle>
+            {identity}
+          </DrawerHeader>
+          <div className="grid gap-4 px-5 pb-2">
+            <DrawerClose
+              nativeButton={false}
+              render={<a href="/settings" className="flex h-12 items-center gap-3 rounded-lg text-sm active:bg-muted" />}
+            >
+              <SettingsIcon className="size-4" />
+              個人設定
+            </DrawerClose>
+            {[
+              { label: "主題", options: themes, value: theme, onChange: setTheme },
+              { label: "語言", options: locales, value: locale, onChange: onLocaleChange },
+            ].map(({ label, options, value, onChange }) => (
+              <div key={label} className="grid gap-2">
+                <span className="text-sm font-semibold text-placeholder">{label}</span>
+                {/* 分段按鈕立即生效；不允許取消選取（空陣列忽略） */}
+                <ToggleGroup
+                  variant="outline"
+                  spacing={0}
+                size="lg"
+                  aria-label={label}
+                  value={[value]}
+                  onValueChange={(v) => v[0] && onChange(v[0])}
+                  className="w-full"
+                >
+                  {options.map((o) => (
+                    <ToggleGroupItem key={o.value} value={o.value} className="flex-1">
+                      {o.label}
+                    </ToggleGroupItem>
+                  ))}
+                </ToggleGroup>
+              </div>
+            ))}
+          </div>
+          <DrawerFooter>
+            <Button variant="ghost" size="lg" onClick={onSignOut}>
+              <LogOutIcon data-icon="inline-start" />
+              登出
+            </Button>
+            <DrawerClose render={<Button variant="ghost" size="lg" />}>關閉</DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger render={userTrigger}>{avatar}</DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-64">
+        <div className="px-3.5 py-2">{identity}</div>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem render={<a href="/settings" />}>
+            <SettingsIcon />
+            個人設定
+          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <SunMoonIcon />
+              <span className="flex-1">主題</span>
+              <span className="text-xs text-muted-foreground">{themes.find((t) => t.value === theme)?.label}</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup value={theme} onValueChange={(v) => setTheme(v as string)}>
+                {themes.map((t) => (
+                  <DropdownMenuRadioItem key={t.value} value={t.value}>
+                    {t.label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <LanguagesIcon />
+              <span className="flex-1">語言</span>
+              <span className="text-xs text-muted-foreground">{locales.find((l) => l.value === locale)?.label}</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup value={locale} onValueChange={(v) => onLocaleChange(v as string)}>
+                {locales.map((l) => (
+                  <DropdownMenuRadioItem key={l.value} value={l.value}>
+                    {l.label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={onSignOut}>
+          <LogOutIcon />
+          登出
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 const nav = [
   { href: "/inbox", label: "收件匣", icon: InboxIcon, badge: "12" },
   { href: "/analytics", label: "即時統計", icon: BarChart3Icon },
   { href: "/customers", label: "客戶", icon: UsersIcon },
 ];
 
-export function AppShell({ pathname, children }: { pathname: string; children: React.ReactNode }) {
+export function AppShell({
+  pathname,
+  children,
+  ...userMenu
+}: { pathname: string; children: React.ReactNode } & UserMenuProps) {
   return (
     <SidebarProvider>
       <Sidebar>
@@ -577,6 +757,9 @@ export function AppShell({ pathname, children }: { pathname: string; children: R
       <SidebarInset>
         <header className="flex h-15 items-center gap-2 px-4">
           <SidebarTrigger />
+          <div className="ml-auto">
+            <UserMenu {...userMenu} />
+          </div>
         </header>
         <main className="flex-1 p-4 md:p-5">{children}</main>
       </SidebarInset>
@@ -585,7 +768,7 @@ export function AppShell({ pathname, children }: { pathname: string; children: R
 }
 ```
 
-框架路由要用自家的 `Link`：`render={<Link href={href} />}`。
+框架路由要用自家的 `Link`：`render={<Link href={href} />}`（個人設定連結同理）。
 
 ## 5. 非同步操作回饋
 

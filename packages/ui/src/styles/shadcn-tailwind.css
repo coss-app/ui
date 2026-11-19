@@ -1,9 +1,3 @@
-/*
- * 來源：shadcn@4.23.0 的 dist/tailwind.css（MIT License, Copyright (c) 2023 shadcn）。
- * 複製進套件，讓使用端不必安裝整個 shadcn CLI（其相依套件會讓 npm audit 報出無法自行修正的弱點）。
- * 更新：執行 shadcn CLI 後，與 node_modules/shadcn/dist/tailwind.css 做 diff 並同步，內容不要自行改動。
- */
-
 @theme inline {
   @keyframes accordion-down {
     from {
@@ -30,7 +24,6 @@
   }
 }
 
-/* Custom variants */
 @custom-variant data-open {
   &:where([data-state="open"]),
   &:where([data-open]:not([data-open="false"])) {
@@ -100,7 +93,6 @@
   }
 }
 
-/* scroll-fade */
 @property --scroll-fade-t {
   syntax: "<length-percentage>";
   inherits: false;
@@ -524,7 +516,6 @@
   --scroll-fade-mask: none;
 }
 
-/* shimmer */
 @property --shimmer-angle {
   syntax: "<angle>";
   inherits: true;
@@ -632,8 +623,6 @@
   --shimmer-angle: calc(--value(integer) * 1deg);
 }
 
-/* Kept for backwards compatibility. Unlayered, so it still wins over other
-   utilities on a plain .shimmer element. Variants are handled in the utility. */
 @media (prefers-reduced-motion: reduce) {
   .shimmer {
     animation: none;

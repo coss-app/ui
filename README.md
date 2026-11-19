@@ -64,19 +64,22 @@ skill 內容由組件原始碼與 `globals.css` 產生（`npm run manifest`）�
 packages/ui/              # 發佈的套件 @coss-app/ui
   src/components/ui/      # 組件
   src/styles/globals.css  # 色彩變數與全域樣式
-  lint.json               # 給 @shadcn/lint 的設計規範規則（隨套件發佈）
+  lint.json               # 設計規範 lint 規則
   dist/                   # 建置產物（gitignored）
-apps/storybook/           # 文件站 ui.coss.com.tw（workspace：@coss-app/docs）
+apps/storybook/           # 文件站（@coss-app/docs）
   stories/                # 每個組件一個 *.stories.tsx
   stories/docs/           # 使用手冊（MDX）
   storybook-static/       # 文件站建置產物（gitignored）
-plugins/coss-ui/          # Claude Code skill（repo 本身是 plugin marketplace）
-.claude-plugin/           # plugin marketplace 設定
-.claude/rules/            # 給 Claude Code 讀的專案規則
-scripts/                  # skill manifest 產生器、組件用途說明
-.changeset/               # 待發佈的版本變更紀錄
+plugins/coss-ui/          # Claude Code skill
+.claude-plugin/           # marketplace 設定
+.claude/rules/            # 按需載入的規則
+.claude/hooks/            # lint、verify hook
+scripts/                  # manifest、檢查腳本
+eslint-rules/             # 內部 lint 規則
+tests/                    # node:test 測試
+.changeset/               # 待發佈變更
 .github/workflows/        # CI、文件站部署、發佈
-eslint.config.mjs         # stories 的 lint 設定
+eslint.config.mjs         # lint 設定
 DESIGN.md                 # 設計規範
 ```
 
@@ -84,15 +87,17 @@ DESIGN.md                 # 設計規範
 
 開發這個 repo 不需要 token，`npm install` 直接用 workspace 原始碼。
 
-| 指令                      | 用途                                              |
-| ------------------------- | ------------------------------------------------- |
-| `npm install`             | 安裝依賴                                          |
-| `npm run storybook`       | 啟動文件站，瀏覽全部組件（http://localhost:6006） |
-| `npm run typecheck`       | 型別檢查                                          |
-| `npm run lint`            | 用 `lint.json` 檢查 stories 的 `className` 與顏色 |
-| `npm run build`           | 建置套件到 `packages/ui/dist`                     |
-| `npm run build-storybook` | 建置文件站靜態檔                                  |
-| `npm run manifest`        | 重新產生 Claude Code skill 的組件索引與 token     |
+| 指令                      | 用途                                                |
+| ------------------------- | --------------------------------------------------- |
+| `npm install`             | 安裝依賴                                            |
+| `npm run storybook`       | 啟動文件站，瀏覽全部組件（`http://localhost:6006`） |
+| `npm run verify`          | 全部檢查：typecheck、lint、test、manifest、deps…    |
+| `npm run typecheck`       | 型別檢查                                            |
+| `npm run lint`            | ESLint（含無註釋規則與 `lint.json`）＋ html／yml    |
+| `npm test`                | lint 規則、check-usage、alias 一致性測試            |
+| `npm run build`           | 建置套件到 `packages/ui/dist`                       |
+| `npm run build-storybook` | 建置文件站靜態檔                                    |
+| `npm run manifest`        | 重新產生 Claude Code skill 的組件索引與 token       |
 
 ## 📏 規則
 
@@ -101,16 +106,28 @@ DESIGN.md                 # 設計規範
 | 名稱                                                               | 用途                                                                          |
 | ------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
 | [`claude-code-skill.md`](./.claude/rules/claude-code-skill.md)     | skill 維護：產生檔勿手改、plugin.json 不設 version、檢查腳本與 lint.json 同步 |
-| [`globals-css.md`](./.claude/rules/globals-css.md)                 | globals.css 慣例：掃描來源、字體後備值、色彩 token 三處同步                   |
+| [`globals-css.md`](./.claude/rules/globals-css.md)                 | globals.css 慣例：掃描來源、字體後備值、色彩 token 與說明                     |
+| [`release.md`](./.claude/rules/release.md)                         | 發版與部署：changeset、release／docs workflow、secrets、trusted publishing    |
+| [`shadcn-cli.md`](./.claude/rules/shadcn-cli.md)                   | 加組件：`--overwrite` 先看 diff、shadcn-tailwind.css 同步                     |
 | [`storybook-branding.md`](./.claude/rules/storybook-branding.md)   | 文件站品牌：分頁標題、favicon、建置後改寫 `<title>`、靜態檔                   |
+| [`storybook.md`](./.claude/rules/storybook.md)                     | 文件站：story 命名、手冊 MDX、範例慣例                                        |
 | [`ui-component-styles.md`](./.claude/rules/ui-component-styles.md) | 組件 class 慣例：輸入框、浮層、選中色、圓角、字重                             |
+
+## 🪝 Hooks
+
+專案 hook 設定在 [`.claude/settings.json`](./.claude/settings.json)。
+
+| Script                                                     | Event                                 | 用途                                                  |
+| ---------------------------------------------------------- | ------------------------------------- | ----------------------------------------------------- |
+| [`lint-file.mjs`](./.claude/hooks/lint-file.mjs)           | PostToolUse（Edit／Write／MultiEdit） | 對改動檔跑 ESLint 或 html／yml 無註釋檢查，有錯就回報 |
+| [`verify-on-stop.mjs`](./.claude/hooks/verify-on-stop.mjs) | Stop                                  | 檔案有變動才跑 `npm run verify`，失敗就擋住結束       |
 
 ## 🛠️ 維護
 
 新增或更新組件：
 
 1. 執行 `cd packages/ui && npx shadcn@latest add <name>`；更新既有組件加 `--overwrite`，它會蓋掉已調整的樣式，執行後先看 diff。
-2. 把 `from "cn"` 改成 `from "@/lib/utils"`，並移除 shadcn CLI 自動加的 `cn` 依賴。
+2. 把 `from "cn"` 改成 `from "@/lib/utils"`，並移除 shadcn CLI 自動加的 `cn` 依賴；漏做時 `npm run verify` 會失敗。
 3. 依 DESIGN.md 換掉預設 class（輸入框 `bg-muted`、浮層 `shadow-menu`、選中 `bg-info` 等）。
 4. 在 `scripts/component-notes.json` 補一句用途，執行 `npm run manifest`，連同 `plugins/coss-ui` 一起提交；漏做時 CI 的 `manifest --check` 會失敗。
 

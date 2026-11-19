@@ -1,7 +1,20 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ChevronDownIcon, CopyIcon, MoreHorizontalIcon, PencilIcon, Trash2Icon, UserPlusIcon } from "lucide-react";
+import {
+  ChevronDownIcon,
+  CopyIcon,
+  LanguagesIcon,
+  LogOutIcon,
+  MoreHorizontalIcon,
+  PencilIcon,
+  SettingsIcon,
+  SunMoonIcon,
+  Trash2Icon,
+  UserPlusIcon,
+} from "lucide-react";
+import { Avatar, AvatarFallback } from "@coss-app/ui/components/avatar";
 import { Button } from "@coss-app/ui/components/button";
+import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@coss-app/ui/components/drawer";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -18,6 +31,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@coss-app/ui/components/dropdown-menu";
+import { ToggleGroup, ToggleGroupItem } from "@coss-app/ui/components/toggle-group";
 
 type Side = "top" | "right" | "bottom" | "left";
 type Align = "start" | "center" | "end";
@@ -81,7 +95,6 @@ const meta = {
     align: { control: "select", options: ["start", "center", "end"] },
   },
   args: { side: "bottom", align: "start" },
-  // 預設展開的浮層會浮在範例外：預留高度，Docs 頁預覽才不會蓋到下一個範例
   decorators: [(Story) => <div className="min-h-136"><Story /></div>],
 } satisfies Meta<typeof TicketActionsMenu>;
 
@@ -157,4 +170,178 @@ export const Inset: Story = {
       </DropdownMenuContent>
     </DropdownMenu>
   ),
+};
+
+const themes = [
+  { value: "light", label: "淺色" },
+  { value: "dark", label: "深色" },
+  { value: "system", label: "跟隨系統" },
+];
+const locales = [
+  { value: "zh-TW", label: "繁體中文" },
+  { value: "en", label: "English" },
+  { value: "ja", label: "日本語" },
+];
+
+const user = { name: "王小明", email: "support@coss.com.tw" };
+
+const userTrigger = (
+  <Button variant="ghost" size="icon" aria-label="帳號選單" className="pointer-coarse:size-11" />
+);
+
+function UserAvatar() {
+  return (
+    <Avatar size="lg">
+      <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
+    </Avatar>
+  );
+}
+
+function UserIdentity() {
+  return (
+    <div className="min-w-0">
+      <p className="truncate text-sm font-semibold text-heading">{user.name}</p>
+      <p className="truncate text-xs text-muted-foreground" title={user.email}>
+        {user.email}
+      </p>
+    </div>
+  );
+}
+
+function UserMenuDesktop({ defaultOpen }: { defaultOpen?: boolean }) {
+  const [theme, setTheme] = useState("system");
+  const [locale, setLocale] = useState("zh-TW");
+  return (
+    <DropdownMenu defaultOpen={defaultOpen}>
+      <DropdownMenuTrigger render={userTrigger}>
+        <UserAvatar />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-64">
+        <div className="px-3.5 py-2">
+          <UserIdentity />
+        </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem render={<a href="#settings" />}>
+            <SettingsIcon />
+            個人設定
+          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <SunMoonIcon />
+              <span className="flex-1">主題</span>
+              <span className="text-xs text-muted-foreground">{themes.find((t) => t.value === theme)?.label}</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup value={theme} onValueChange={(v) => setTheme(v as string)}>
+                {themes.map((t) => (
+                  <DropdownMenuRadioItem key={t.value} value={t.value}>
+                    {t.label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <LanguagesIcon />
+              <span className="flex-1">語言</span>
+              <span className="text-xs text-muted-foreground">{locales.find((l) => l.value === locale)?.label}</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup value={locale} onValueChange={(v) => setLocale(v as string)}>
+                {locales.map((l) => (
+                  <DropdownMenuRadioItem key={l.value} value={l.value}>
+                    {l.label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <LogOutIcon />
+          登出
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function UserMenuMobile({ defaultOpen }: { defaultOpen?: boolean }) {
+  const [theme, setTheme] = useState("system");
+  const [locale, setLocale] = useState("zh-TW");
+  return (
+    <Drawer defaultOpen={defaultOpen}>
+      <DrawerTrigger render={userTrigger}>
+        <UserAvatar />
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle className="sr-only">帳號選單</DrawerTitle>
+          <UserIdentity />
+        </DrawerHeader>
+        <div className="grid gap-4 px-5 pb-2">
+          <DrawerClose
+            nativeButton={false}
+            render={<a href="#settings" className="flex h-12 items-center gap-3 rounded-lg text-sm active:bg-muted" />}
+          >
+            <SettingsIcon className="size-4" />
+            個人設定
+          </DrawerClose>
+          {[
+            { label: "主題", options: themes, value: theme, onChange: setTheme },
+            { label: "語言", options: locales, value: locale, onChange: setLocale },
+          ].map(({ label, options, value, onChange }) => (
+            <div key={label} className="grid gap-2">
+              <span className="text-sm font-semibold text-placeholder">{label}</span>
+              <ToggleGroup
+                variant="outline"
+                spacing={0}
+                size="lg"
+                aria-label={label}
+                value={[value]}
+                onValueChange={(v) => v[0] && onChange(v[0])}
+                className="w-full"
+              >
+                {options.map((o) => (
+                  <ToggleGroupItem key={o.value} value={o.value} className="flex-1">
+                    {o.label}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            </div>
+          ))}
+        </div>
+        <DrawerFooter>
+          <Button variant="ghost" size="lg">
+            <LogOutIcon data-icon="inline-start" />
+            登出
+          </Button>
+          <DrawerClose render={<Button variant="ghost" size="lg" />}>關閉</DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
+export const UserMenu: Story = {
+  render: (args) => <UserMenuDesktop defaultOpen={args.defaultOpen} />,
+  args: { defaultOpen: true },
+  decorators: [(Story) => <div className="flex min-h-96 justify-end"><Story /></div>],
+  parameters: { docs: { description: { story: "頭像選單：頂列最右側。登出、主題、語言都收在這裡，不在頂列另放切換鈕" } } },
+};
+
+export const UserMenuOnMobile: Story = {
+  render: (args) => <UserMenuMobile defaultOpen={args.defaultOpen} />,
+  args: { defaultOpen: true },
+  globals: { viewport: { value: "mobile", isRotated: false } },
+  parameters: {
+    docs: {
+      description: { story: "手機（< md）：底部 Drawer；主題、語言為分段按鈕" },
+      story: { inline: false, height: "520px" },
+    },
+  },
+  decorators: [(Story) => <div className="flex min-h-96 justify-end"><Story /></div>],
 };

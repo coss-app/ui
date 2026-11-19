@@ -9,4 +9,4 @@ paths:
 - 浮層（menu、select、popover、hover-card…）：`shadow-menu dark:ring-1 dark:ring-border`；項目 `h-10 px-3.5`，hover `bg-background dark:bg-accent`。
 - 選中／勾選／日期／連結用資訊藍 `bg-info`／`text-info`；綠色（`primary`）僅給主要動作與目前位置。
 - 主要按鈕膠囊 `rounded-full`；容器 10px（`rounded-lg`）；彈窗、抽屜 25px；遮罩 `bg-overlay/50`。
-- 字重僅 400／500／600：不用 `font-bold`；`font-medium` 僅給日期格等 DESIGN.md 指定處。
+- 字重僅 400／500／600（`font-bold` 由 lint 擋）；`font-medium` 僅給日期格等 DESIGN.md 指定處。

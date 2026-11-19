@@ -34,7 +34,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       style={
         {
-          /* DESIGN.md「Toast」：碳黑底白字、10px 圓角；桌面左下 40px */
           "--normal-bg": "var(--toast)",
           "--normal-text": "var(--toast-foreground)",
           "--normal-border": "transparent",

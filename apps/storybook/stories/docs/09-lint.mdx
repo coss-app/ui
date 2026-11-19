@@ -126,6 +126,8 @@ JSX 子節點位置要用大括號包起來：`{/* eslint-disable-next-line … 
 
 引用組件匯出的樣式函式，例如 `className={navigationMenuTriggerStyle()}`，會被 `require-static-classes` 回報，因為 lint 讀不到函式回傳的 class。這是官方用法，加上面的註解略過即可。
 
+這個 repo 自己的 stories 不允許任何註釋，例外一律寫在根目錄 `eslint.config.mjs` 的 `files` override。
+
 ## 與 Claude Code skill 搭配
 
 兩者各管一部分，互補：

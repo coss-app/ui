@@ -70,7 +70,6 @@ export const Default: Story = {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            {/* eslint-disable-next-line shadcn/require-static-classes -- 套件匯出的 navigationMenuTriggerStyle() 是官方用法 */}
             <NavigationMenuLink href="#" className={navigationMenuTriggerStyle()}>
               價格方案
             </NavigationMenuLink>

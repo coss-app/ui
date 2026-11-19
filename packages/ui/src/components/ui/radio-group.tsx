@@ -19,7 +19,6 @@ function RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {
     <RadioPrimitive.Root
       data-slot="radio-group-item"
       className={cn(
-        /* DESIGN.md「單選」：圓形 20px；未選白底深靛藍框，選中資訊藍實心白點 */
         "group/radio-group-item peer relative flex aspect-square size-5 shrink-0 rounded-full border border-foreground bg-card outline-none group-has-[:focus-visible]/field-label:ring-0 after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-checked:border-info data-checked:bg-info aria-invalid:data-checked:border-info",
         className
       )}

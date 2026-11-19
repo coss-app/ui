@@ -4,12 +4,6 @@
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
 />
-<!-- 字體：globals.css 的 --font-sans 未注入時自動退回 "Inter"，這裡只需載入字型檔 -->
-<!--
-  字級：Storybook 預設偏小（內文 14px、程式碼 13px），對中文吃力；只放大手冊／Docs 內文。
-  - 排除 .sb-unstyled（Storybook 區塊）與 .docs-story（組件範例）
-  - 組件範例刻意維持實際尺寸（勿改 html font-size）：文件站要和產品裡看到的一致；要看細節用範例工具列的放大鈕
--->
 <style>
   .sbdocs-content :is(p, li, blockquote):not(.sb-unstyled *, .docs-story *) {
     font-size: 16px;
@@ -31,14 +25,6 @@
   .sbdocs-content .docblock-argstable :is(td, th) {
     font-size: 14px;
   }
-  /*
-    手機與平板（< 1024，同 DESIGN.md 斷點）：寬表格（手冊的 Markdown 表格、組件頁的 props 表）
-    與長行內程式碼會撐開整頁造成左右晃動。
-    - 表格改成自己在框內橫向捲動
-    - 表格外的行內程式碼改成可換行（Storybook 預設 nowrap）；表格內的維持不換行，
-      否則程式碼會被切成多行難以閱讀，交給上面的橫向捲動；程式碼區塊（pre）本來就會自己捲動
-    只在窄螢幕生效，桌面維持原樣。排除組件範例（.docs-story）。
-  */
   @media (max-width: 1023px) {
     .sbdocs-content table:not(.docs-story *) {
       display: block;

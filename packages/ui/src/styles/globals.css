@@ -2,96 +2,87 @@
 @import "tw-animate-css";
 @import "./shadcn-tailwind.css";
 
-/* 掃描已編譯的組件，避免消費端 Tailwind 漏掉 class（src 與 dist 皆適用） */
 @source "../components";
 
 @custom-variant dark (&:is(.dark *));
 
-/* 色彩依 DESIGN.md（Figma JC ServOps）；括號內為 Figma 變數名稱 */
 :root {
   color-scheme: light;
-  --background: #f7f8fe; /* grey 10：App 底色 */
-  --foreground: #2d336b; /* grey default：內文 */
-  --heading: #222962; /* grey 80：大標 */
+  --background: #f7f8fe;
+  --foreground: #2d336b;
+  --heading: #222962;
   --card: #ffffff;
   --card-foreground: #2d336b;
   --popover: #ffffff;
   --popover-foreground: #2d336b;
-  --primary: #00a756; /* primary dark：主要按鈕 */
+  --primary: #00a756;
   --primary-foreground: #ffffff;
-  --primary-hover: #008746; /* 主要按鈕 hover */
-  --primary-disabled: #80d3ab; /* 主要按鈕停用 */
-  --brand: #07ce6f; /* primary default：進度、狀態點 */
-  --secondary: #eff0f8; /* grey 20 */
+  --primary-hover: #008746;
+  --primary-disabled: #80d3ab;
+  --brand: #07ce6f;
+  --secondary: #eff0f8;
   --secondary-foreground: #2d336b;
-  --muted: #eff0f8; /* grey 20：輸入框填色 */
-  --muted-foreground: #5566a4; /* grey 60：次要文字 */
-  --placeholder: #8f9bc8; /* grey 50 */
-  --accent: #eff0f8; /* hover 底 */
+  --muted: #eff0f8;
+  --muted-foreground: #5566a4;
+  --placeholder: #8f9bc8;
+  --accent: #eff0f8;
   --accent-foreground: #2d336b;
-  --destructive: #ef4564; /* red default */
-  --destructive-foreground: #c7334e; /* 深珊瑚：錯誤淡底上的字 */
-  --destructive-muted: #fff1f4; /* 珊瑚霧：錯誤淡底 */
-  --success-foreground: #00a756; /* 成功標籤字（同 primary） */
-  --success-muted: #ecfef5; /* 薄荷霧：成功淡底 */
-  --info: #0066ff; /* blue default：連結、勾選框 */
-  --info-muted: #f1f6ff; /* blue lighter：資訊提示底 */
-  --info-foreground: #0032b1; /* blue dark：資訊提示文字 */
-  --info-subtle: #f3f7ff; /* blue lightest：大面積提示區 */
-  --warning: #c65300; /* Orange Dark：待受理 */
-  --warning-muted: #fff4ec; /* 橘霧：警示淡底 */
-  --warning-bright: #ff8227; /* 亮橘：只給圖示與點綴，不放文字 */
-  --star: #ffb400; /* 星等黃：評分星星專用 */
-  --toast: #1e1e1e; /* Grey_100 */
+  --destructive: #ef4564;
+  --destructive-foreground: #c7334e;
+  --destructive-muted: #fff1f4;
+  --success-foreground: #00a756;
+  --success-muted: #ecfef5;
+  --info: #0066ff;
+  --info-muted: #f1f6ff;
+  --info-foreground: #0032b1;
+  --info-subtle: #f3f7ff;
+  --warning: #c65300;
+  --warning-muted: #fff4ec;
+  --warning-bright: #ff8227;
+  --star: #ffb400;
+  --toast: #1e1e1e;
   --toast-foreground: #ffffff;
-  --overlay: #3a3d5c; /* 彈窗遮罩（搭配 50% 透明） */
-  /* 圖片預覽全螢幕底：照片是內容，淺深色同值（.dark 沿用） */
+  --overlay: #3a3d5c;
   --viewer: #0e1124;
   --viewer-foreground: #ffffff;
-  /* 看板主題色：內容不是介面色，淺深色同值（.dark 沿用） */
   --banner-blue: #007dfa;
   --banner-green: #08a24b;
   --banner-orange: #d06100;
   --banner-purple: #7041b2;
   --banner-black: #353b41;
-  --banner-foreground: #ffffff; /* 看板上的字與按鈕底 */
-  /* 即時統計的藍色階（Figma 即時統計 1049:483）：1 最深→5 最淺；soft＝待受理；on-strong＝深色段上的字 */
-  --stat-1: #0032b1; /* blue dark */
-  --stat-2: #0066ff; /* blue default */
-  --stat-3: #8f9bc8; /* grey 50 */
-  --stat-4: #b1b7e6; /* grey 40 */
-  --stat-5: #dee1f4; /* grey 30 */
-  --stat-soft: #d9e6ff; /* blue light */
+  --banner-foreground: #ffffff;
+  --stat-1: #0032b1;
+  --stat-2: #0066ff;
+  --stat-3: #8f9bc8;
+  --stat-4: #b1b7e6;
+  --stat-5: #dee1f4;
+  --stat-soft: #d9e6ff;
   --stat-on-strong: #ffffff;
-  --border: #dee1f4; /* grey 30：分隔線 */
-  --border-strong: #b1b7e6; /* grey 40：中性按鈕框 */
+  --border: #dee1f4;
+  --border-strong: #b1b7e6;
   --input: #dee1f4;
-  --ring: #2d336b; /* 聚焦框線 */
+  --ring: #2d336b;
   --chart-1: #00a756;
   --chart-2: #0066ff;
   --chart-3: #c65300;
   --chart-4: #ef4564;
   --chart-5: #8f9bc8;
-  --radius: 0.625rem; /* 10px：輸入框、按鈕、面板 */
+  --radius: 0.625rem;
   --sidebar: #f7f8fe;
   --sidebar-foreground: #2d336b;
   --sidebar-primary: #00a756;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ecfef5; /* primary light：目前頁面 */
+  --sidebar-accent: #ecfef5;
   --sidebar-accent-foreground: #00a756;
   --sidebar-border: #dee1f4;
   --sidebar-ring: #2d336b;
 }
 
-/* 動畫曲線：ease-out（進出場）、ease-in-out（畫面內移動）、ease-drawer（抽屜）；內建 CSS 曲線太弱 */
 @theme {
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-  /* 骨架換成內容的淡入（hooks/use-skeleton-reveal.ts）：只動透明度，不像 tw-animate 的 animate-in
-     會套 transform（播放期間讓容器變成 fixed 子元素的定位基準） */
   --animate-reveal: reveal 150ms var(--ease-out);
-  /* 只給浮在內容上的元素（DESIGN.md「陰影與層次」） */
   --shadow-menu: 0 4px 10px 0 rgb(60 60 85 / 0.2);
   --shadow-picker: 0 0 10px rgb(0 0 0 / 0.25), 0 4px 5px rgb(60 60 85 / 0.4);
   --shadow-tab: 0 0 4px rgb(0 0 0 / 0.2);
@@ -105,8 +96,6 @@
 
 @theme inline {
   --font-heading: var(--font-sans);
-  /* Inter（next/font 以 variable: "--font-sans" 注入）＋中文系統字。
-     var() 必須帶後備值：沒注入時這裡是自我參照（循環→無效），不帶後備會讓整條 font-family 失效、退回襯線字 */
   --font-sans:
     var(--font-sans, "Inter"), "PingFang TC", "Microsoft JhengHei", system-ui,
     sans-serif;
@@ -186,7 +175,6 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* 深色：Figma 沒有，延續靛藍調中性色＋品牌綠（見 DESIGN.md「深色模式」） */
 .dark {
   color-scheme: dark;
   --background: #0e1124;
@@ -196,7 +184,6 @@
   --card-foreground: #e4e7f7;
   --popover: #1c2140;
   --popover-foreground: #e4e7f7;
-  /* 綠底一律白字，淺深色一致 */
   --primary: #00a756;
   --primary-foreground: #ffffff;
   --primary-hover: #008746;
@@ -234,7 +221,6 @@
   --chart-3: #ff9a4d;
   --chart-4: #ff6b85;
   --chart-5: #9aa3cf;
-  /* 深色底上強調色要變亮：1 仍是最醒目的一段 */
   --stat-1: #a9c8ff;
   --stat-2: #5c9dff;
   --stat-3: #6f79a8;
@@ -252,7 +238,6 @@
   --sidebar-ring: #9aa3cf;
 }
 
-/* 捲軸工具 class（部分 shadcn 組件沿用 tailwind-scrollbar 外掛的寫法，這裡補上定義） */
 @utility scrollbar-none {
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -273,11 +258,9 @@
   scrollbar-color: transparent transparent;
 }
 
-/* 全域元素樣式一律放在 @layer base：未分層的樣式會蓋過所有 Tailwind utilities（例如 <a> 做成的按鈕字色） */
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    /* 捲軸軌道透明（深色模式不出現框），只留細滑塊；scrollbar-color 會繼承到所有捲動區 */
     scrollbar-width: thin;
     scrollbar-color: color-mix(
         in oklab,
@@ -286,7 +269,6 @@
       )
       transparent;
   }
-  /* 預留捲軸槽：內容高度變化（篩選、分頁、展開、載入完成）時版面不橫跳；Base UI 彈窗鎖捲動時也會設同值。消費端可覆寫 */
   html {
     scrollbar-gutter: stable;
   }
@@ -296,7 +278,6 @@
   a {
     color: inherit;
   }
-  /* 減少動態：保留淡入淡出，去掉位移與縮放（不是全關）。tw-animate-css 的進出場吃這些變數 */
   @media (prefers-reduced-motion: reduce) {
     * {
       --tw-enter-scale: 1 !important;
@@ -310,7 +291,6 @@
     [data-ending-style] {
       scale: none !important;
     }
-    /* Sheet 用 transition 位移：改成只淡入淡出 */
     [data-slot="sheet-content"][data-starting-style],
     [data-slot="sheet-content"][data-ending-style] {
       translate: none !important;
@@ -319,8 +299,6 @@
     [data-slot="sheet-content"] {
       transition-duration: 150ms !important;
     }
-    /* Drawer 用 transform（--closed-transform）滑入滑出：進出場停在原位只淡入淡出；
-       手指拖曳中照常跟手（data-swiping 不受影響） */
     [data-slot="drawer-popup"][data-starting-style],
     [data-slot="drawer-popup"][data-ending-style] {
       transform: translate3d(
@@ -332,7 +310,6 @@
       opacity: 0 !important;
       transition-duration: 200ms !important;
     }
-    /* Toast 由下方 transform 滑入、滑出：改成停在堆疊中的原位淡入淡出（同 toast.tsx 的靜止位置；手指滑掉的照常跟手） */
     [data-slot="toast"][data-starting-style],
     [data-slot="toast"][data-ending-style]:not([data-swipe-direction]) {
       transform: translateX(var(--toast-swipe-movement-x))
@@ -359,7 +336,6 @@
     -webkit-text-size-adjust: 100%;
     overscroll-behavior: none;
   }
-  /* 16px 以下 iOS 聚焦時會放大頁面；只在觸控主要輸入時強制，桌面維持設計字級 */
   @media (pointer: coarse) {
     input,
     textarea,
@@ -378,7 +354,6 @@
   label[for] {
     touch-action: manipulation;
   }
-  /* Tailwind v4 拿掉了按鈕預設的手指游標：所有可點元素補回，停用的除外 */
   button:not(:disabled),
   [role="button"],
   [role="radio"],
@@ -391,7 +366,6 @@
       cursor: pointer;
     }
   }
-  /* 連結不加 user-select: none，工單連結需可選取 */
   button,
   [role="button"],
   [role="option"],

@@ -27,7 +27,6 @@ const meta = {
       </InputOTPGroup>
     ),
   },
-  // input-otp 內部一律受控：defaultValue 轉成 state 再以 value 傳入，避免 React 的 value + defaultValue 警告
   render: function Render({ defaultValue, ...args }) {
     const [value, setValue] = React.useState(String(defaultValue ?? ""));
     return <InputOTP {...args} value={value} onChange={setValue} />;
