@@ -93,6 +93,7 @@
 | 步驟式處理紀錄、可展開細節 | `Trace` |
 | 標籤、狀態 | `Badge` |
 | 頭像、頭像群組 | `Avatar`、`AvatarGroup` |
+| 頂列帳號：登出、主題、語言切換 | 頭像選單（`DropdownMenu`＋`Avatar`），規則見 [ux-rules.md](ux-rules.md)「10. 導覽、連結與快捷鍵」 |
 | 鍵盤快捷鍵 | `Kbd` |
 | 程式碼、錯誤輸出 | `CodeBlock` |
 | 圖表 | `ChartContainer`（Recharts） |

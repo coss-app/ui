@@ -31,7 +31,7 @@ AI 助理用 <a href="/?path=/docs/使用手冊-claude-code-skill--docs" target=
 | 列表篩選，如「狀態」「負責人」 | 下拉膠囊 | 搜尋框＋「篩選」鈕（顯示已選數量）→ 面板列出各條件與「清除篩選」，點條件疊第二層選項 Drawer |
 | 日期，如「到期日」 | `Popover`＋`Calendar` | `Drawer` |
 | 多選下拉，如「標籤」「協作人員」 | `Combobox` 多選（`ComboboxChips`） | `Drawer`＋48px 勾選列，頂端搜尋框，底部固定「確認」鈕（顯示已選數量）；勾選當下不關閉 |
-| 動作選單 `DropdownMenu`、頭像選單 | 下拉（可有子選單） | `Drawer`；子選單（主題、語言）改成分段按鈕直接切換 |
+| 動作選單 `DropdownMenu`、頭像選單（項目見下方「頭像選單」） | 下拉（可有子選單） | `Drawer`；子選單（主題、語言）改成分段按鈕直接切換 |
 | 說明 ⓘ、表情等小面板 `Popover` | `Popover` | `Drawer`；本身已在 Drawer 內時改就地展開 |
 | 通知面板 | `Popover` | 由右往左滑出的整高 `Drawer`（`swipeDirection="right"`，往右滑關閉） |
 | 側欄 | 固定 260px | 左側抽屜（`Sidebar` 自動處理） |
@@ -253,6 +253,18 @@ export function ResponsiveDialog({
 - **導覽用真的 `<a>`**（框架的 `Link`，或 `Button render={<a />}`），不用 `onClick` 加 `router.push`：這樣 ⌘／Ctrl 點擊、中鍵、右鍵「在新分頁開啟」才能用。可點的工單列、卡片也要有真連結（標題是 `<a>`，用 CSS 把點擊區撐滿整列）。
 - **外部連結**加 `target="_blank"` 與 `rel="noopener noreferrer"`，並附外部連結圖示（`aria-hidden`）與「（另開新分頁）」的 `sr-only` 文字；站內連結不另開分頁。
 - **快捷鍵**：不覆蓋瀏覽器與系統快捷鍵（⌘R、⌘W、⌘F）；依平台顯示 ⌘ 或 Ctrl（用 `Kbd`）；輸入框、可編輯區聚焦時不觸發單鍵快捷鍵；每個快捷鍵動作都要有一般的點擊入口。
+
+### 頭像選單
+
+- 有登入系統就在**頂列最右側**放頭像選單（`DropdownMenu`＋`Avatar`），所有登入後頁面同一位置，手機也在頂列右上；有無側欄皆同。觸發鈕 `aria-label="帳號選單"`，粗指標點擊區 ≥ 44px；沒有照片用姓名首字 `AvatarFallback`。
+- **登出、主題、語言（有的話）一律收進頭像選單**，頂列不另放獨立的主題或語言切換鈕。
+- **項目順序**：身分區（姓名＋Email 或角色，如「王小明／support@coss.com.tw」；Email 過長時截斷並附 `title` 看完整值）→ 個人相關連結（個人設定等，用真連結）→ 偏好（主題：淺色／深色／跟隨系統；語言）→ 分隔線 → 登出（最後一項）。
+- **桌面**：主題、語言用子選單（`DropdownMenuSub`＋`DropdownMenuRadioGroup`），子選單觸發列右側顯示目前值。**手機**：`Drawer`，主題、語言改分段按鈕（`ToggleGroup`）直接切換，底部保留「關閉」鈕。切換立即生效，不需儲存。
+- 語言選項用該語言的自稱（「繁體中文」「English」「日本語」），不翻成目前介面語言。
+- 登出不跳確認框（可重新登入，不屬不可復原動作）；有未儲存變更時沿用「放棄變更」確認框。
+- 未登入頁面（登入、註冊、忘記密碼）沒有頭像選單：主題、語言若有，放頁面右上角的小型切換。沒有登入系統的專案：主題、語言放頂列右側。
+
+範例見「後台外框」範本（Claude Code Skill 的 `patterns.md`）與 DropdownMenu 的 `UserMenu` story。
 
 ## 文案
 
