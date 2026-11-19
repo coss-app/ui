@@ -1,7 +1,6 @@
 import { addons } from "storybook/manager-api";
 import { create } from "storybook/theming/create";
 
-// 文件站外框（側欄、工具列）套公司配色；顏色取自 globals.css 的淺色 token
 addons.setConfig({
   theme: create({
     base: "light",
@@ -29,7 +28,6 @@ addons.setConfig({
   }),
 });
 
-// 分頁標題：Storybook 寫死「… ⋅ Storybook」後綴且無設定可改，標題一變動就換成 coss UI
 const BRAND = "coss UI";
 const rebrand = () => {
   const next = document.title

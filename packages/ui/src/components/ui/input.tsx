@@ -2,7 +2,6 @@ import * as React from "react"
 import { Input as InputPrimitive } from "@base-ui/react/input"
 import { cn } from "@/lib/utils"
 
-/* DESIGN.md「輸入框」：高 40、10px 圓角、淡霧灰填色無框；聚焦白底＋1.5px 深靛藍框；錯誤白底＋珊瑚紅框 */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <InputPrimitive

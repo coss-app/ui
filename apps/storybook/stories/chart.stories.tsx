@@ -69,7 +69,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ChartContainer 的 config/children 為必填；每個 story 都用 render，args 只為了滿足型別
 const baseArgs = { config: weeklyConfig, children: <></> };
 
 export const BarMultiple: Story = {

@@ -116,15 +116,16 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** 必填單選 → 可複選（可略過）→ 文字輸入；未選直接按「下一題」會顯示錯誤 */
-export const Default: Story = {};
-
-/** 以字母快捷鍵（A、B、C…）選答 */
-export const LetterShortcuts: Story = {
-  args: { shortcuts: "letters" },
+export const Default: Story = {
+  parameters: { docs: { description: { story: "必填單選 → 可複選（可略過）→ 文字輸入；未選直接按「下一題」會顯示錯誤" } } },
 };
 
-/** 以數字快捷鍵（1、2、3…）選答 */
+export const LetterShortcuts: Story = {
+  args: { shortcuts: "letters" },
+  parameters: { docs: { description: { story: "以字母快捷鍵（A、B、C…）選答" } } },
+};
+
 export const NumberShortcuts: Story = {
   args: { shortcuts: "numbers" },
+  parameters: { docs: { description: { story: "以數字快捷鍵（1、2、3…）選答" } } },
 };

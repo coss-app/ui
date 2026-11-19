@@ -103,7 +103,6 @@ function FormLabel({
   )
 }
 
-/** 把 aria／id 合併到唯一子元素上（取代 Radix Slot） */
 function FormControl({
   children,
   ...props

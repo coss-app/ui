@@ -63,7 +63,6 @@ function PaginationLink({
   )
 }
 
-/* DESIGN.md「分頁」：上一頁／下一頁各 40×40 圓形白底；箭頭石板藍，停用灰藍 */
 const paginationArrowClass =
   "bg-card text-muted-foreground hover:bg-muted aria-disabled:pointer-events-none aria-disabled:text-placeholder"
 
@@ -101,7 +100,6 @@ function PaginationNext({
   )
 }
 
-/** 左側資訊文字，例如「1 - 15 of 19」 */
 function PaginationInfo({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p

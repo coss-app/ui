@@ -1,61 +1,32 @@
-# CLAUDE.md
+- 代碼庫是你的，永遠由你開發與維護。
+- 每次犯錯，有優先寫成 lint rule；再用測試，自己驗收。
+- 嚴禁在代碼寫任何註釋。
 
 ## 專案
 
-`@coss-app/ui`：coss 公司 React 組件庫，shadcn/ui **Base UI 版 base-nova**＋Tailwind v4，發佈到 npmjs（公開，MIT；repo 也是公開）。文件站（Storybook）https://ui.coss.com.tw，Cloudflare Pages 專案 `coss-ui`。repo `coss-app/ui`。視覺規範 `DESIGN.md`。
+`@coss-app/ui`：coss 公司 React 組件庫，shadcn/ui **Base UI 版 base-nova**＋Tailwind v4，發佈到 npmjs（公開，MIT；repo 也是公開）。文件站（Storybook）https://ui.coss.com.tw。視覺規範 `DESIGN.md`。
 
-npm workspaces：
-
-- `packages/ui` → `@coss-app/ui`（發佈套件）
-- `apps/storybook` → `@coss-app/docs`（private，文件站）。勿命名為 `storybook`：與 npm 套件 `storybook` 同名，`changeset version` 誤判依賴版本。
+npm workspaces：`packages/ui` → `@coss-app/ui`（發佈套件）；`apps/storybook` → `@coss-app/docs`（private；勿命名為 `storybook`：與 npm 套件同名，`changeset version` 誤判依賴版本）。
 
 ## 指令
 
 ```bash
-npm install                              # workspace 直接用原始碼
-npm run storybook                        # http://localhost:6006
-npm run typecheck                        # 只檢查 packages/ui
-npm run typecheck -w @coss-app/docs      # stories / .storybook / MDX 的型別
-npm run lint                             # stories 用 packages/ui/lint.json（@shadcn/lint）檢查
-npm run build                            # packages/ui → dist
-npm run build-storybook                  # 文件站靜態檔＋改寫 <title>
+npm install
+npm run storybook          # http://localhost:6006
+npm run verify             # typecheck ×2、lint、test、manifest --check、check:deps、check:shadcn-css、check:patterns
+npm run build              # packages/ui → dist
+npm run build-storybook
 ```
 
-無測試。驗證 = 兩個 typecheck＋`lint`＋`build`＋`build-storybook`。CI 跑兩個 typecheck＋`build`＋`lint`＋`npm run manifest -- --check`＋`npm run check:deps`。UI 改動在 Storybook 實看淺／深色。
+CI = `build` ＋ `verify`。hook 已自動執行：改檔後對該檔跑 lint、結束前（檔案有變動時）跑 `verify`；UI 改動另在 Storybook 實看淺／深色。
 
-## 套件（packages/ui）
+## 架構
 
-- 建置：`tsc` → `tsc-alias` 把 `@/` 轉相對路徑 → 複製 `src/styles` 到 `dist`。`exports`：`./components/*` → `dist/components/ui/*`，另有 `./lib/*`、`./hooks/*`、`./globals.css`、`./lint.json`（給消費端 `@shadcn/lint` 用的規則，非建置產物，直接放套件根目錄）。組件內部 import 一律 `@/…`。
-- `src/styles/globals.css` 是唯一 token 來源（根目錄無 globals.css）。
-- 組件是 Base UI，非 Radix：組合用 `render` prop，不用 `asChild`；需 Slot 行為用 `@base-ui/react/use-render`（見 `form.tsx` 的 `FormControl`）。Menu 的 `*Label` 須放在 `*Group` 內。
+- `packages/ui` 建置：`tsc` → `tsc-alias` → 複製 `src/styles`；`exports` 見其 `package.json`。`src/styles/globals.css` 是唯一 token 來源（token 說明在 `scripts/token-notes.json`）。
+- 組件是 Base UI，非 Radix：組合用 `render` prop；需 Slot 行為用 `@base-ui/react/use-render`（見 `form.tsx` 的 `FormControl`）。
+- `packages/ui/lint.json` 隨套件發佈給消費端的 `@shadcn/lint`；repo 內部規則在 `eslint.config.mjs` 與 `eslint-rules/`。
+- `plugins/coss-ui`：給其他 coss 專案 AI agent 用的 skill。
 
-### shadcn CLI
+## 規則（`.claude/rules/`，依編輯路徑按需載入）
 
-在 `packages/ui` 執行 `npx shadcn@latest add <name>` 之後必做：
-
-1. `from "cn"` 改成 `from "@/lib/utils"`，並從 `package.json` 移除 CLI 自動加的 `cn` 依賴。
-2. `--overwrite` 會蓋掉已依 DESIGN.md 調整的 class：先看 diff，再重套樣式。
-3. `shadcn` 只能在 devDependencies（CLI 可能加回 dependencies；`npm run check:deps` 會擋，CI 也跑）。`src/styles/shadcn-tailwind.css` 是 `shadcn/dist/tailwind.css` 的複本（使用端因此不必安裝 shadcn CLI，避開其相依套件的 npm audit 弱點）：add 之後與 `node_modules/shadcn/dist/tailwind.css` 做 diff，有差異就同步（新組件可能用到新的 utility），並更新檔頭的版本號。
-
-## 文件站（apps/storybook）
-
-- story 一律以消費端路徑 import：`@coss-app/ui/components/<name>`。`.storybook/main.ts` alias 與 `tsconfig.json` paths 導回 `packages/ui/src`，兩處須同步。
-- `.storybook/docs-page.tsx`：組件 Docs 頁頂端「引用方式」由 story 檔名推出組件檔，再解析組件檔尾 `export { … }` 自動產生（解析在 `scripts/parse-exports.mjs`，與 skill manifest 共用）。故新組件檔須保留檔尾 export 區塊，story 檔名須與組件檔名相同（`button.stories.tsx` ↔ `button.tsx`）。
-- 使用手冊在 `stories/docs/*.mdx`：標題前綴「使用手冊/」，排序寫在 `preview.tsx` 的 `storySort`；MDX 表格靠 `remark-gfm`。手冊與 story 內容用繁體中文、客服工單情境。
-
-## Claude Code skill（plugins/coss-ui）
-
-給「其他 coss 專案」的 AI agent 用。repo 即 plugin marketplace（`.claude-plugin/marketplace.json`，消費端 `/plugin marketplace add coss-app/ui`）；`npx skills add coss-app/ui --skill coss-ui` 也掃得到（CLI 掃 repo 內 `SKILL.md`，免額外設定）。
-
-- `references/components.md`、`tokens.md`、`plugins/coss-ui/manifest.json` 由 `npm run manifest` 產生，勿手改。來源：組件原始碼（匯出、cva variants）、story 的 `meta.title`、`globals.css`。改這些後須重跑；`-- --check` 不同步即失敗，CI 會跑。
-- 新增組件：`scripts/component-notes.json` 補一句用途（缺或多都失敗）→ `npm run manifest` → 視需要更新 `decision-guide.md`。新色彩 token 若不屬 `build-manifest.mjs` 的 `TOKEN_GROUPS` 也失敗，補分組。
-- 新增 story 分類：同步 `preview.tsx` 的 `storySort` 與 `build-manifest.mjs` 的 `CATEGORY_ORDER`。
-- 其餘維護規則（手寫／產生檔清單、`plugin.json` 無 version、`check-usage.mjs`、`lint.json` 與硬規則同步、`patterns.md` 驗證）見 `.claude/rules/claude-code-skill.md`，編輯 `plugins/coss-ui/**`、`scripts/**` 時載入。
-
-## 發版與部署
-
-- main 受保護：須走 PR 且 `ci` 檢查通過。repo 不允許 Actions 開 PR，故**不用 `changesets/action`**。
-- 流程：功能 PR 附 `npx changeset` → 要發版時開分支跑 `npx changeset version && npm install && npm run manifest`（manifest 把新版本號寫進 `components.md`／`tokens.md`／`manifest.json`，供判斷專案裝的套件夠不夠新），以 PR 合併。
-- `.github/workflows/release.yml`：main 上 `packages/ui/package.json` 版本尚未發佈 → `changeset publish`（發佈到 npmjs）、推 tag `@coss-app/ui@x.y.z`、建 GitHub Release（取 CHANGELOG 該版段落）；已發佈則略過。
-- `docs.yml`：PR 部署預覽並留言網址；push 到 main（`apps/storybook/**`、`packages/ui/**`、`scripts/parse-exports.*`、`package-lock.json`、`.github/workflows/docs.yml` 有變動）與 `workflow_dispatch` 部署正式站。正式站可能領先已發佈版本（含未發版組件）。
-- repo secrets：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`；tag 與 Release 用內建 `GITHUB_TOKEN`。npmjs 發佈走 trusted publishing（OIDC），無 npm token；設定在 npmjs `@coss-app/ui` 套件頁（Trusted Publisher：`coss-app`／`ui`／`release.yml`，須勾 Allow npm publish，否則只 stage 不上架）。`release.yml` 須 `id-token: write`，且 npm ≥ 11.5.1（Node 22 內建 npm 10，故先升級）。
+`ui-component-styles` 組件樣式｜`globals-css` token｜`storybook`、`storybook-branding` 文件站｜`shadcn-cli` 加組件｜`claude-code-skill` skill 維護｜`release` 發版部署

@@ -1,7 +1,6 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-/* 同 Input：淡霧灰填色無框，聚焦白底＋深靛藍框；多行行高 1.5 */
 function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
     <textarea

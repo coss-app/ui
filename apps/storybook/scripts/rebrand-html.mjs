@@ -1,4 +1,3 @@
-// 建置後處理：Storybook 的 <title> 固定是「<title> - Storybook」且無設定可改，直接改寫成品的 index.html
 import { readFileSync, writeFileSync } from "node:fs";
 
 const file = new URL("../storybook-static/index.html", import.meta.url);

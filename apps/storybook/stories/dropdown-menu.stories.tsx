@@ -95,7 +95,6 @@ const meta = {
     align: { control: "select", options: ["start", "center", "end"] },
   },
   args: { side: "bottom", align: "start" },
-  // 預設展開的浮層會浮在範例外：預留高度，Docs 頁預覽才不會蓋到下一個範例
   decorators: [(Story) => <div className="min-h-136"><Story /></div>],
 } satisfies Meta<typeof TicketActionsMenu>;
 
@@ -209,7 +208,6 @@ function UserIdentity() {
   );
 }
 
-/** 頂列右上角的頭像選單（桌面）：身分 → 個人設定 → 主題、語言子選單 → 分隔線 → 登出 */
 function UserMenuDesktop({ defaultOpen }: { defaultOpen?: boolean }) {
   const [theme, setTheme] = useState("system");
   const [locale, setLocale] = useState("zh-TW");
@@ -271,7 +269,6 @@ function UserMenuDesktop({ defaultOpen }: { defaultOpen?: boolean }) {
   );
 }
 
-/** 手機：底部 Drawer，主題、語言改分段按鈕直接切換 */
 function UserMenuMobile({ defaultOpen }: { defaultOpen?: boolean }) {
   const [theme, setTheme] = useState("system");
   const [locale, setLocale] = useState("zh-TW");
@@ -299,7 +296,6 @@ function UserMenuMobile({ defaultOpen }: { defaultOpen?: boolean }) {
           ].map(({ label, options, value, onChange }) => (
             <div key={label} className="grid gap-2">
               <span className="text-sm font-semibold text-placeholder">{label}</span>
-              {/* 分段按鈕：不允許取消選取（空陣列忽略） */}
               <ToggleGroup
                 variant="outline"
                 spacing={0}
@@ -330,19 +326,22 @@ function UserMenuMobile({ defaultOpen }: { defaultOpen?: boolean }) {
   );
 }
 
-/** 頭像選單：頂列最右側。登出、主題、語言都收在這裡，不在頂列另放切換鈕 */
 export const UserMenu: Story = {
   render: (args) => <UserMenuDesktop defaultOpen={args.defaultOpen} />,
   args: { defaultOpen: true },
   decorators: [(Story) => <div className="flex min-h-96 justify-end"><Story /></div>],
+  parameters: { docs: { description: { story: "頭像選單：頂列最右側。登出、主題、語言都收在這裡，不在頂列另放切換鈕" } } },
 };
 
-/** 手機（< md）：底部 Drawer；主題、語言為分段按鈕 */
 export const UserMenuOnMobile: Story = {
   render: (args) => <UserMenuMobile defaultOpen={args.defaultOpen} />,
   args: { defaultOpen: true },
   globals: { viewport: { value: "mobile", isRotated: false } },
-  // Docs 頁預設展開的 modal Drawer 會蓋住整頁：改用 iframe 渲染
-  parameters: { docs: { story: { inline: false, height: "520px" } } },
+  parameters: {
+    docs: {
+      description: { story: "手機（< md）：底部 Drawer；主題、語言為分段按鈕" },
+      story: { inline: false, height: "520px" },
+    },
+  },
   decorators: [(Story) => <div className="flex min-h-96 justify-end"><Story /></div>],
 };

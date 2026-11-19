@@ -14,7 +14,6 @@ const viewports = {
 } as const;
 
 const preview: Preview = {
-  // 每個組件自動產生 Docs 頁（頂端顯示 import 寫法，見 docs-page.tsx）
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
@@ -61,7 +60,6 @@ const preview: Preview = {
   decorators: [
     (Story, context) => (
       <TooltipProvider>
-        {/* 單一 story 檢視撐滿視窗（背景連續）；Docs 頁預覽依內容高度，否則一顆 Button 也有整個視窗高 */}
         <div
           className={
             context.viewMode === "docs"
@@ -74,7 +72,6 @@ const preview: Preview = {
       </TooltipProvider>
     ),
     withThemeByClassName({
-      // key 用英文：Storybook 的 URL globals 只接受英數，?globals=theme:dark 才能直接連結深色
       themes: { light: "", dark: "dark" },
       defaultTheme: "light",
       parentSelector: "html",

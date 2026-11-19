@@ -1,18 +1,3 @@
-#!/usr/bin/env node
-/**
- * 檢查程式碼有沒有違反 coss-ui 的寫法規則（純文字比對，無依賴，Node 18+）。
- *
- * 用法：
- *   node check-usage.mjs [檔案或資料夾 ...]   不給參數時掃描目前資料夾
- *   有違規 → 逐行印出並 exit 1；沒有 → exit 0
- *
- * 只掃 .tsx／.jsx／.ts／.js；略過 node_modules、dist、.next、build 等產物資料夾。
- * 刻意例外的那一行，在同一行任何位置放上註解文字 coss-ui-ignore 即可略過
- * （一般程式用行尾的雙斜線註解，JSX 內用大括號包起來的區塊註解）。
- *
- * 規則與原因見 SKILL.md「硬規則」與 references/design-rules.md。
- * 型別檢查抓得到 asChild 與不存在的 variant，抓不到的是下面的顏色與字重。
- */
 import fs from "node:fs";
 import path from "node:path";
 

@@ -80,7 +80,6 @@ export const Inline: Story = {
 };
 
 function EmptyDemo() {
-  // cmdk 的 Input 內部受控，不能用 defaultValue
   const [search, setSearch] = useState("不存在的關鍵字");
   return (
     <Command className="max-w-md border shadow-menu">

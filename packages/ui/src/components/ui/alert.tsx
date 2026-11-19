@@ -7,7 +7,6 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        /* 資訊提示列：冰藍底、深海藍字 */
         default:
           "bg-info-muted text-info-foreground *:[svg]:text-info",
         success: "bg-success-muted text-success-foreground",

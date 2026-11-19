@@ -150,10 +150,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** 送出時以 zod 驗證；通過後模擬 1.2 秒的寄送（loading 狀態） */
-export const Default: Story = {};
+export const Default: Story = {
+  parameters: { docs: { description: { story: "送出時以 zod 驗證；通過後模擬 1.2 秒的寄送（loading 狀態）" } } },
+};
 
-/** 載入即觸發驗證，展示所有錯誤訊息與 aria-invalid 樣式 */
 export const WithErrors: Story = {
   args: { validateOnMount: true },
+  parameters: { docs: { description: { story: "載入即觸發驗證，展示所有錯誤訊息與 aria-invalid 樣式" } } },
 };

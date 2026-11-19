@@ -14,17 +14,17 @@
 | `background` | `#f7f8fe` | `#0e1124` | grey 10：App 底色 |
 | `foreground` | `#2d336b` | `#e4e7f7` | grey default：內文 |
 | `heading` | `#222962` | `#f3f4fc` | grey 80：大標 |
-| `card` | `#ffffff` | `#171b36` |  |
-| `card-foreground` | `#2d336b` | `#e4e7f7` |  |
-| `popover` | `#ffffff` | `#1c2140` |  |
-| `popover-foreground` | `#2d336b` | `#e4e7f7` |  |
+| `card` | `#ffffff` | `#171b36` | 卡片底色 |
+| `card-foreground` | `#2d336b` | `#e4e7f7` | 卡片上的文字 |
+| `popover` | `#ffffff` | `#1c2140` | 浮層底色 |
+| `popover-foreground` | `#2d336b` | `#e4e7f7` | 浮層上的文字 |
 
 ## 品牌與主要動作
 
 | Utility | 淺色 | 深色 | 用途 |
 | --- | --- | --- | --- |
 | `primary` | `#00a756` | `#00a756` | primary dark：主要按鈕 |
-| `primary-foreground` | `#ffffff` | `#ffffff` |  |
+| `primary-foreground` | `#ffffff` | `#ffffff` | 主要色底上的字 |
 | `primary-hover` | `#008746` | `#008746` | 主要按鈕 hover |
 | `primary-disabled` | `#80d3ab` | `#0c6146` | 主要按鈕停用 |
 | `brand` | `#07ce6f` | `#3ddc8e` | primary default：進度、狀態點 |
@@ -34,15 +34,15 @@
 | Utility | 淺色 | 深色 | 用途 |
 | --- | --- | --- | --- |
 | `secondary` | `#eff0f8` | `#232845` | grey 20 |
-| `secondary-foreground` | `#2d336b` | `#e4e7f7` |  |
+| `secondary-foreground` | `#2d336b` | `#e4e7f7` | secondary 底上的字 |
 | `muted` | `#eff0f8` | `#232845` | grey 20：輸入框填色 |
 | `muted-foreground` | `#5566a4` | `#9aa3cf` | grey 60：次要文字 |
 | `placeholder` | `#8f9bc8` | `#6f79a8` | grey 50 |
 | `accent` | `#eff0f8` | `#262c4e` | hover 底 |
-| `accent-foreground` | `#2d336b` | `#e4e7f7` |  |
+| `accent-foreground` | `#2d336b` | `#e4e7f7` | accent 底上的字 |
 | `border` | `#dee1f4` | `#2c3258` | grey 30：分隔線 |
 | `border-strong` | `#b1b7e6` | `#3f4775` | grey 40：中性按鈕框 |
-| `input` | `#dee1f4` | `#2c3258` |  |
+| `input` | `#dee1f4` | `#2c3258` | 輸入框邊線 |
 | `ring` | `#2d336b` | `#9aa3cf` | 聚焦框線 |
 
 ## 狀態色
@@ -68,20 +68,20 @@
 | Utility | 淺色 | 深色 | 用途 |
 | --- | --- | --- | --- |
 | `toast` | `#1e1e1e` | `#f3f4fc` | Grey_100 |
-| `toast-foreground` | `#ffffff` | `#171b36` |  |
+| `toast-foreground` | `#ffffff` | `#171b36` | Toast 上的字 |
 | `overlay` | `#3a3d5c` | `#05060f` | 彈窗遮罩（搭配 50% 透明） |
-| `viewer` | `#0e1124` | 同淺色 |  |
-| `viewer-foreground` | `#ffffff` | 同淺色 |  |
+| `viewer` | `#0e1124` | 同淺色 | 圖片預覽全螢幕底：照片是內容，淺深色同值 |
+| `viewer-foreground` | `#ffffff` | 同淺色 | 圖片預覽上的字與控制鈕 |
 
 ## 看板主題色
 
 | Utility | 淺色 | 深色 | 用途 |
 | --- | --- | --- | --- |
-| `banner-blue` | `#007dfa` | 同淺色 |  |
-| `banner-green` | `#08a24b` | 同淺色 |  |
-| `banner-orange` | `#d06100` | 同淺色 |  |
-| `banner-purple` | `#7041b2` | 同淺色 |  |
-| `banner-black` | `#353b41` | 同淺色 |  |
+| `banner-blue` | `#007dfa` | 同淺色 | 看板主題色：內容色，淺深色同值 |
+| `banner-green` | `#08a24b` | 同淺色 | 看板主題色：內容色，淺深色同值 |
+| `banner-orange` | `#d06100` | 同淺色 | 看板主題色：內容色，淺深色同值 |
+| `banner-purple` | `#7041b2` | 同淺色 | 看板主題色：內容色，淺深色同值 |
+| `banner-black` | `#353b41` | 同淺色 | 看板主題色：內容色，淺深色同值 |
 | `banner-foreground` | `#ffffff` | 同淺色 | 看板上的字與按鈕底 |
 
 ## 即時統計色階
@@ -94,30 +94,30 @@
 | `stat-4` | `#b1b7e6` | `#4a5384` | grey 40 |
 | `stat-5` | `#dee1f4` | `#2c3258` | grey 30 |
 | `stat-soft` | `#d9e6ff` | `#1f3566` | blue light |
-| `stat-on-strong` | `#ffffff` | `#0e1124` |  |
+| `stat-on-strong` | `#ffffff` | `#0e1124` | 即時統計深色段上的字 |
 
 ## 圖表
 
 | Utility | 淺色 | 深色 | 用途 |
 | --- | --- | --- | --- |
-| `chart-1` | `#00a756` | `#00a756` |  |
-| `chart-2` | `#0066ff` | `#5c9dff` |  |
-| `chart-3` | `#c65300` | `#ff9a4d` |  |
-| `chart-4` | `#ef4564` | `#ff6b85` |  |
-| `chart-5` | `#8f9bc8` | `#9aa3cf` |  |
+| `chart-1` | `#00a756` | `#00a756` | 圖表系列 1 |
+| `chart-2` | `#0066ff` | `#5c9dff` | 圖表系列 2 |
+| `chart-3` | `#c65300` | `#ff9a4d` | 圖表系列 3 |
+| `chart-4` | `#ef4564` | `#ff6b85` | 圖表系列 4 |
+| `chart-5` | `#8f9bc8` | `#9aa3cf` | 圖表系列 5 |
 
 ## 側邊欄
 
 | Utility | 淺色 | 深色 | 用途 |
 | --- | --- | --- | --- |
-| `sidebar` | `#f7f8fe` | `#0e1124` |  |
-| `sidebar-foreground` | `#2d336b` | `#e4e7f7` |  |
-| `sidebar-primary` | `#00a756` | `#00a756` |  |
-| `sidebar-primary-foreground` | `#ffffff` | `#ffffff` |  |
+| `sidebar` | `#f7f8fe` | `#0e1124` | 側邊欄底色 |
+| `sidebar-foreground` | `#2d336b` | `#e4e7f7` | 側邊欄文字 |
+| `sidebar-primary` | `#00a756` | `#00a756` | 側邊欄主要色 |
+| `sidebar-primary-foreground` | `#ffffff` | `#ffffff` | 側邊欄主要色上的字 |
 | `sidebar-accent` | `#ecfef5` | `#12372a` | primary light：目前頁面 |
-| `sidebar-accent-foreground` | `#00a756` | `#3ddc8e` |  |
-| `sidebar-border` | `#dee1f4` | `#2c3258` |  |
-| `sidebar-ring` | `#2d336b` | `#9aa3cf` |  |
+| `sidebar-accent-foreground` | `#00a756` | `#3ddc8e` | 側邊欄目前頁面的字 |
+| `sidebar-border` | `#dee1f4` | `#2c3258` | 側邊欄分隔線 |
+| `sidebar-ring` | `#2d336b` | `#9aa3cf` | 側邊欄聚焦框線 |
 
 ## 圓角
 

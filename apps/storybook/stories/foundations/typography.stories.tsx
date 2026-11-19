@@ -1,7 +1,5 @@
-/* eslint-disable shadcn/no-arbitrary-values, shadcn/no-inline-styles -- 文件頁需依資料動態設定色票與字級，不是消費端示範 */
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-/** DESIGN.md 第 3 節字級表 */
 const SCALE = [
   { level: "Hero", size: 40, weight: 600, usage: "歡迎頁超大標（少用）", sample: "歡迎使用 ServOps" },
   { level: "Display", size: 30, weight: 600, usage: "登入頁品牌名", sample: "JC ServOps", className: "text-heading" },
@@ -101,7 +99,6 @@ function FontFamilyProbe() {
 const meta = {
   title: "Foundations/Typography",
   component: TypeScale,
-  // 文件站內部的展示頁，Show code 只會是 <TypeScale />，對消費端沒用，直接隱藏
   parameters: { controls: { disable: true }, docs: { codePanel: false, canvas: { sourceState: "none" } } },
 } satisfies Meta<typeof TypeScale>;
 

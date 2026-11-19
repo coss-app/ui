@@ -1,6 +1,3 @@
-# 文件站（Storybook）部署到 Cloudflare Pages
-# - PR：部署預覽，網址留言在 PR
-# - 合併到 main（文件站或套件有變動）、手動（workflow_dispatch）：部署正式站 ui.coss.com.tw
 name: Docs
 on:
   pull_request:

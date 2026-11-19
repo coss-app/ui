@@ -1,0 +1,214 @@
+{
+  "background": {
+    "note": "grey 10：App 底色"
+  },
+  "foreground": {
+    "note": "grey default：內文"
+  },
+  "heading": {
+    "note": "grey 80：大標"
+  },
+  "card": {
+    "note": "卡片底色"
+  },
+  "card-foreground": {
+    "note": "卡片上的文字"
+  },
+  "popover": {
+    "note": "浮層底色"
+  },
+  "popover-foreground": {
+    "note": "浮層上的文字"
+  },
+  "primary": {
+    "note": "primary dark：主要按鈕"
+  },
+  "primary-foreground": {
+    "note": "主要色底上的字"
+  },
+  "primary-hover": {
+    "note": "主要按鈕 hover"
+  },
+  "primary-disabled": {
+    "note": "主要按鈕停用"
+  },
+  "brand": {
+    "note": "primary default：進度、狀態點"
+  },
+  "secondary": {
+    "note": "grey 20"
+  },
+  "secondary-foreground": {
+    "note": "secondary 底上的字"
+  },
+  "muted": {
+    "note": "grey 20：輸入框填色"
+  },
+  "muted-foreground": {
+    "note": "grey 60：次要文字"
+  },
+  "placeholder": {
+    "note": "grey 50"
+  },
+  "accent": {
+    "note": "hover 底"
+  },
+  "accent-foreground": {
+    "note": "accent 底上的字"
+  },
+  "destructive": {
+    "note": "red default"
+  },
+  "destructive-foreground": {
+    "note": "深珊瑚：錯誤淡底上的字"
+  },
+  "destructive-muted": {
+    "note": "珊瑚霧：錯誤淡底"
+  },
+  "success-foreground": {
+    "note": "成功標籤字（同 primary）"
+  },
+  "success-muted": {
+    "note": "薄荷霧：成功淡底"
+  },
+  "info": {
+    "note": "blue default：連結、勾選框"
+  },
+  "info-muted": {
+    "note": "blue lighter：資訊提示底"
+  },
+  "info-foreground": {
+    "note": "blue dark：資訊提示文字"
+  },
+  "info-subtle": {
+    "note": "blue lightest：大面積提示區"
+  },
+  "warning": {
+    "note": "Orange Dark：待受理"
+  },
+  "warning-muted": {
+    "note": "橘霧：警示淡底"
+  },
+  "warning-bright": {
+    "note": "亮橘：只給圖示與點綴，不放文字"
+  },
+  "star": {
+    "note": "星等黃：評分星星專用"
+  },
+  "toast": {
+    "note": "Grey_100"
+  },
+  "toast-foreground": {
+    "note": "Toast 上的字"
+  },
+  "overlay": {
+    "note": "彈窗遮罩（搭配 50% 透明）"
+  },
+  "viewer": {
+    "note": "圖片預覽全螢幕底：照片是內容，淺深色同值",
+    "sameInDark": true
+  },
+  "viewer-foreground": {
+    "note": "圖片預覽上的字與控制鈕",
+    "sameInDark": true
+  },
+  "banner-blue": {
+    "note": "看板主題色：內容色，淺深色同值",
+    "sameInDark": true
+  },
+  "banner-green": {
+    "note": "看板主題色：內容色，淺深色同值",
+    "sameInDark": true
+  },
+  "banner-orange": {
+    "note": "看板主題色：內容色，淺深色同值",
+    "sameInDark": true
+  },
+  "banner-purple": {
+    "note": "看板主題色：內容色，淺深色同值",
+    "sameInDark": true
+  },
+  "banner-black": {
+    "note": "看板主題色：內容色，淺深色同值",
+    "sameInDark": true
+  },
+  "banner-foreground": {
+    "note": "看板上的字與按鈕底",
+    "sameInDark": true
+  },
+  "stat-1": {
+    "note": "blue dark"
+  },
+  "stat-2": {
+    "note": "blue default"
+  },
+  "stat-3": {
+    "note": "grey 50"
+  },
+  "stat-4": {
+    "note": "grey 40"
+  },
+  "stat-5": {
+    "note": "grey 30"
+  },
+  "stat-soft": {
+    "note": "blue light"
+  },
+  "stat-on-strong": {
+    "note": "即時統計深色段上的字"
+  },
+  "border": {
+    "note": "grey 30：分隔線"
+  },
+  "border-strong": {
+    "note": "grey 40：中性按鈕框"
+  },
+  "input": {
+    "note": "輸入框邊線"
+  },
+  "ring": {
+    "note": "聚焦框線"
+  },
+  "chart-1": {
+    "note": "圖表系列 1"
+  },
+  "chart-2": {
+    "note": "圖表系列 2"
+  },
+  "chart-3": {
+    "note": "圖表系列 3"
+  },
+  "chart-4": {
+    "note": "圖表系列 4"
+  },
+  "chart-5": {
+    "note": "圖表系列 5"
+  },
+  "radius": {
+    "note": "10px：輸入框、按鈕、面板"
+  },
+  "sidebar": {
+    "note": "側邊欄底色"
+  },
+  "sidebar-foreground": {
+    "note": "側邊欄文字"
+  },
+  "sidebar-primary": {
+    "note": "側邊欄主要色"
+  },
+  "sidebar-primary-foreground": {
+    "note": "側邊欄主要色上的字"
+  },
+  "sidebar-accent": {
+    "note": "primary light：目前頁面"
+  },
+  "sidebar-accent-foreground": {
+    "note": "側邊欄目前頁面的字"
+  },
+  "sidebar-border": {
+    "note": "側邊欄分隔線"
+  },
+  "sidebar-ring": {
+    "note": "側邊欄聚焦框線"
+  }
+}

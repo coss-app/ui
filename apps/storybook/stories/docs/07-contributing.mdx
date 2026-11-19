@@ -21,9 +21,11 @@ DESIGN.md                ← 設計規範
 ```bash
 npm install
 npm run storybook        # http://localhost:6006，改組件會即時更新
-npm run typecheck
+npm run verify           # typecheck、lint、test、manifest、deps 等全部檢查
 npm run build
 ```
+
+程式碼不寫註釋（lint 會擋）：說明放在文件、commit 訊息，或寫成 lint 規則與測試。
 
 開發這個 repo 不需要 token。repo 直接使用 `packages/ui` 的原始碼，`npm install` 不會從 npmjs 下載 `@coss-app/ui`。
 
@@ -48,7 +50,7 @@ Account ID 在 Cloudflare 後台 Workers & Pages 頁面右側可以看到。
 
 1. `cd packages/ui && npx shadcn@latest add <name>`。更新既有組件要加 `--overwrite`，這會蓋掉已經調整過的樣式，執行後先看 diff。
 2. 把 `from "cn"` 改成 `from "@/lib/utils"`，並從 `package.json` 移除 CLI 自動加的 `cn` 依賴。
-3. `shadcn` 只能放在 devDependencies（使用端不該裝到 shadcn CLI 的相依套件），`npm run check:deps` 會檢查。同時把 `node_modules/shadcn/dist/tailwind.css` 與 `packages/ui/src/styles/shadcn-tailwind.css` 做 diff，有差異就同步過去，並更新檔頭的版本號。
+3. `shadcn` 只能放在 devDependencies（使用端不該裝到 shadcn CLI 的相依套件）。`npm run verify` 會檢查這兩點，以及 `packages/ui/src/styles/shadcn-tailwind.css` 是否與 `node_modules/shadcn/dist/tailwind.css` 一致（不一致就複製上游內容並刪掉註釋）。
 4. 依 `DESIGN.md` 改 class：輸入框用 `bg-muted` 且無框、浮層用 `shadow-menu`、選中用 `bg-info`、主要動作用 `rounded-full`，字重只用 400／500／600。
 5. 在 `apps/storybook/stories/` 新增 `<name>.stories.tsx`。import 一律寫 `@coss-app/ui/components/<name>`，展示所有 variant 與狀態，範例文字用繁體中文。
 6. 在 `scripts/component-notes.json` 補一句用途說明，執行 `npm run manifest`，把更新後的 `plugins/coss-ui` 一起提交。這會更新給 AI 助理用的 skill（組件清單、variants、token）；漏做的話 CI 的 `manifest --check` 會失敗。兩個組件容易混淆時，同步補上 `plugins/coss-ui/skills/coss-ui/references/decision-guide.md`。

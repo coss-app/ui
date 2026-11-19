@@ -1,19 +1,19 @@
-/* eslint-disable shadcn/no-arbitrary-values, shadcn/no-inline-styles -- 文件頁需依資料動態設定色票與字級，不是消費端示範 */
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import globalsCss from "../../../../packages/ui/src/styles/globals.css?raw";
+import tokenNotes from "../../../../scripts/token-notes.json";
 
 type Token = { name: string; comment: string };
 
-/** 從 globals.css 的 :root 區塊取出所有色彩 token（值為 # 開頭），註解一併帶出 */
 function parseRootColorTokens(css: string): Token[] {
   const root = css.match(/:root\s*\{([\s\S]*?)\n\}/);
   if (!root) return [];
   const tokens: Token[] = [];
-  const re = /(--[\w-]+)\s*:\s*(#[0-9a-fA-F]{3,8})\s*;[ \t]*(?:\/\*\s*(.*?)\s*\*\/)?/g;
+  const re = /(--[\w-]+)\s*:\s*#[0-9a-fA-F]{3,8}\s*;/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(root[1]))) {
-    tokens.push({ name: m[1], comment: m[3] ?? "" });
+    const notes: Record<string, { note: string }> = tokenNotes;
+    tokens.push({ name: m[1], comment: notes[m[1].slice(2)]?.note ?? "" });
   }
   return tokens;
 }
@@ -50,7 +50,6 @@ function groupTokens(tokens: Token[]) {
   return order.map((title) => ({ title, tokens: result.get(title) ?? [] })).filter((g) => g.tokens.length);
 }
 
-/** html 的 class 變了（淺深色切換）就重新讀 computed 值 */
 function useThemeVersion() {
   const [version, setVersion] = React.useState(0);
   React.useEffect(() => {
@@ -118,7 +117,6 @@ const meta = {
   component: ColorTokens,
   parameters: {
     controls: { disable: true },
-    // Show code 顯示完整 globals.css（可直接複製）；identity transform 避免全域 transformSource 改動 CSS
     docs: { source: { code: globalsCss, language: "css", transform: (code: string) => code } },
   },
 } satisfies Meta<typeof ColorTokens>;

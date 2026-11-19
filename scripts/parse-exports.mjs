@@ -1,10 +1,3 @@
-/**
- * 組件檔的匯出解析與引用語句格式化。
- * 文件站（apps/storybook/.storybook/docs-page.tsx）與 skill manifest（scripts/build-manifest.mjs）共用，
- * 以免兩邊對「這個組件有哪些匯出」的答案分歧。型別宣告在 parse-exports.d.mts。
- */
-
-/** 從組件原始碼取出可用匯出名稱：`export { … }`（含 as 別名）與 `export function/const`；排除 `type` 匯出。 */
 export function parseExports(source) {
   const names = [];
   for (const block of source.matchAll(/export\s*\{([^}]*)\}/g)) {
@@ -19,7 +12,6 @@ export function parseExports(source) {
   return [...new Set(names)];
 }
 
-/** 產生消費端引用語句；單行超過 80 字元就換行展開。 */
 export function formatImport(names, module) {
   const from = `"@coss-app/ui/components/${module}"`;
   const oneLine = `import { ${names.join(", ")} } from ${from};`;

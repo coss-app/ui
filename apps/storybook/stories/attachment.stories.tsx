@@ -17,7 +17,6 @@ const states = ["idle", "uploading", "processing", "error", "done"] as const;
 const sizes = ["default", "sm", "xs"] as const;
 const orientations = ["horizontal", "vertical"] as const;
 
-// 內嵌示意圖，不依賴外部圖片
 const sampleImage =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
