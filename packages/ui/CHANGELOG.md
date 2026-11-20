@@ -1,5 +1,21 @@
 # @coss-app/ui
 
+## 0.4.0
+
+### Minor Changes
+
+- **破壞性**：主色由品牌綠改為藍，選中狀態由資訊藍改為主色。
+
+  - 主色 `primary`、`primary-hover`、`primary-disabled`、`brand`、`sidebar-primary`、`sidebar-accent` 系列改為藍；`background`、`sidebar` 底色微調為 `#f0f2fa`。消費端若寫死綠色強調，請自行確認。
+  - 勾選框、單選、開關、滑桿、日期選中、分段切換、選項卡、questionnaire 選中、表格選中列、外框按鈕 hover 與選單選中項改用 `primary`／`primary-muted`。消費端若用 `bg-info`、`text-info` 自做選中樣式，請改成 `bg-primary`、`bg-primary-muted text-primary-muted-foreground`；連結與資訊提示仍用 `info`。
+  - 成功色維持綠色：淺色 `success-foreground` 改為 `#008746`；成功 toast 圖示改用 `success-foreground`。要表示成功請用 `success-*`，不要用 `primary`。
+  - 新增 token：`primary-muted`、`primary-muted-foreground`、`selection`、`category-1`～`category-5`（含 `-muted`）。
+  - 新增 lint 規則 `coss/selected-uses-primary`（repo 內部使用）。
+
+### Patch Changes
+
+- 83c74cc: 移除 `globals.css`、`shadcn-tailwind.css` 與組件內的註釋，行為不變；`shadcn-tailwind.css` 的 MIT 出處聲明移至 `LICENSE` 的第三方聲明。
+
 ## 0.3.0
 
 ### Minor Changes

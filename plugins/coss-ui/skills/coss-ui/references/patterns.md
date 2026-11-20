@@ -516,7 +516,7 @@ export function TicketChat({
 
 ## 4. 後台外框：側欄＋頂列頭像選單
 
-重點：`SidebarProvider` 包住 `Sidebar` 與 `SidebarInset`；目前頁面用 `isActive`（淡綠底）；手機自動變抽屜，由 `SidebarTrigger` 開啟。頂列最右側放頭像選單：登出、主題、語言都收在裡面（頂列不另放切換鈕）；桌面 `DropdownMenu`（主題、語言為子選單），手機底部 `Drawer`（主題、語言為分段按鈕）。主題用 `next-themes`，語言與登出由 props 傳入，不綁特定 i18n 套件。
+重點：`SidebarProvider` 包住 `Sidebar` 與 `SidebarInset`；目前頁面用 `isActive`（主色淡底）；手機自動變抽屜，由 `SidebarTrigger` 開啟。頂列最右側放頭像選單：登出、主題、語言都收在裡面（頂列不另放切換鈕）；桌面 `DropdownMenu`（主題、語言為子選單），手機底部 `Drawer`（主題、語言為分段按鈕）。主題用 `next-themes`，語言與登出由 props 傳入，不綁特定 i18n 套件。
 
 ```tsx
 "use client";

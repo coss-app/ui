@@ -164,7 +164,7 @@ function parseDeclarations(block) {
 
 const TOKEN_GROUPS = [
   ["表面與文字", /^(background|foreground|heading|card|card-foreground|popover|popover-foreground)$/],
-  ["品牌與主要動作", /^(primary|primary-foreground|primary-hover|primary-disabled|brand)$/],
+  ["品牌與主要動作", /^(primary|primary-foreground|primary-hover|primary-disabled|primary-muted|primary-muted-foreground|brand|selection)$/],
   ["中性與邊框", /^(secondary|secondary-foreground|muted|muted-foreground|placeholder|accent|accent-foreground|border|border-strong|input|ring)$/],
   ["狀態色", /^(destructive|destructive-foreground|destructive-muted|success-foreground|success-muted|info|info-muted|info-foreground|info-subtle|warning|warning-muted|warning-bright|star)$/],
   ["浮層與預覽", /^(toast|toast-foreground|overlay|viewer|viewer-foreground)$/],
@@ -172,6 +172,7 @@ const TOKEN_GROUPS = [
   ["即時統計色階", /^stat-/],
   ["圖表", /^chart-/],
   ["側邊欄", /^sidebar/],
+  ["單據類別色", /^category-/],
 ];
 
 function collectTokens(css, tokenNotes) {
@@ -254,7 +255,7 @@ function renderTokensMd(tokens, pkgVersion) {
     "",
     `對應 \`@coss-app/ui\` **${pkgVersion}**。來源是 \`globals.css\`（唯一 token 來源），消費端引入 \`@coss-app/ui/globals.css\` 即得到全部。`,
     "",
-    "寫 class 時只用語意名稱，不寫 HEX 或任意值（如 `bg-[#00a756]`）：深色模式由 token 自動切換。",
+    "寫 class 時只用語意名稱，不寫 HEX 或任意值（如 `bg-[#316def]`）：深色模式由 token 自動切換。",
     "「Utility」欄的名稱可搭配 `bg-`、`text-`、`border-`、`ring-`、`fill-` 等色彩前綴，例如 `bg-primary`、`text-muted-foreground`、`border-border`。",
   ];
   for (const [groupName] of TOKEN_GROUPS) {

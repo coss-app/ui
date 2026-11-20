@@ -2,7 +2,7 @@
 
 # coss UI 組件索引
 
-對應 `@coss-app/ui` **0.3.0**，共 65 個組件。每個組件的 props 與互動範例以文件站為準（連結在各組件下方）。
+對應 `@coss-app/ui` **0.4.0**，共 65 個組件。每個組件的 props 與互動範例以文件站為準（連結在各組件下方）。
 
 引用一律走 `@coss-app/ui/components/<檔名>`；以下 import 為可直接複製的完整匯出清單，只留用到的名稱。
 
@@ -10,7 +10,7 @@
 
 ### Button · `button`
 
-按鈕。default＝主要動作（綠、膠囊，一個畫面只放一個）、outline＝次要、secondary＝輔助、neutral＝列表列上的動作、ghost＝圖示鈕、destructive＝刪除、link＝文字連結。
+按鈕。default＝主要動作（藍、膠囊，一個畫面只放一個）、outline＝次要、secondary＝輔助、neutral＝列表列上的動作、ghost＝圖示鈕、destructive＝刪除、link＝文字連結。
 
 ```tsx
 import { Button, buttonVariants } from "@coss-app/ui/components/button";
@@ -39,7 +39,7 @@ import {
 
 ### Calendar · `calendar`
 
-月曆選日期（單日、區間），日期選中用資訊藍；放在 Popover 內做日期欄位。
+月曆選日期（單日、區間），日期選中用主色藍；放在 Popover 內做日期欄位。
 
 ```tsx
 import { Calendar, CalendarDayButton } from "@coss-app/ui/components/calendar";
@@ -49,7 +49,7 @@ import { Calendar, CalendarDayButton } from "@coss-app/ui/components/calendar";
 
 ### Checkbox · `checkbox`
 
-勾選框（資訊藍）；單一選項或多選清單。
+勾選框（主色藍）；單一選項或多選清單。
 
 ```tsx
 import { Checkbox } from "@coss-app/ui/components/checkbox";
@@ -633,7 +633,7 @@ import {
 
 ### Sidebar · `sidebar`
 
-應用程式側邊欄（Provider／Menu／Group／Inset／Trigger／Rail），目前頁面用淡綠底；可收合、行動裝置自動變抽屜。
+應用程式側邊欄（Provider／Menu／Group／Inset／Trigger／Rail），目前頁面用主色淡底；可收合、行動裝置自動變抽屜。
 
 ```tsx
 import {
@@ -932,7 +932,7 @@ import {
 
 ### Progress · `progress`
 
-進度條（品牌綠），可附標籤與數值。
+進度條（主色藍），可附標籤與數值。
 
 ```tsx
 import {

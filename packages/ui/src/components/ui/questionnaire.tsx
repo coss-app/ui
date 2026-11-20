@@ -106,7 +106,7 @@ function QuestionnaireChoice({
     <QuestionnairePrimitive.Choice
       data-slot="questionnaire-choice"
       className={cn(
-        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-lg border border-border bg-card px-3.5 py-2.5 text-start text-sm transition-colors outline-none select-none hover:bg-background has-[>input:focus-visible]:border-ring has-[>input:focus-visible]:ring-3 has-[>input:focus-visible]:ring-ring/50 data-invalid:border-destructive data-checked:border-info/40 data-checked:bg-info-muted",
+        "group/questionnaire-choice relative flex min-h-11 cursor-pointer items-start gap-2.5 rounded-lg border border-border bg-card px-3.5 py-2.5 text-start text-sm transition-colors outline-none select-none hover:bg-background has-[>input:focus-visible]:border-ring has-[>input:focus-visible]:ring-3 has-[>input:focus-visible]:ring-ring/50 data-invalid:border-destructive data-checked:border-primary/40 data-checked:bg-primary-muted",
         "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
         className
       )}
@@ -119,7 +119,7 @@ function QuestionnaireChoice({
       <span
         aria-hidden="true"
         data-slot="questionnaire-choice-indicator"
-        className="pointer-events-none relative flex size-5 shrink-0 translate-y-[--spacing(0.2)] items-center justify-center rounded-[5px] border border-foreground bg-card group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-info group-data-checked/questionnaire-choice:bg-info group-data-checked/questionnaire-choice:text-white"
+        className="pointer-events-none relative flex size-5 shrink-0 translate-y-[--spacing(0.2)] items-center justify-center rounded-[5px] border border-foreground bg-card group-has-data-[slot=questionnaire-choice-description]/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-white"
       >
         <span
           data-slot="questionnaire-choice-indicator-dot"

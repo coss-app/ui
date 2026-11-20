@@ -5,7 +5,7 @@ import pkg from "../../../../packages/ui/package.json";
 
 # @coss-app/ui
 
-coss 公司通用 UI 組件庫，共 65 個組件，以 [shadcn/ui](https://ui.shadcn.com)（Base UI 版）和 Tailwind CSS v4 為基礎，套用公司設計規範「靛藍＋品牌綠」。
+coss 公司通用 UI 組件庫，共 65 個組件，以 [shadcn/ui](https://ui.shadcn.com)（Base UI 版）和 Tailwind CSS v4 為基礎，套用公司設計規範「靛藍＋主色藍」。
 
 目前版本：**{pkg.version}**　·　原始碼：[github.com/coss-app/ui](https://github.com/coss-app/ui)　·　套件：[npmjs.com/package/@coss-app/ui](https://www.npmjs.com/package/@coss-app/ui)
 
@@ -46,8 +46,8 @@ export function CreateTicket() {
 
 ## 設計原則（摘要）
 
-- 綠色只給主要動作與目前位置：主要按鈕、選中的側邊選單、進度。一個畫面只放一個主要按鈕。
-- 資訊用藍色：連結、勾選、日期選中、處理中狀態都用資訊藍。
+- 主色藍給主要動作、選中狀態與目前位置：主要按鈕、勾選、日期選中、選中的側邊選單、進度。一個畫面只放一個主要按鈕。
+- 連結與資訊提示用資訊藍，成功用綠色，選中不用資訊藍。
 - 文字不用純黑，用深靛藍；灰階全部帶藍紫調。
 - 幾乎不用陰影，靠底色與白色面板的明暗差分層；只有浮層（下拉、彈窗、Toast）有淡陰影。
 - 主要動作用膠囊形，容器 10px 圓角，彈窗 25px。

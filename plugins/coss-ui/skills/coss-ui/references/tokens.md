@@ -2,16 +2,16 @@
 
 # coss UI token
 
-對應 `@coss-app/ui` **0.3.0**。來源是 `globals.css`（唯一 token 來源），消費端引入 `@coss-app/ui/globals.css` 即得到全部。
+對應 `@coss-app/ui` **0.4.0**。來源是 `globals.css`（唯一 token 來源），消費端引入 `@coss-app/ui/globals.css` 即得到全部。
 
-寫 class 時只用語意名稱，不寫 HEX 或任意值（如 `bg-[#00a756]`）：深色模式由 token 自動切換。
+寫 class 時只用語意名稱，不寫 HEX 或任意值（如 `bg-[#316def]`）：深色模式由 token 自動切換。
 「Utility」欄的名稱可搭配 `bg-`、`text-`、`border-`、`ring-`、`fill-` 等色彩前綴，例如 `bg-primary`、`text-muted-foreground`、`border-border`。
 
 ## 表面與文字
 
 | Utility | 淺色 | 深色 | 用途 |
 | --- | --- | --- | --- |
-| `background` | `#f7f8fe` | `#0e1124` | grey 10：App 底色 |
+| `background` | `#f0f2fa` | `#0e1124` | grey 10：App 底色 |
 | `foreground` | `#2d336b` | `#e4e7f7` | grey default：內文 |
 | `heading` | `#222962` | `#f3f4fc` | grey 80：大標 |
 | `card` | `#ffffff` | `#171b36` | 卡片底色 |
@@ -23,11 +23,14 @@
 
 | Utility | 淺色 | 深色 | 用途 |
 | --- | --- | --- | --- |
-| `primary` | `#00a756` | `#00a756` | primary dark：主要按鈕 |
+| `primary` | `#316def` | `#316def` | primary dark：主要按鈕 |
 | `primary-foreground` | `#ffffff` | `#ffffff` | 主要色底上的字 |
-| `primary-hover` | `#008746` | `#008746` | 主要按鈕 hover |
-| `primary-disabled` | `#80d3ab` | `#0c6146` | 主要按鈕停用 |
-| `brand` | `#07ce6f` | `#3ddc8e` | primary default：進度、狀態點 |
+| `primary-hover` | `#2557c9` | `#2557c9` | 主要按鈕 hover |
+| `primary-disabled` | `#98b6f7` | `#1e3a7a` | 主要按鈕停用 |
+| `primary-muted` | `#eef3fe` | `#172a55` | 主色淡底：勾選、選中、外框按鈕 hover |
+| `primary-muted-foreground` | `#2557c9` | `#7aa2f7` | 主色淡底上的字、選中選項的字 |
+| `brand` | `#316def` | `#7aa2f7` | primary default（藍）：進度、狀態點 |
+| `selection` | `#f6f9ff` | `#141f38` | 清單、表格中被選中那一列的底色 |
 
 ## 中性與邊框
 
@@ -52,9 +55,9 @@
 | `destructive` | `#ef4564` | `#ff6b85` | red default |
 | `destructive-foreground` | `#c7334e` | `#ff9aac` | 深珊瑚：錯誤淡底上的字 |
 | `destructive-muted` | `#fff1f4` | `#3a1628` | 珊瑚霧：錯誤淡底 |
-| `success-foreground` | `#00a756` | `#3ddc8e` | 成功標籤字（同 primary） |
+| `success-foreground` | `#008746` | `#3ddc8e` | 成功標籤字（綠，獨立於 primary） |
 | `success-muted` | `#ecfef5` | `#12372a` | 薄荷霧：成功淡底 |
-| `info` | `#0066ff` | `#5c9dff` | blue default：連結、勾選框 |
+| `info` | `#0066ff` | `#5c9dff` | blue default：連結、資訊提示 |
 | `info-muted` | `#f1f6ff` | `#16264a` | blue lighter：資訊提示底 |
 | `info-foreground` | `#0032b1` | `#a9c8ff` | blue dark：資訊提示文字 |
 | `info-subtle` | `#f3f7ff` | `#121d3a` | blue lightest：大面積提示區 |
@@ -110,14 +113,29 @@
 
 | Utility | 淺色 | 深色 | 用途 |
 | --- | --- | --- | --- |
-| `sidebar` | `#f7f8fe` | `#0e1124` | 側邊欄底色 |
+| `sidebar` | `#f0f2fa` | `#0e1124` | 側邊欄底色 |
 | `sidebar-foreground` | `#2d336b` | `#e4e7f7` | 側邊欄文字 |
-| `sidebar-primary` | `#00a756` | `#00a756` | 側邊欄主要色 |
+| `sidebar-primary` | `#316def` | `#316def` | 側邊欄主要色 |
 | `sidebar-primary-foreground` | `#ffffff` | `#ffffff` | 側邊欄主要色上的字 |
-| `sidebar-accent` | `#ecfef5` | `#12372a` | primary light：目前頁面 |
-| `sidebar-accent-foreground` | `#00a756` | `#3ddc8e` | 側邊欄目前頁面的字 |
+| `sidebar-accent` | `#eef3fe` | `#172a55` | primary light：側邊欄目前頁面 |
+| `sidebar-accent-foreground` | `#2557c9` | `#7aa2f7` | 側邊欄目前頁面的字 |
 | `sidebar-border` | `#dee1f4` | `#2c3258` | 側邊欄分隔線 |
 | `sidebar-ring` | `#2d336b` | `#9aa3cf` | 側邊欄聚焦框線 |
+
+## 單據類別色
+
+| Utility | 淺色 | 深色 | 用途 |
+| --- | --- | --- | --- |
+| `category-1` | `#5b3fd6` | `#b9aaff` | 單據類別色 1（請假）：淡底上的字 |
+| `category-1-muted` | `#f1eeff` | `#272052` | 單據類別色 1 的淡底 |
+| `category-2` | `#0b6e80` | `#6ccfe0` | 單據類別色 2（加班）：淡底上的字 |
+| `category-2-muted` | `#e6f6f9` | `#0f2f38` | 單據類別色 2 的淡底 |
+| `category-3` | `#ad2e78` | `#f293cb` | 單據類別色 3（公出）：淡底上的字 |
+| `category-3-muted` | `#fceef6` | `#3a1631` | 單據類別色 3 的淡底 |
+| `category-4` | `#3446a8` | `#9fb0ff` | 單據類別色 4（調班）：淡底上的字 |
+| `category-4-muted` | `#e9ecfa` | `#1e2650` | 單據類別色 4 的淡底 |
+| `category-5` | `#5566a4` | `#9aa3cf` | 單據類別色 5（忘刷卡）：淡底上的字 |
+| `category-5-muted` | `#eff0f8` | `#232845` | 單據類別色 5 的淡底 |
 
 ## 圓角
 

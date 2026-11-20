@@ -26,7 +26,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
         },
       }}
       icons={{
-        success: <CircleCheckIcon className="size-6 fill-brand text-toast" />,
+        success: <CircleCheckIcon className="size-6 fill-success-foreground text-toast" />,
         info: <InfoIcon className="size-6 text-info" />,
         warning: <TriangleAlertIcon className="size-6 text-warning-bright" />,
         error: <OctagonXIcon className="size-6 text-destructive" />,

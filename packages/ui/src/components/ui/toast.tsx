@@ -137,7 +137,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
 
   if (type === "success") {
     icon = (
-      <CircleCheckIcon className="fill-brand text-toast" aria-hidden="true" />
+      <CircleCheckIcon className="fill-success-foreground text-toast" aria-hidden="true" />
     )
   }
 
