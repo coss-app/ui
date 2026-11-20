@@ -5,7 +5,7 @@ coss 公司的 React 組件庫：65 個組件套好公司設計規範，安裝�
 | 重點        | 說明                                                                             |
 | ----------- | -------------------------------------------------------------------------------- |
 | 📚 文件站   | [ui.coss.com.tw](https://ui.coss.com.tw) 有每個組件的範例、import 寫法與使用手冊 |
-| 🌈 設計規範 | 依 [DESIGN.md](./DESIGN.md) 的靛藍＋品牌綠配色，內建深色模式                     |
+| 🌈 設計規範 | 依 [DESIGN.md](./DESIGN.md) 的靛藍＋主色藍配色，內建深色模式                     |
 | 🧱 技術基礎 | shadcn/ui（Base UI 版）＋ Tailwind CSS v4                                        |
 | 📦 公開套件 | 發佈在 npmjs（MIT），安裝不需要 token                                            |
 
@@ -128,7 +128,7 @@ DESIGN.md                 # 設計規範
 
 1. 執行 `cd packages/ui && npx shadcn@latest add <name>`；更新既有組件加 `--overwrite`，它會蓋掉已調整的樣式，執行後先看 diff。
 2. 把 `from "cn"` 改成 `from "@/lib/utils"`，並移除 shadcn CLI 自動加的 `cn` 依賴；漏做時 `npm run verify` 會失敗。
-3. 依 DESIGN.md 換掉預設 class（輸入框 `bg-muted`、浮層 `shadow-menu`、選中 `bg-info` 等）。
+3. 依 DESIGN.md 換掉預設 class（輸入框 `bg-muted`、浮層 `shadow-menu`、選中 `bg-primary` 等）。
 4. 在 `scripts/component-notes.json` 補一句用途，執行 `npm run manifest`，連同 `plugins/coss-ui` 一起提交；漏做時 CI 的 `manifest --check` 會失敗。
 
 發佈新版：
@@ -138,11 +138,11 @@ DESIGN.md                 # 設計規範
 
    ```bash
    git switch main && git pull
-   git switch -c release/v0.2.0
+   git switch -c release/vX.Y.Z
    npx changeset version   # 依累積的 changeset 升版號、寫 CHANGELOG
    npm install             # 更新 package-lock.json
    npm run manifest        # 更新 skill 內標示的套件版本（否則 CI 的 manifest 檢查會失敗）
-   git commit -am "chore: release v0.2.0"
+   git commit -am "chore: release vX.Y.Z"
    git push -u origin HEAD && gh pr create --fill
    ```
 

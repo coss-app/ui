@@ -1,6 +1,6 @@
 {
   "package": "@coss-app/ui",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "docs": "https://ui.coss.com.tw",
   "categories": [
     "Inputs",
@@ -279,7 +279,7 @@
     {
       "slug": "button",
       "name": "Button",
-      "description": "按鈕。default＝主要動作（綠、膠囊，一個畫面只放一個）、outline＝次要、secondary＝輔助、neutral＝列表列上的動作、ghost＝圖示鈕、destructive＝刪除、link＝文字連結。",
+      "description": "按鈕。default＝主要動作（藍、膠囊，一個畫面只放一個）、outline＝次要、secondary＝輔助、neutral＝列表列上的動作、ghost＝圖示鈕、destructive＝刪除、link＝文字連結。",
       "importPath": "@coss-app/ui/components/button",
       "import": "import { Button, buttonVariants } from \"@coss-app/ui/components/button\";",
       "exports": [
@@ -354,7 +354,7 @@
     {
       "slug": "calendar",
       "name": "Calendar",
-      "description": "月曆選日期（單日、區間），日期選中用資訊藍；放在 Popover 內做日期欄位。",
+      "description": "月曆選日期（單日、區間），日期選中用主色藍；放在 Popover 內做日期欄位。",
       "importPath": "@coss-app/ui/components/calendar",
       "import": "import { Calendar, CalendarDayButton } from \"@coss-app/ui/components/calendar\";",
       "exports": [
@@ -427,7 +427,7 @@
     {
       "slug": "checkbox",
       "name": "Checkbox",
-      "description": "勾選框（資訊藍）；單一選項或多選清單。",
+      "description": "勾選框（主色藍）；單一選項或多選清單。",
       "importPath": "@coss-app/ui/components/checkbox",
       "import": "import { Checkbox } from \"@coss-app/ui/components/checkbox\";",
       "exports": [
@@ -1121,7 +1121,7 @@
     {
       "slug": "progress",
       "name": "Progress",
-      "description": "進度條（品牌綠），可附標籤與數值。",
+      "description": "進度條（主色藍），可附標籤與數值。",
       "importPath": "@coss-app/ui/components/progress",
       "import": "import {\n  Progress,\n  ProgressTrack,\n  ProgressIndicator,\n  ProgressLabel,\n  ProgressValue,\n} from \"@coss-app/ui/components/progress\";",
       "exports": [
@@ -1271,7 +1271,7 @@
     {
       "slug": "sidebar",
       "name": "Sidebar",
-      "description": "應用程式側邊欄（Provider／Menu／Group／Inset／Trigger／Rail），目前頁面用淡綠底；可收合、行動裝置自動變抽屜。",
+      "description": "應用程式側邊欄（Provider／Menu／Group／Inset／Trigger／Rail），目前頁面用主色淡底；可收合、行動裝置自動變抽屜。",
       "importPath": "@coss-app/ui/components/sidebar",
       "import": "import {\n  Sidebar,\n  SidebarContent,\n  SidebarFooter,\n  SidebarGroup,\n  SidebarGroupAction,\n  SidebarGroupContent,\n  SidebarGroupLabel,\n  SidebarHeader,\n  SidebarInput,\n  SidebarInset,\n  SidebarMenu,\n  SidebarMenuAction,\n  SidebarMenuBadge,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarMenuSkeleton,\n  SidebarMenuSub,\n  SidebarMenuSubButton,\n  SidebarMenuSubItem,\n  SidebarProvider,\n  SidebarRail,\n  SidebarSeparator,\n  SidebarTrigger,\n  useSidebar,\n} from \"@coss-app/ui/components/sidebar\";",
       "exports": [
@@ -1579,7 +1579,7 @@
       {
         "name": "background",
         "group": "表面與文字",
-        "light": "#f7f8fe",
+        "light": "#f0f2fa",
         "dark": "#0e1124",
         "utility": true,
         "comment": "grey 10：App 底色"
@@ -1635,8 +1635,8 @@
       {
         "name": "primary",
         "group": "品牌與主要動作",
-        "light": "#00a756",
-        "dark": "#00a756",
+        "light": "#316def",
+        "dark": "#316def",
         "utility": true,
         "comment": "primary dark：主要按鈕"
       },
@@ -1651,26 +1651,42 @@
       {
         "name": "primary-hover",
         "group": "品牌與主要動作",
-        "light": "#008746",
-        "dark": "#008746",
+        "light": "#2557c9",
+        "dark": "#2557c9",
         "utility": true,
         "comment": "主要按鈕 hover"
       },
       {
         "name": "primary-disabled",
         "group": "品牌與主要動作",
-        "light": "#80d3ab",
-        "dark": "#0c6146",
+        "light": "#98b6f7",
+        "dark": "#1e3a7a",
         "utility": true,
         "comment": "主要按鈕停用"
       },
       {
+        "name": "primary-muted",
+        "group": "品牌與主要動作",
+        "light": "#eef3fe",
+        "dark": "#172a55",
+        "utility": true,
+        "comment": "主色淡底：勾選、選中、外框按鈕 hover"
+      },
+      {
+        "name": "primary-muted-foreground",
+        "group": "品牌與主要動作",
+        "light": "#2557c9",
+        "dark": "#7aa2f7",
+        "utility": true,
+        "comment": "主色淡底上的字、選中選項的字"
+      },
+      {
         "name": "brand",
         "group": "品牌與主要動作",
-        "light": "#07ce6f",
-        "dark": "#3ddc8e",
+        "light": "#316def",
+        "dark": "#7aa2f7",
         "utility": true,
-        "comment": "primary default：進度、狀態點"
+        "comment": "primary default（藍）：進度、狀態點"
       },
       {
         "name": "secondary",
@@ -1755,10 +1771,10 @@
       {
         "name": "success-foreground",
         "group": "狀態色",
-        "light": "#00a756",
+        "light": "#008746",
         "dark": "#3ddc8e",
         "utility": true,
-        "comment": "成功標籤字（同 primary）"
+        "comment": "成功標籤字（綠，獨立於 primary）"
       },
       {
         "name": "success-muted",
@@ -1774,7 +1790,7 @@
         "light": "#0066ff",
         "dark": "#5c9dff",
         "utility": true,
-        "comment": "blue default：連結、勾選框"
+        "comment": "blue default：連結、資訊提示"
       },
       {
         "name": "info-muted",
@@ -2051,7 +2067,7 @@
       {
         "name": "sidebar",
         "group": "側邊欄",
-        "light": "#f7f8fe",
+        "light": "#f0f2fa",
         "dark": "#0e1124",
         "utility": true,
         "comment": "側邊欄底色"
@@ -2067,8 +2083,8 @@
       {
         "name": "sidebar-primary",
         "group": "側邊欄",
-        "light": "#00a756",
-        "dark": "#00a756",
+        "light": "#316def",
+        "dark": "#316def",
         "utility": true,
         "comment": "側邊欄主要色"
       },
@@ -2083,16 +2099,16 @@
       {
         "name": "sidebar-accent",
         "group": "側邊欄",
-        "light": "#ecfef5",
-        "dark": "#12372a",
+        "light": "#eef3fe",
+        "dark": "#172a55",
         "utility": true,
-        "comment": "primary light：目前頁面"
+        "comment": "primary light：側邊欄目前頁面"
       },
       {
         "name": "sidebar-accent-foreground",
         "group": "側邊欄",
-        "light": "#00a756",
-        "dark": "#3ddc8e",
+        "light": "#2557c9",
+        "dark": "#7aa2f7",
         "utility": true,
         "comment": "側邊欄目前頁面的字"
       },
@@ -2111,6 +2127,94 @@
         "dark": "#9aa3cf",
         "utility": true,
         "comment": "側邊欄聚焦框線"
+      },
+      {
+        "name": "selection",
+        "group": "品牌與主要動作",
+        "light": "#f6f9ff",
+        "dark": "#141f38",
+        "utility": true,
+        "comment": "清單、表格中被選中那一列的底色"
+      },
+      {
+        "name": "category-1",
+        "group": "單據類別色",
+        "light": "#5b3fd6",
+        "dark": "#b9aaff",
+        "utility": true,
+        "comment": "單據類別色 1（請假）：淡底上的字"
+      },
+      {
+        "name": "category-1-muted",
+        "group": "單據類別色",
+        "light": "#f1eeff",
+        "dark": "#272052",
+        "utility": true,
+        "comment": "單據類別色 1 的淡底"
+      },
+      {
+        "name": "category-2",
+        "group": "單據類別色",
+        "light": "#0b6e80",
+        "dark": "#6ccfe0",
+        "utility": true,
+        "comment": "單據類別色 2（加班）：淡底上的字"
+      },
+      {
+        "name": "category-2-muted",
+        "group": "單據類別色",
+        "light": "#e6f6f9",
+        "dark": "#0f2f38",
+        "utility": true,
+        "comment": "單據類別色 2 的淡底"
+      },
+      {
+        "name": "category-3",
+        "group": "單據類別色",
+        "light": "#ad2e78",
+        "dark": "#f293cb",
+        "utility": true,
+        "comment": "單據類別色 3（公出）：淡底上的字"
+      },
+      {
+        "name": "category-3-muted",
+        "group": "單據類別色",
+        "light": "#fceef6",
+        "dark": "#3a1631",
+        "utility": true,
+        "comment": "單據類別色 3 的淡底"
+      },
+      {
+        "name": "category-4",
+        "group": "單據類別色",
+        "light": "#3446a8",
+        "dark": "#9fb0ff",
+        "utility": true,
+        "comment": "單據類別色 4（調班）：淡底上的字"
+      },
+      {
+        "name": "category-4-muted",
+        "group": "單據類別色",
+        "light": "#e9ecfa",
+        "dark": "#1e2650",
+        "utility": true,
+        "comment": "單據類別色 4 的淡底"
+      },
+      {
+        "name": "category-5",
+        "group": "單據類別色",
+        "light": "#5566a4",
+        "dark": "#9aa3cf",
+        "utility": true,
+        "comment": "單據類別色 5（忘刷卡）：淡底上的字"
+      },
+      {
+        "name": "category-5-muted",
+        "group": "單據類別色",
+        "light": "#eff0f8",
+        "dark": "#232845",
+        "utility": true,
+        "comment": "單據類別色 5 的淡底"
       }
     ],
     "others": [

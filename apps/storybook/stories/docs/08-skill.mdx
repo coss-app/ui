@@ -15,7 +15,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 | 當成 Radix 版 shadcn，寫 `asChild`、`data-[state=open]` | 改用 Base UI 的 `render`、`data-open` |
 | 從 `@/components/ui/...` import，或把組件原始碼複製進專案 | 一律 `@coss-app/ui/components/<名稱>` |
 | 寫死色碼或用 `bg-green-500`、`text-gray-600` | 只用語意 token（`bg-primary`、`text-muted-foreground`），深色模式自動切換 |
-| 到處放綠色按鈕、用綠色表示選中 | 綠色只給主要動作與目前位置，選中用資訊藍 |
+| 到處放主要色按鈕、用資訊藍表示選中 | 主色藍給主要動作、選中與目前位置，連結與提示才用資訊藍 |
 | 不知道 Dialog、Sheet、Drawer 或 Select、Combobox 該選哪個 | 有選型表，依情境決定 |
 | 手機上仍用置中 Dialog、浮動下拉，觸控目標太小、輸入框被 iOS 放大 | 手機一律底部 Drawer，粗指標下目標 ≥ 44px，照 UX 規則處理 |
 | 忘了 Select 要傳 `items`、選單的 `Label` 要放在 `Group` 內 | 規則寫在 skill 裡，寫之前就會讀到 |
@@ -90,7 +90,7 @@ skill 附一支檢查腳本 `check-usage.mjs`，AI 寫完程式後會用它掃�
 
 | 抓什麼 | 應該改成 |
 | --- | --- |
-| 寫死的 HEX、Tailwind 任意色值（`bg-[#00a756]`） | 語意 token class |
+| 寫死的 HEX、Tailwind 任意色值（`bg-[#316def]`） | 語意 token class |
 | 預設色票（`gray-600`、`green-500`）、純黑 | 語意 token class |
 | `font-bold` | 標題與按鈕用 `font-semibold`，內文用預設 |
 | `asChild`、`data-[state=…]` | `render`、`data-open` 等 |

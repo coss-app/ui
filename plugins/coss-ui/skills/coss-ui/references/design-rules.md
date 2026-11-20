@@ -4,8 +4,9 @@
 
 ## 色彩
 
-- 品牌綠 `primary` 只用於兩處：主要動作按鈕、目前所在位置（側欄選中項、進度）。其他保持中性。
-- 資訊藍 `info`：連結、勾選、日期選中、處理中。選中狀態不用綠色。
+- 主色藍 `primary`：主要動作按鈕、選中與勾選狀態（勾選框、單選、開關、滑桿、日期）、目前所在位置（側欄選中項、進度）。選中的淡底用 `bg-primary-muted`＋`text-primary-muted-foreground`；表格選中列用 `bg-selection`。其他保持中性。
+- 資訊藍 `info`：連結、資訊提示、處理中。選中狀態一律用 `primary`，不用 `info`；成功狀態用 `success-*` 綠色。
+- 單據類別用 `category-1`～`category-5` 搭配 `-muted` 淡底（`bg-category-1-muted text-category-1`）。
 - 灰階全部帶靛藍調：用 `foreground`／`muted-foreground`／`placeholder`／`border`；不用 `gray-*`、`slate-*`、`black`。
 - 底色與字色成對使用，不混搭：
   - `bg-primary` ↔ `text-primary-foreground`（白）
@@ -14,7 +15,7 @@
   - `bg-warning-muted` ↔ `text-warning`
   - `bg-destructive-muted` ↔ `text-destructive-foreground`
   - `bg-muted`／`bg-secondary` ↔ `text-foreground` 或 `text-muted-foreground`
-- 對比：`placeholder`、`border-strong` 只用於 placeholder、表頭、次要圖示、停用文字，不放主要資訊。`brand`（鮮亮綠）、`warning-bright`（亮橘）對比不足：不放白字、不單獨當文字色。`star` 只給評分星星。
+- 對比：`placeholder`、`border-strong` 只用於 placeholder、表頭、次要圖示、停用文字，不放主要資訊。`warning-bright`（亮橘）對比不足：不放白字、不單獨當文字色。`star` 只給評分星星。
 - 資訊不只靠顏色：每個狀態同時有文字或圖示（Badge 帶文字、Alert 帶圖示）。
 
 ## 按鈕
@@ -31,7 +32,7 @@
 | 文字連結式動作 | `variant="link"` |
 
 - 載入中：`<Spinner data-icon="inline-start" />`＋進行式文字（「送出中」）；顯示時機見 [ux-rules.md](ux-rules.md)「9. 載入、回饋與錯誤狀態」。
-- 停用用 `disabled`，不自己改色（主要鈕換淡綠，其他半透明）。
+- 停用用 `disabled`，不自己改色（主要鈕換淡藍，其他半透明）。
 - 圖示用 `lucide-react`，不自訂尺寸；`data-icon="inline-start"` 放文字前、`"inline-end"` 放文字後。
 
 ## 表單
@@ -85,7 +86,7 @@
 
 Do
 - 文字用 `foreground` 階；底色用 `background`／`card` 的明度差分層。
-- 綠色只給主要動作與目前位置；連結、勾選、進度用資訊藍。
+- 主色藍給主要動作、選中狀態與目前位置；連結與資訊提示用資訊藍；成功用綠色。
 - 主要動作膠囊形；容器 10px；大型容器 20–25px。
 - 每個狀態同時給顏色與文字／圖示。
 
@@ -93,5 +94,5 @@ Don't
 - 純黑文字、無藍調的中性灰、Bold 700。
 - 替一般面板加陰影、替輸入框加預設框線。
 - 把星等黃、亮橘當狀態色或文字色。
-- 在綠色以外的元素做「主要」強調；一個畫面放多個主要動作鈕。
+- 在主色藍以外的元素做「主要」強調；一個畫面放多個主要動作鈕。
 - 寫 HEX 或 Tailwind 預設色（`bg-green-500`、`text-gray-600`），一律用 token。

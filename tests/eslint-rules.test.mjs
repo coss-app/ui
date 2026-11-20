@@ -38,6 +38,30 @@ tester.run("coss/menu-label-in-group", coss.rules["menu-label-in-group"], {
   ],
 });
 
+tester.run("coss/selected-uses-primary", coss.rules["selected-uses-primary"], {
+  valid: [
+    '<div className="data-checked:border-primary data-checked:bg-primary" />',
+    '<div className="has-data-checked:bg-primary-muted aria-pressed:text-primary-muted-foreground" />',
+    '<a className="text-info hover:underline" />',
+    '<div className="bg-info-muted text-info-foreground" />',
+    '<div className="hover:bg-primary-muted aria-expanded:bg-primary-muted" />',
+    '<div className="bg-success-muted text-success-foreground" />',
+    "<div className={`data-checked:bg-primary`} />",
+  ],
+  invalid: [
+    { code: '<div className="data-checked:bg-info" />', errors: 1 },
+    { code: '<div className="aria-invalid:data-checked:border-info" />', errors: 1 },
+    { code: '<div className="has-data-checked:bg-info-muted has-data-checked:border-info/40" />', errors: 2 },
+    { code: '<div className="aria-pressed:text-info" />', errors: 1 },
+    { code: '<div className="data-[state=selected]:bg-info-subtle" />', errors: 1 },
+    { code: '<div className="data-[range-start=true]:bg-info" />', errors: 1 },
+    { code: '<div className="group-data-checked/choice:border-info" />', errors: 1 },
+    { code: '<div className="hover:bg-success-muted" />', errors: 1 },
+    { code: '<div className="aria-expanded:bg-success-muted" />', errors: 1 },
+    { code: "<div className={`data-checked:bg-info`} />", errors: 1 },
+  ],
+});
+
 describe("coss/no-comments（CSS）", () => {
   const eslint = new ESLint({
     overrideConfigFile: true,

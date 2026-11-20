@@ -61,6 +61,10 @@ export default defineConfig([
     rules: { "coss/menu-label-in-group": "error" },
   },
   {
+    files: ["packages/ui/src/components/**/*.tsx"],
+    rules: { "coss/selected-uses-primary": "error" },
+  },
+  {
     files: ["packages/ui/src/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-syntax": ["error", asChild, ...fontWeight],

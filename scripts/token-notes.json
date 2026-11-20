@@ -32,8 +32,14 @@
   "primary-disabled": {
     "note": "主要按鈕停用"
   },
+  "primary-muted": {
+    "note": "主色淡底：勾選、選中、外框按鈕 hover"
+  },
+  "primary-muted-foreground": {
+    "note": "主色淡底上的字、選中選項的字"
+  },
   "brand": {
-    "note": "primary default：進度、狀態點"
+    "note": "primary default（藍）：進度、狀態點"
   },
   "secondary": {
     "note": "grey 20"
@@ -66,13 +72,13 @@
     "note": "珊瑚霧：錯誤淡底"
   },
   "success-foreground": {
-    "note": "成功標籤字（同 primary）"
+    "note": "成功標籤字（綠，獨立於 primary）"
   },
   "success-muted": {
     "note": "薄荷霧：成功淡底"
   },
   "info": {
-    "note": "blue default：連結、勾選框"
+    "note": "blue default：連結、資訊提示"
   },
   "info-muted": {
     "note": "blue lighter：資訊提示底"
@@ -200,7 +206,7 @@
     "note": "側邊欄主要色上的字"
   },
   "sidebar-accent": {
-    "note": "primary light：目前頁面"
+    "note": "primary light：側邊欄目前頁面"
   },
   "sidebar-accent-foreground": {
     "note": "側邊欄目前頁面的字"
@@ -210,5 +216,38 @@
   },
   "sidebar-ring": {
     "note": "側邊欄聚焦框線"
+  },
+  "selection": {
+    "note": "清單、表格中被選中那一列的底色"
+  },
+  "category-1": {
+    "note": "單據類別色 1（請假）：淡底上的字"
+  },
+  "category-1-muted": {
+    "note": "單據類別色 1 的淡底"
+  },
+  "category-2": {
+    "note": "單據類別色 2（加班）：淡底上的字"
+  },
+  "category-2-muted": {
+    "note": "單據類別色 2 的淡底"
+  },
+  "category-3": {
+    "note": "單據類別色 3（公出）：淡底上的字"
+  },
+  "category-3-muted": {
+    "note": "單據類別色 3 的淡底"
+  },
+  "category-4": {
+    "note": "單據類別色 4（調班）：淡底上的字"
+  },
+  "category-4-muted": {
+    "note": "單據類別色 4 的淡底"
+  },
+  "category-5": {
+    "note": "單據類別色 5（忘刷卡）：淡底上的字"
+  },
+  "category-5-muted": {
+    "note": "單據類別色 5 的淡底"
   }
 }

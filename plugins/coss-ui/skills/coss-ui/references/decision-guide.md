@@ -71,7 +71,7 @@
 
 | 情境 | 用 |
 | --- | --- |
-| 後台主導覽（左側欄，目前頁面淡綠底） | `Sidebar`（`SidebarProvider`＋`SidebarInset`；手機自動變抽屜） |
+| 後台主導覽（左側欄，目前頁面主色淡底） | `Sidebar`（`SidebarProvider`＋`SidebarInset`；手機自動變抽屜） |
 | 對外網站頂部導覽（含展開選單） | `NavigationMenu` |
 | 同頁內切換並列內容（全部／待受理／已結案） | `Tabs` |
 | 顯示目前層級位置 | `Breadcrumb` |

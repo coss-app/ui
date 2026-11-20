@@ -20,6 +20,7 @@ function parseRootColorTokens(css: string): Token[] {
 
 const GROUPS: { title: string; test: (name: string) => boolean }[] = [
   { title: "Sidebar", test: (n) => n.startsWith("--sidebar") },
+  { title: "類別 Category", test: (n) => n.startsWith("--category") },
   { title: "Chart", test: (n) => n.startsWith("--chart") },
   { title: "即時統計 Stat", test: (n) => n.startsWith("--stat") },
   { title: "看板 Banner", test: (n) => n.startsWith("--banner") },
@@ -32,7 +33,7 @@ const GROUPS: { title: string; test: (name: string) => boolean }[] = [
     title: "表面與浮層 Surface",
     test: (n) => /^--(card|popover|toast|overlay|viewer)/.test(n),
   },
-  { title: "品牌與動作 Brand", test: (n) => /^--(primary|brand|secondary|accent)/.test(n) },
+  { title: "品牌與動作 Brand", test: (n) => /^--(primary|brand|secondary|accent|selection)/.test(n) },
   {
     title: "基礎 Base",
     test: () => true,
@@ -46,7 +47,7 @@ function groupTokens(tokens: Token[]) {
     const g = GROUPS.find((g) => g.test(t.name))!;
     result.get(g.title)!.push(t);
   }
-  const order = ["基礎 Base", "品牌與動作 Brand", "表面與浮層 Surface", "狀態 Status", "即時統計 Stat", "看板 Banner", "Chart", "Sidebar"];
+  const order = ["基礎 Base", "品牌與動作 Brand", "表面與浮層 Surface", "狀態 Status", "即時統計 Stat", "看板 Banner", "類別 Category", "Chart", "Sidebar"];
   return order.map((title) => ({ title, tokens: result.get(title) ?? [] })).filter((g) => g.tokens.length);
 }
 

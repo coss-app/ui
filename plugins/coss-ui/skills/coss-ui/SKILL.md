@@ -1,6 +1,6 @@
 ---
 name: coss-ui
-description: 在 React 專案使用 coss 公司組件庫 @coss-app/ui（Base UI 版 shadcn＋Tailwind v4，靛藍＋品牌綠）時使用。凡是要用 @coss-app/ui 建立或修改畫面（後台、客服工單、表單、列表、對話、彈窗、側欄），或專案已有 @coss-app/ui 依賴、import 了 @coss-app/ui/components/*，就套用本 skill。涵蓋 import 路徑、組件選型、設計規範、token、Base UI 與 Radix 的差異、安裝設定。
+description: 在 React 專案使用 coss 公司組件庫 @coss-app/ui（Base UI 版 shadcn＋Tailwind v4，靛藍＋主色藍）時使用。凡是要用 @coss-app/ui 建立或修改畫面（後台、客服工單、表單、列表、對話、彈窗、側欄），或專案已有 @coss-app/ui 依賴、import 了 @coss-app/ui/components/*，就套用本 skill。涵蓋 import 路徑、組件選型、設計規範、token、Base UI 與 Radix 的差異、安裝設定。
 ---
 
 # coss UI（`@coss-app/ui`）
@@ -26,8 +26,8 @@ coss 公司通用組件庫：65 個 Base UI 組件＋Tailwind v4＋一份 `globa
 
 ## 設計判斷
 
-- 綠色（`primary`）只給主要動作與「目前所在位置」。一個畫面一個主要按鈕（`<Button>` 預設）；次要 `variant="outline"`，輔助 `secondary`，列表列動作 `neutral`，圖示鈕 `ghost`。
-- 資訊用藍色：連結、勾選、選中、處理中。選中不用綠色。
+- 藍色（`primary`）給主要動作、選中狀態與「目前所在位置」。一個畫面一個主要按鈕（`<Button>` 預設）；次要 `variant="outline"`，輔助 `secondary`，列表列動作 `neutral`，圖示鈕 `ghost`。
+- 連結與資訊提示用資訊藍 `info`（比主色亮），成功用綠色 `success`；選中、勾選用 `primary`，不用 `info`。
 - 狀態用 Badge／Alert 的 variant，且一律附文字：待受理＝`warning`、處理中＝`info`、已結案／成功＝`success`、逾期／失敗＝`destructive`、分類＝`default`。
 - 面板靠底色分層，不加陰影：`Card` 本身就是白底、10px 圓角。只有浮層（選單、彈窗、Toast）有陰影（組件已內建）。
 - 字重只用 400／500／600，不用 `font-bold`；不用純黑文字，內文 `text-foreground`，次要 `text-muted-foreground`。
